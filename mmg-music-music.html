@@ -84,13 +84,16 @@
         </aside>
     </div>
 
-    <audio id="back-sound" src="assets/back.mp3"></audio>
-    <audio id="select-sound" src="assets/select.mp3"></audio>
-    <audio id="switch-to-white-sound" src="assets/switch_towhite.mp3"></audio>
-    <audio id="switch-to-black-sound" src="assets/switch_toblack.mp3"></audio>
+    <audio id="back-sound" src="assets/back.ogg"></audio>
+    <audio id="select-sound" src="assets/select.ogg"></audio>
+    <audio id="switch-to-white-sound" src="assets/switch_towhite.ogg"></audio>
+    <audio id="switch-to-black-sound" src="assets/switch_toblack.ogg"></audio>
+    
     <audio id="background-music" loop>
+        <source src="assets/mmg-beats-mmg-music.ogg" type="audio/ogg">
         <source src="assets/mmg-beats-mmg-music.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas la balise audio.
+        <source src="assets/mmg-beats-mmg-music.wav" type="audio/wav">
+        Votre navigateur ne supporte pas la lecture audio.
     </audio>
 
     <script src="script.js"></script>
