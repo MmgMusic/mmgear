@@ -32,25 +32,20 @@
     <audio id="switch-to-black-sound" src="assets/switch_toblack.ogg"></audio>
     <audio id="scroll-sound"src="assets/scroll.mp3" preload="auto"></audio>
     <audio id="shop-sound" src="assets/shop.mp3" preload="auto"></audio>
-    <!-- COMMENTAIRE: Ajout de l'audio pour la connexion WiFi -->
     <audio id="connecting-sound" src="assets/connecting.mp3" preload="auto"></audio>
     
     <div id="main-content-wrapper" class="hidden">
         <div class="main-board">
 
             <aside class="sidebar-left">
-                <div class="sidebar-nav-buttons">
-                    <a href="#" class="back-btn" title="Retour"><i class="fas fa-arrow-left"></i></a>
-                    <a href="#" id="home-btn" class="home-btn" title="Accueil"><i class="fas fa-home"></i></a>
+                <div class="sidebar-top-content">
+                    <div class="sidebar-nav-buttons">
+                        <a href="#" class="back-btn" title="Retour"><i class="fas fa-arrow-left"></i></a>
+                        <a href="#" id="home-btn" class="home-btn" title="Accueil"><i class="fas fa-home"></i></a>
+                        <button id="guide-btn" class="sidebar-btn" title="Guide"><i class="fas fa-question-circle"></i></button>
+                    </div>
                 </div>
-                <!-- COMMENTAIRE: Ajout du bouton Guide -->
-                <div class="sidebar-item-container">
-                    <button id="guide-btn" class="sidebar-btn" title="Guide"><i class="fas fa-question-circle"></i></button>
-                </div>
-                <div class="concept-text">
-                    <h3>The concept :</h3>
-                    <p>texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte texte</p>
-                </div>
+                <!-- COMMENTAIRE: La section "The concept" a été supprimée. -->
                 <div class="theme-switcher-footer">
                     <i class="fas fa-moon theme-icon"></i>
                     <div class="switch-wrapper">
@@ -185,7 +180,6 @@
                                     <i class="fas fa-play" id="play-pause-btn"></i>
                                 </div>
                                 <i class="fas fa-step-forward" id="next-video-btn" title="Suivant"></i>
-                                <!-- COMMENTAIRE: Ajout du bouton Shuffle -->
                                 <i class="fas fa-random" id="shuffle-btn" title="Lecture aléatoire"></i>
                                 <i class="fas fa-sync-alt" id="loop-btn" title="Répéter la chanson"></i>
                                 <i class="fas fa-share-alt" id="share-btn" title="Partager la chanson"></i>
@@ -216,7 +210,7 @@
                 </div>
                 <div class="footer-icons">
                     <a href="https://www.instagram.com/mmgonthetrack/?hl=fr" target="_blank"><i class="fab fa-instagram"></i> mmgonthetrack</a>
-                    <span>MmGear v.1.1</span>
+                    <span>MmGear v.1.4</span>
                 </div>
             </aside>
         </div>
@@ -224,8 +218,6 @@
     
     <audio id="background-music" loop>
         <source src="assets/mmg-beats-mmg-music.ogg" type="audio/ogg">
-        <source src="assets/mmg-beats-mmg-music.mp3" type="audio/mpeg">
-        <source src="assets/mmg-beats-mmg-music.wav" type="audio/wav">
         Ton navigateur ne supporte pas la lecture audio.
     </audio>
 
@@ -262,8 +254,8 @@
                 <button class="theme-buy-btn" data-theme="theme-16bit">Select</button>
             </div>
              <div class="shop-item">
-                <span>Vaporwave Theme</span>
-                <button class="theme-buy-btn" data-theme="theme-vaporwave">Select</button>
+                <span>Cyberpunk Theme</span>
+                <button class="theme-buy-btn" data-theme="theme-cyberpunk">Select</button>
             </div>
         </div>
     </div>
@@ -284,14 +276,13 @@
         <p id="dialog-message"></p>
     </div>
 
-    <!-- COMMENTAIRE: Ajout du conteneur pour le tutoriel -->
     <div id="tutorial-overlay" class="hidden">
         <div id="tutorial-box">
             <p id="tutorial-text"></p>
             <div id="tutorial-nav">
-                <button id="tutorial-prev">Précédent</button>
-                <button id="tutorial-next">Suivant</button>
-                <button id="tutorial-end">Terminer</button>
+                <button id="tutorial-prev">Previous</button>
+                <button id="tutorial-next">Next</button>
+                <button id="tutorial-end">End Tour</button>
             </div>
         </div>
     </div>
