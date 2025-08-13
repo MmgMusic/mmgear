@@ -9,13 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
             'card2': { 'title': 'Clips Vidéos', 'image': 'assets/mmg-videos.png', 'link': 'gameplay-section' },
             'card3': { 'title': 'Making-Ofs', 'image': 'assets/mmg-makingofs.png', 'link': 'makingofs-section' },
             'card4': { 'title': 'Titres Likés', 'image': 'https://via.placeholder.com/240x300/E91E63/FFFFFF?text=♥', 'link': 'liked-titles-section' },
-            'card5': { 'title': 'À Propos', 'image': 'assets/mmg-music-avatar.jpg', 'link': 'about-section' }
+            'card5': { 'title': 'À Propos', 'image': 'assets/mmg-music-avatar.PNG', 'link': 'about-section' }
         },
         'mmg-beats': {
             'card1': { 'title': 'Albums Beats', 'image': 'https://via.placeholder.com/200x120/FFC107/FFFFFF?text=Beats+Albums', 'link': 'albums-section' },
             'card2': { 'title': 'Vidéos Beats', 'image': 'https://via.placeholder.com/200x120/E91E63/FFFFFF?text=Beats+Videos', 'link': 'gameplay-section' },
             'card3': { 'title': 'Making-Ofs Beats', 'image': 'https://via.placeholder.com/200x120/673AB7/FFFFFF?text=Beats+Making-Ofs', 'link': 'makingofs-section' },
-            'card4': { 'title': 'À Propos', 'image': 'assets/mmg-beats-avatar.jpg', 'link': 'about-section' }
+            'card4': { 'title': 'À Propos', 'image': 'assets/mmg-beats-avatar.PNG', 'link': 'about-section' }
         }
     };
 
@@ -984,5 +984,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tutorial-prev').addEventListener('click', () => showTutorialStep(currentStep - 1));
     document.getElementById('tutorial-end').addEventListener('click', endTutorial);
 });
+
 
 
