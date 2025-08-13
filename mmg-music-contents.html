@@ -10,19 +10,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="css/mmg-music-contents.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body class="light-theme">
 
+    <!-- Splash screen at startup -->
     <div id="splash-screen">
         <button id="start-button">START</button>
-        <video id="intro-video" playsinline>
+        <video id="intro-video" playsinline muted>
             <source src="assets/mmgintro.mp4" type="video/mp4">
             Ton navigateur ne supporte pas la vidéo.
         </video>
     </div>
 
-    <!-- Audio assets -->
+    <!-- Audio assets for UI sounds -->
     <audio id="typing-forward-sound" src="assets/typing-forwards.ogg" preload="auto"></audio>
     <audio id="typing-backward-sound" src="assets/typing-backwards.ogg" preload="auto"></audio>
     <audio id="hover-sound" src="assets/hover.ogg" preload="auto"></audio>
@@ -32,45 +34,37 @@
     <audio id="switch-to-black-sound" src="assets/switch_toblack.ogg"></audio>
     <audio id="scroll-sound"src="assets/scroll.mp3" preload="auto"></audio>
     <audio id="shop-sound" src="assets/shop.mp3" preload="auto"></audio>
-    <audio id="connecting-sound" src="assets/connecting.mp3" preload="auto"></audio>
-    
+    <audio id="connecting-sound" src="assets/connecting.ogg" preload="auto"></audio>
+    <audio id="achievement-unlocked-sound" src="https://www.myinstants.com/media/sounds/videogame-achievement-sound.mp3" preload="auto"></audio>
+
+    <!-- Main application wrapper -->
     <div id="main-content-wrapper" class="hidden">
         <div class="main-board">
 
-            <aside class="sidebar-left">
-                <div class="sidebar-top-content">
-                    <div class="sidebar-nav-buttons">
-                        <a href="#" class="back-btn" title="Retour"><i class="fas fa-arrow-left"></i></a>
-                        <a href="#" id="home-btn" class="home-btn" title="Accueil"><i class="fas fa-home"></i></a>
-                        <button id="guide-btn" class="sidebar-btn" title="Guide"><i class="fas fa-question-circle"></i></button>
-                    </div>
+            <!-- Top navigation bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <a href="#" class="top-bar-btn back-btn" title="Retour"><i class="fas fa-arrow-left"></i></a>
+                    <a href="#" id="home-btn" class="top-bar-btn home-btn" title="Accueil"><i class="fas fa-home"></i></a>
                 </div>
-                <!-- COMMENTAIRE: La section "The concept" a été supprimée. -->
-                <div class="theme-switcher-footer">
-                    <i class="fas fa-moon theme-icon"></i>
-                    <div class="switch-wrapper">
-                        <label class="switch">
-                            <input type="checkbox" id="theme-switch">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-            </aside>
-            
-            <main class="main-content">
-                <div class="top-bar-content">
+                <div class="top-bar-center">
                     <div class="search-bar">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="Song / Video title...">
+                        <input type="text" id="search-input" placeholder="Titre, artiste, album...">
+                        <button id="tags-filter-btn" class="top-bar-btn" title="Filtrer par tag"><i class="fas fa-tag"></i></button>
                     </div>
-                    <div class="top-bar-icons">
-                        <a href="#" id="shop-btn" class="settings"><i class="fas fa-shopping-cart"></i></a>
-                        <a href="#" id="wifi-btn" class="settings"><i class="fas fa-wifi"></i></a>
-                        <a href="#" id="settings-btn" class="settings"><i class="fas fa-cog"></i></a>
-                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <a href="#" id="shop-btn" class="top-bar-btn" title="Boutique"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="#" id="achievements-btn" class="top-bar-btn" title="Succès"><i class="fas fa-trophy"></i></a>
+                    <a href="#" id="settings-btn" class="top-bar-btn" title="Paramètres"><i class="fas fa-cog"></i></a>
+                    <a href="#" id="wifi-btn" class="top-bar-btn" title="WiFi"><i class="fas fa-wifi"></i></a>
                     <div class="time" id="real-time">09:31</div>
                 </div>
-                
+            </header>
+            
+            <!-- Main content area -->
+            <main class="main-content">
                 <div class="content-section-board">
                     <div class="central-profiles-card">
                         <div class="profile-tab active" data-project="mmg-music">
@@ -89,25 +83,26 @@
                             <div id="large-player-iframe"></div>
                         </div>
                     </section>
-
-                    <!-- Medium Player + Details for Music Titles -->
+                    
                     <section id="music-title-details-section" class="page-section hidden">
                         <div class="music-details-container">
+                            <div class="music-art-panel">
+                                <img id="details-album-art" src="" alt="Pochette de l'album">
+                            </div>
                             <div class="music-info-panel">
                                 <h2 id="details-title"></h2>
                                 <p><strong>Album:</strong> <a href="#" id="details-album-link"><span id="details-album"></span></a></p>
-                                <p><strong>Year:</strong> <span id="details-year"></span></p>
+                                <p><strong>Année:</strong> <span id="details-year"></span></p>
                                 <h3>Inspirations</h3>
                                 <p id="details-description"></p>
                                 <h3>Tags</h3>
                                 <div id="details-tags" class="tags-container"></div>
                             </div>
-                            <div class="player-container medium">
-                                <div id="medium-player-iframe"></div>
-                            </div>
                         </div>
                     </section>
                     
+                    <div id="medium-player-iframe" class="hidden-player"></div>
+
                     <!-- Video suggestions section -->
                     <section id="video-suggestions-section" class="page-section hidden">
                          <h2 class="section-title">Suggestions</h2>
@@ -118,24 +113,23 @@
                         <section class="content-sections-card" id="content-cards"></section>
                     </section>
                     
-                    <!-- Albums Section -->
                     <section id="albums-section" class="page-section hidden">
                         <h2 class="section-title">Albums</h2>
                         <section class="content-sections-card" id="albums-cards"></section>
                     </section>
 
                     <section id="search-results-section" class="page-section hidden">
-                        <h2 class="section-title">Search Results</h2>
+                        <h2 class="section-title">Résultats de recherche</h2>
                         <section class="content-sections-card" id="search-results-cards"></section>
                     </section>
                     
                     <section id="titles-section" class="page-section hidden">
-                        <h2 id="titles-section-title" class="section-title">Music Titles</h2>
+                        <h2 id="titles-section-title" class="section-title">Titres</h2>
                         <section class="content-sections-card titles-grid" id="titles-cards"></section>
                     </section>
 
                     <section id="gameplay-section" class="page-section hidden">
-                        <h2 class="section-title">Music Videos</h2>
+                        <h2 class="section-title">Clips Vidéos</h2>
                         <section class="content-sections-card" id="gameplay-cards"></section>
                     </section>
 
@@ -143,76 +137,91 @@
                         <h2 class="section-title">Making-Ofs</h2>
                         <section class="content-sections-card" id="makingofs-cards"></section>
                     </section>
+                    
+                    <section id="liked-titles-section" class="page-section hidden">
+                        <h2 id="liked-titles-section-title" class="section-title">Titres Likés</h2>
+                        <section class="content-sections-card titles-grid" id="liked-titles-cards"></section>
+                    </section>
 
                     <section id="beats-titles-section" class="page-section hidden">
-                        <h2 class="section-title">Beats Titles</h2>
+                        <h2 class="section-title">Titres Beats</h2>
                         <section class="content-sections-card titles-grid" id="beats-titles-cards"></section>
                     </section>
 
                     <section id="beats-gameplay-section" class="page-section hidden">
-                        <h2 class="section-title">Beats Videos</h2>
+                        <h2 class="section-title">Vidéos Beats</h2>
                         <section class="content-sections-card" id="beats-gameplay-cards"></section>
                     </section>
 
                     <section id="beats-makingofs-section" class="page-section hidden">
-                        <h2 class="section-title">Beats Making-Ofs</h2>
+                        <h2 class="section-title">Making-Ofs Beats</h2>
                         <section class="content-sections-card" id="beats-makingofs-cards"></section>
                     </section>
 
                     <section id="about-section" class="page-section hidden">
-                        <h2 id="about-title" class="section-title">About Mmg Music</h2>
-                        <div id="about-content" class="about-content"></div>
+                        <h2 id="about-title" class="section-title">À propos de Mmg Music</h2>
+                        <div id="about-content" class="about-content">
+                        </div>
                     </section>
                 </div>
-                
-                <section id="mp3-player-container" class="hidden">
-                    <div class="player-controls-wrapper">
-                        <div class="player-cover">
-                            <img id="player-album-cover" src="assets/placeholder-cover.svg" alt="Album cover">
+            </main>
+
+            <!-- Mini audio player -->
+            <section id="mp3-player-container" class="hidden">
+                <div class="player-controls-wrapper">
+                    <div class="player-cover">
+                        <img id="player-album-cover" src="assets/placeholder-cover.svg" alt="Pochette d'album">
+                    </div>
+                    <div class="player-center-controls">
+                        <div class="song-info">
+                            <h4 id="song-title"></h4>
                         </div>
-                        <div class="player-center-controls">
-                            <div class="song-info">
-                                <h4 id="song-title"></h4>
+                        <div class="player-buttons">
+                            <i class="fas fa-random small-btn" id="shuffle-btn" title="Lecture aléatoire"></i>
+                            <i class="fas fa-step-backward" id="prev-video-btn" title="Précédent"></i>
+                            <div class="controls-box">
+                                <i class="fas fa-play" id="play-pause-btn"></i>
                             </div>
-                            <div class="player-buttons">
-                                <i class="fas fa-step-backward" id="prev-video-btn" title="Précédent"></i>
-                                <div class="controls-box">
-                                    <i class="fas fa-play" id="play-pause-btn"></i>
-                                </div>
-                                <i class="fas fa-step-forward" id="next-video-btn" title="Suivant"></i>
-                                <i class="fas fa-random" id="shuffle-btn" title="Lecture aléatoire"></i>
-                                <i class="fas fa-sync-alt" id="loop-btn" title="Répéter la chanson"></i>
-                                <i class="fas fa-share-alt" id="share-btn" title="Partager la chanson"></i>
-                            </div>
+                            <i class="fas fa-step-forward" id="next-video-btn" title="Suivant"></i>
+                            <i class="fas fa-sync-alt small-btn" id="loop-btn" title="Répéter la chanson"></i>
                         </div>
+                    </div>
+                    <div class="player-right-controls">
                         <div class="volume-control">
                             <i class="fas fa-volume-down"></i>
                             <input type="range" id="volume-slider" min="0" max="100" value="100" title="Volume">
                             <i class="fas fa-volume-up"></i>                    
                         </div>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="progress-bar">
-                            <div class="progress-fill" id="progress-fill"></div>
-                        </div>
-                    </div>
-                </section>
-            </main>
-
-            <aside class="sidebar-right">
-                <div class="available-on">
-                    <div id="tags-filter-dropdown" class="tags-filter-container">
-                        <h3 id="toggle-tags-filter">
-                            Filter by Tag <i class="fas fa-chevron-down"></i>
-                        </h3>
-                        <div id="tags-filter-list" class="tags-list hidden"></div>
+                        <i class="far fa-heart like-btn" id="player-like-btn" title="Aimer la chanson"></i>
+                        <i class="fas fa-share-alt" id="share-btn" title="Partager la chanson"></i>
                     </div>
                 </div>
-                <div class="footer-icons">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Footer bar -->
+            <footer class="footer-bar">
+                <div class="theme-switcher-footer">
+                    <i class="fas fa-moon theme-icon"></i>
+                    <div class="switch-wrapper">
+                        <label class="switch">
+                            <input type="checkbox" id="theme-switch">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                 <div class="footer-center">
                     <a href="https://www.instagram.com/mmgonthetrack/?hl=fr" target="_blank"><i class="fab fa-instagram"></i> mmgonthetrack</a>
-                    <span>MmGear v.1.4</span>
+                    <span>MmGear v.2.1</span>
                 </div>
-            </aside>
+                <div class="footer-right">
+                    <button id="guide-btn" class="top-bar-btn" title="Guide"><i class="fas fa-question-circle"></i></button>
+                </div>
+            </footer>
         </div>
     </div>
     
@@ -221,13 +230,13 @@
         Ton navigateur ne supporte pas la lecture audio.
     </audio>
 
-    <!-- Settings Overlay -->
+    <!-- Overlays -->
     <div id="settings-overlay" class="hidden">
         <div class="settings-card">
-            <button class="close-settings-btn"><i class="fas fa-times"></i></button>
-            <h2>Settings</h2>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2>Paramètres</h2>
             <div class="setting-item">
-                <span>Background Music</span>
+                <span>Musique de fond</span>
                 <label class="switch">
                     <input type="checkbox" id="background-music-switch" checked>
                     <span class="slider round"></span>
@@ -236,42 +245,70 @@
         </div>
     </div>
 
-    <!-- Shop Overlay -->
     <div id="shop-overlay" class="hidden">
         <div class="settings-card">
-            <button class="close-shop-btn"><i class="fas fa-times"></i></button>
-            <h2>Shop</h2>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2>Boutique</h2>
             <div class="shop-item">
-                <span>Default Theme</span>
-                <button class="theme-buy-btn" data-theme="default">Select</button>
+                <span>Thème par Défaut</span>
+                <button class="theme-buy-btn" data-theme="default">Sélectionner</button>
             </div>
             <div class="shop-item">
-                <span>8-bit Theme</span>
-                <button class="theme-buy-btn" data-theme="theme-8bit">Select</button>
+                <span>Thème 8-bit</span>
+                <button class="theme-buy-btn locked" data-theme="theme-8bit" data-achievement="retroPlayer">
+                    <i class="fas fa-lock"></i> Débloquer
+                </button>
             </div>
             <div class="shop-item">
-                <span>16-bit Theme</span>
-                <button class="theme-buy-btn" data-theme="theme-16bit">Select</button>
+                <span>Thème 16-bit</span>
+                <button class="theme-buy-btn locked" data-theme="theme-16bit" data-achievement="loopMaster">
+                    <i class="fas fa-lock"></i> Débloquer
+                </button>
             </div>
              <div class="shop-item">
-                <span>Cyberpunk Theme</span>
-                <button class="theme-buy-btn" data-theme="theme-cyberpunk">Select</button>
+                <span>Thème Cyberpunk</span>
+                <button class="theme-buy-btn locked" data-theme="theme-cyberpunk" data-achievement="patienceIsKey">
+                    <i class="fas fa-lock"></i> Débloquer
+                </button>
+            </div>
+            <!-- MODIFIED: Added PS Style Theme -->
+            <div class="shop-item">
+                <span>Thème PS Style</span>
+                <button class="theme-buy-btn locked" data-theme="theme-ps-style" data-achievement="psPlayer">
+                    <i class="fas fa-lock"></i> Débloquer
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- WiFi Overlay -->
     <div id="wifi-overlay" class="hidden">
         <div class="settings-card">
-            <button class="close-wifi-btn"><i class="fas fa-times"></i></button>
-            <h2>Connecting...</h2>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2>Connexion...</h2>
             <div class="wifi-animation-container">
                 <div class="loader"></div>
             </div>
         </div>
     </div>
+    
+    <div id="achievements-overlay" class="hidden">
+        <div class="settings-card">
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2>Succès</h2>
+            <div id="achievements-list">
+            </div>
+        </div>
+    </div>
 
-    <!-- Custom Dialog -->
+    <div id="tags-filter-overlay" class="hidden">
+        <div class="settings-card">
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2>Filtrer par Tags</h2>
+            <div id="tags-filter-list" class="tags-list">
+            </div>
+        </div>
+    </div>
+
     <div id="custom-dialog" class="hidden">
         <p id="dialog-message"></p>
     </div>
@@ -280,9 +317,9 @@
         <div id="tutorial-box">
             <p id="tutorial-text"></p>
             <div id="tutorial-nav">
-                <button id="tutorial-prev">Previous</button>
-                <button id="tutorial-next">Next</button>
-                <button id="tutorial-end">End Tour</button>
+                <button id="tutorial-prev">Précédent</button>
+                <button id="tutorial-next">Suivant</button>
+                <button id="tutorial-end">Terminer</button>
             </div>
         </div>
     </div>
@@ -291,3 +328,4 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
+
