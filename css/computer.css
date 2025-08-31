@@ -1,0 +1,82 @@
+/* Styles spécifiques pour les écrans de plus de 768px */
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.main-board {
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    max-width: 1800px;
+    max-height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+
+#main-content-wrapper {
+    transform-origin: center center;
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.top-bar-left, .top-bar-right {
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 0;
+    width: auto;
+    order: 0;
+}
+
+.top-bar-center {
+    order: 0;
+    width: auto;
+    flex-grow: 1;
+}
+
+.time {
+    display: block;
+}
+
+#player-more-options-btn {
+    display: none;
+}
+
+.player-right-controls .volume-control-new,
+.player-right-controls #share-btn {
+    display: flex;
+}
+
+
+/* MODIFICATION: Ajout des styles pour les mobiles en mode paysage mais avec une grande largeur */
+@media (max-height: 500px) {
+    #achievements-overlay .settings-card {
+        padding: 10px;
+        height: 95vh;
+        display: flex;
+        flex-direction: column;
+    }
+    #achievements-overlay .coin-counter {
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+    }
+    #achievements-list {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 5px;
+    }
+    #achievements-overlay .cheat-code-section {
+        margin-top: 5px;
+        padding-top: 5px;
+        flex-shrink: 0;
+    }
+}
