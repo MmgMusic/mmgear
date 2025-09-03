@@ -2189,7 +2189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCards(sections[dataLink].container, sections[dataLink].data, sections[dataLink].type);
         } else if (dataLink === 'about-section') {
             document.getElementById('about-title').textContent = `À propos de ${activeProfile === 'mmg-music' ? 'Mmg Music' : 'Mmg Beats'}`;
-            const avatarUrl = activeProfile === 'mmg-music' ? 'assets/mmg-music-avatar.png' : 'assets/mmg-beats-avatar.png';
+            const avatarUrl = activeProfile === 'mmg-music' ? 'assets/mmg-music-avatar.jpg' : 'assets/mmg-beats-avatar.jpg';
             document.getElementById('about-content').innerHTML = `<img src="${avatarUrl}" alt="Avatar"><p>${siteData.aboutContent[activeProfile]}</p>`;
         } else if (dataLink === 'liked-titles-section') {
             const likedItems = Object.fromEntries(
@@ -2206,5 +2206,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     loadDataAndInitialize();
 });
+
 
 
