@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let sfxEnabled = true;
     let currentNavigationContext = { playlist: [], index: -1 };
     
+    // --- NOUVEAUX ÉTATS ---
+    let isBackgroundPlayEnabled = true; // Activé par défaut
+    const keepAliveAudio = document.getElementById('keep-alive-audio');
+    
     let listenProgress = 0;
     let previousListenProgress = 0; 
     let seekDetectedInCurrentPlay = false;
@@ -146,6 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (event.data === YT.PlayerState.ENDED) {
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
+            if (isBackgroundPlayEnabled) keepAliveAudio.pause(); // MODIFICATION
+            
             const finalProgress = activePlayer.getDuration() > 0 ? activePlayer.getCurrentTime() / activePlayer.getDuration() : 0;
             
             if (currentPlayingItem && isMusicTitle(currentPlayingItem) && !seekDetectedInCurrentPlay && finalProgress >= 0.95) {
@@ -181,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (playPauseBtn) playPauseBtn.className = 'fas fa-pause';
             backgroundMusic.pause();
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "playing";
+            if (isBackgroundPlayEnabled) keepAliveAudio.play(); // MODIFICATION
 
             if (isResumingFromOverlay) {
                 isResumingFromOverlay = false; 
@@ -205,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (event.data === YT.PlayerState.PAUSED) {
             if (playPauseBtn) playPauseBtn.className = 'fas fa-play';
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
+            if (isBackgroundPlayEnabled) keepAliveAudio.pause(); // MODIFICATION
         }
     }
 
@@ -315,34 +323,15 @@ document.addEventListener('DOMContentLoaded', () => {
         
         navigator.mediaSession.playbackState = "playing";
 
-        // --- DÉBUT MODIFICATION ---
-        // Ajout des gestionnaires pour les actions de lecture
-        navigator.mediaSession.setActionHandler('play', () => { 
-            if(activePlayer) activePlayer.playVideo();
-            navigator.mediaSession.playbackState = "playing";
-        });
-        navigator.mediaSession.setActionHandler('pause', () => { 
-            if(activePlayer) activePlayer.pauseVideo();
-            navigator.mediaSession.playbackState = "paused";
-        });
+        navigator.mediaSession.setActionHandler('play', () => { if(activePlayer) activePlayer.playVideo() });
+        navigator.mediaSession.setActionHandler('pause', () => { if(activePlayer) activePlayer.pauseVideo() });
         
         navigator.mediaSession.setActionHandler('previoustrack', () => playNextTrack(-1, true));
         navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack(1, true));
         
-        // Ajout des contrôles pour avancer/reculer de 10 secondes
-        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-            const skipTime = details.seekOffset || 10;
-            if(activePlayer) activePlayer.seekTo(activePlayer.getCurrentTime() - skipTime, true);
-        });
-        navigator.mediaSession.setActionHandler('seekforward', (details) => {
-            const skipTime = details.seekOffset || 10;
-            if(activePlayer) activePlayer.seekTo(activePlayer.getCurrentTime() + skipTime, true);
-        });
-        
-        // Vider les actions non utilisées pour éviter qu'elles n'apparaissent
-        navigator.mediaSession.setActionHandler('seekto', null);
-        navigator.mediaSession.setActionHandler('stop', null);
-        // --- FIN MODIFICATION ---
+        // On ne met pas les seek pour l'instant pour assurer la stabilité
+        navigator.mediaSession.setActionHandler('seekbackward', null);
+        navigator.mediaSession.setActionHandler('seekforward', null);
     }
 
     function findItemById(id) {
@@ -366,6 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const storedSfx = localStorage.getItem('mmg-sfxEnabled');
         sfxEnabled = storedSfx !== null ? JSON.parse(storedSfx) : true;
         document.getElementById('sfx-switch').checked = sfxEnabled;
+        
+        // --- NOUVELLE LOGIQUE ---
+        const storedBackgroundPlay = localStorage.getItem('mmg-backgroundPlayEnabled');
+        isBackgroundPlayEnabled = storedBackgroundPlay !== null ? JSON.parse(storedBackgroundPlay) : true;
+        document.getElementById('background-play-switch').checked = isBackgroundPlayEnabled;
 
         const storedAchievements = localStorage.getItem('mmg-achievements');
         const defaultAchievements = {
@@ -1485,6 +1479,16 @@ document.addEventListener('DOMContentLoaded', () => {
             sfxEnabled = e.target.checked;
             localStorage.setItem('mmg-sfxEnabled', JSON.stringify(sfxEnabled));
         });
+        
+        // --- NOUVEL ÉCOUTEUR ---
+        document.getElementById('background-play-switch').addEventListener('change', (e) => {
+            isBackgroundPlayEnabled = e.target.checked;
+            localStorage.setItem('mmg-backgroundPlayEnabled', JSON.stringify(isBackgroundPlayEnabled));
+            if (!isBackgroundPlayEnabled) {
+                keepAliveAudio.pause(); // On coupe le son silencieux si l'option est désactivée
+            }
+        });
+
 
         document.getElementById('play-pause-box').addEventListener('click', () => {
             if (!activePlayer || !currentPlayingItem) {
