@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (event.data === YT.PlayerState.ENDED) {
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
-            if (isBackgroundPlayEnabled) keepAliveAudio.pause(); // MODIFICATION
+            if (isBackgroundPlayEnabled) keepAliveAudio.pause();
             
             const finalProgress = activePlayer.getDuration() > 0 ? activePlayer.getCurrentTime() / activePlayer.getDuration() : 0;
             
@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                  if (playPauseBtn) playPauseBtn.className = 'fas fa-play';
             }
+            updateMediaPositionState(); // Update one last time
             
         } else if (event.data === YT.PlayerState.PLAYING) {
             if (isReloadingForAd) {
@@ -187,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (playPauseBtn) playPauseBtn.className = 'fas fa-pause';
             backgroundMusic.pause();
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "playing";
-            if (isBackgroundPlayEnabled) keepAliveAudio.play(); // MODIFICATION
+            if (isBackgroundPlayEnabled) keepAliveAudio.play();
 
             if (isResumingFromOverlay) {
                 isResumingFromOverlay = false; 
@@ -208,11 +209,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }, 500);
             }
+            updateMediaPositionState();
 
         } else if (event.data === YT.PlayerState.PAUSED) {
             if (playPauseBtn) playPauseBtn.className = 'fas fa-play';
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
-            if (isBackgroundPlayEnabled) keepAliveAudio.pause(); // MODIFICATION
+            if (isBackgroundPlayEnabled) keepAliveAudio.pause();
+            updateMediaPositionState();
         }
     }
 
@@ -307,6 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /**
+     * Mets à jour les métadonnées et les contrôles pour l'API Media Session.
+     */
     function updateMediaSession(item) {
         if (!('mediaSession' in navigator)) {
             return;
@@ -329,9 +335,47 @@ document.addEventListener('DOMContentLoaded', () => {
         navigator.mediaSession.setActionHandler('previoustrack', () => playNextTrack(-1, true));
         navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack(1, true));
         
-        // On ne met pas les seek pour l'instant pour assurer la stabilité
-        navigator.mediaSession.setActionHandler('seekbackward', null);
-        navigator.mediaSession.setActionHandler('seekforward', null);
+        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+            const skipTime = details.seekOffset || 10;
+            if(activePlayer) activePlayer.seekTo(Math.max(0, activePlayer.getCurrentTime() - skipTime), true);
+        });
+        navigator.mediaSession.setActionHandler('seekforward', (details) => {
+            const skipTime = details.seekOffset || 10;
+            if(activePlayer) activePlayer.seekTo(Math.min(activePlayer.getDuration(), activePlayer.getCurrentTime() + skipTime), true);
+        });
+        navigator.mediaSession.setActionHandler('seekto', (details) => {
+            if (details.fastSeek && 'fastSeek' in activePlayer) {
+              activePlayer.fastSeek(details.seekTime);
+              return;
+            }
+            if(activePlayer) activePlayer.seekTo(details.seekTime, true);
+        });
+
+        updateMediaPositionState(); // Initialisation de la barre de progression
+    }
+
+    /**
+     * Met à jour la position et la durée dans l'API Media Session pour la notification.
+     */
+    function updateMediaPositionState() {
+        if (!('mediaSession' in navigator) || !activePlayer || typeof activePlayer.getDuration !== 'function') {
+            return;
+        }
+
+        const duration = activePlayer.getDuration() || 0;
+        const position = activePlayer.getCurrentTime() || 0;
+        
+        if (!isNaN(duration) && isFinite(duration)) {
+            try {
+                navigator.mediaSession.setPositionState({
+                    duration: duration,
+                    playbackRate: activePlayer.getPlaybackRate(),
+                    position: position
+                });
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour de setPositionState:', error);
+            }
+        }
     }
 
     function findItemById(id) {
@@ -356,7 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sfxEnabled = storedSfx !== null ? JSON.parse(storedSfx) : true;
         document.getElementById('sfx-switch').checked = sfxEnabled;
         
-        // --- NOUVELLE LOGIQUE ---
         const storedBackgroundPlay = localStorage.getItem('mmg-backgroundPlayEnabled');
         isBackgroundPlayEnabled = storedBackgroundPlay !== null ? JSON.parse(storedBackgroundPlay) : true;
         document.getElementById('background-play-switch').checked = isBackgroundPlayEnabled;
@@ -927,6 +970,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             previousListenProgress = listenProgress;
         }
+        updateMediaPositionState();
     }
 
     function showSection(sectionId, updateHistory = true, keepPlayerVisible = false) {
@@ -1480,12 +1524,11 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('mmg-sfxEnabled', JSON.stringify(sfxEnabled));
         });
         
-        // --- NOUVEL ÉCOUTEUR ---
         document.getElementById('background-play-switch').addEventListener('change', (e) => {
             isBackgroundPlayEnabled = e.target.checked;
             localStorage.setItem('mmg-backgroundPlayEnabled', JSON.stringify(isBackgroundPlayEnabled));
             if (!isBackgroundPlayEnabled) {
-                keepAliveAudio.pause(); // On coupe le son silencieux si l'option est désactivée
+                keepAliveAudio.pause();
             }
         });
 
@@ -2291,4 +2334,3 @@ document.addEventListener('DOMContentLoaded', () => {
     
     loadDataAndInitialize();
 });
-
