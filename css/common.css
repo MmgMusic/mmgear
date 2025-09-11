@@ -489,6 +489,9 @@ body {
 .like-btn-card:hover, .add-playlist-btn-card:hover {
     color: #888;
 }
+.add-playlist-btn-card.added {
+    color: var(--active-color);
+}
 
 .card.locked .card-inner {
     filter: grayscale(80%);
@@ -1687,4 +1690,5 @@ body.theme-ps-style {
     --ui-bar-border: #b8d3e0;
     --search-bar-bg: #e1eef6;
 }
+
 
