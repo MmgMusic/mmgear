@@ -61,6 +61,10 @@
     <audio id="coin-sound" src="assets/sounds/coin.ogg" preload="auto"></audio>
     <audio id="minimize-sound" src="assets/sounds/minimize_008.ogg" preload="auto"></audio>
     <audio id="maximize-sound" src="assets/sounds/maximize_008.ogg" preload="auto"></audio>
+    
+    <!-- NOUVEL ÉLÉMENT : Piste audio silencieuse pour maintenir l'app active -->
+    <audio id="keep-alive-audio" loop src="assets/sounds/silent.ogg"></audio>
+
 
     <!-- Main application wrapper (caché au début) -->
     <div id="main-content-wrapper" class="hidden">
@@ -288,6 +292,17 @@
                 <span>Effets sonores (SFX)</span>
                 <label class="switch">
                     <input type="checkbox" id="sfx-switch" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <!-- NOUVEAU PARAMÈTRE -->
+            <div class="setting-item">
+                <span class="setting-label-group">
+                    Lecture arrière-plan (stable)
+                    <i class="fas fa-info-circle" title="Active une méthode pour empêcher la musique de se couper lorsque l'application est en arrière-plan sur mobile. Peut consommer un peu plus de batterie."></i>
+                </span>
+                <label class="switch">
+                    <input type="checkbox" id="background-play-switch" checked>
                     <span class="slider round"></span>
                 </label>
             </div>
