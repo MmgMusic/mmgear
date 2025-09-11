@@ -5,14 +5,14 @@
       "card2": { "title": "Clips Vidéos", "image": "assets/mmg-videos.png", "link": "gameplay-section" },
       "card3": { "title": "Making-Ofs", "image": "assets/mmg-makingofs.png", "link": "makingofs-section" },
       "card4": { "title": "Titres Likés", "image": "https://placehold.co/240x300/E91E63/FFFFFF?text=♥", "link": "liked-titles-section" },
-      "card5": { "title": "À Propos", "image": "assets/mmg-music-avatar.png", "link": "about-section" }
+      "card5": { "title": "À Propos", "image": "assets/mmg-music-avatar.jpg", "link": "about-section" }
     },
     "mmg-beats": {
       "card1": { "title": "Albums Beats", "image": "https://placehold.co/200x120/FFC107/FFFFFF?text=Beats+Albums", "link": "albums-section" },
       "card2": { "title": "Vidéos Beats", "image": "https://placehold.co/200x120/E91E63/FFFFFF?text=Beats+Videos", "link": "gameplay-section" },
       "card3": { "title": "Making-Ofs Beats", "image": "https://placehold.co/200x120/673AB7/FFFFFF?text=Beats+Making-Ofs", "link": "makingofs-section" },
       "card4": { "title": "Titres Likés", "image": "https://placehold.co/240x300/E91E63/FFFFFF?text=♥", "link": "liked-titles-section" },
-      "card5": { "title": "À Propos", "image": "assets/mmg-beats-avatar.png", "link": "about-section" }
+      "card5": { "title": "À Propos", "image": "assets/mmg-beats-avatar.jpg", "link": "about-section" }
     }
   },
   "contentData": {
@@ -75,4 +75,5 @@
     "mmg-beats": "Salut, c'est Mmg. J'ai eu la chance de travailler avec des artistes comme Koba LaD et F430, et même pour le film 'L'École Est à Nous'. Maintenant, je sors mes propres morceaux. Sur ce profil, je me concentre sur le hip-hop : Trap, Boombap, RnB, et Pop. Découvre mes prods et n'hésite pas à me contacter pour une collaboration."
   }
 }
+
 
