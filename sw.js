@@ -23,7 +23,7 @@ const STATIC_ASSETS = [
     // Images UI
     './assets/mmg-music-avatar.png',
     './assets/mmg-beats-avatar.png',
-    // Icônes (à créer)
+    // Icônes
     './assets/icons/icon-192.png',
     './assets/icons/icon-512.png',
     // Librairies externes
@@ -39,7 +39,7 @@ self.addEventListener('install', event => {
         caches.open(STATIC_CACHE_NAME).then(cache => {
             console.log('[Service Worker] Mise en cache des ressources statiques...');
             return cache.addAll(STATIC_ASSETS);
-        })
+        }).then(() => self.skipWaiting()) // Force activation of new service worker
     );
 });
 
@@ -60,38 +60,63 @@ self.addEventListener('activate', event => {
 });
 
 // Interception des requêtes réseau.
-// Stratégie : Réseau d'abord, puis cache en cas d'échec.
-// Les ressources consultées sont ajoutées au cache dynamique pour un accès hors ligne futur.
 self.addEventListener('fetch', event => {
-    // Pour les polices Google, on privilégie le cache.
-    if (event.request.url.includes('fonts.gstatic.com')) {
+    // Stratégie : Cache d'abord, puis réseau (Cache-First) pour les ressources statiques
+    if (STATIC_ASSETS.some(asset => event.request.url.endsWith(asset.replace('./', '')))) {
         event.respondWith(
             caches.match(event.request).then(response => {
-                return response || fetch(event.request).then(res => {
-                    return caches.open(DYNAMIC_CACHE_NAME).then(cache => {
-                        cache.put(event.request.url, res.clone());
-                        return res;
-                    })
-                });
+                return response || fetch(event.request);
             })
         );
-    } else {
-        // Pour le reste, on privilégie le réseau pour avoir les données à jour.
-        event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    const clonedResponse = response.clone();
-                    caches.open(DYNAMIC_CACHE_NAME).then(cache => {
-                        if (event.request.method === 'GET') {
-                            cache.put(event.request.url, clonedResponse);
-                        }
-                    });
-                    return response;
-                })
-                .catch(err => {
-                    // Si le réseau échoue, on cherche dans le cache.
-                    return caches.match(event.request);
-                })
-        );
+        return;
     }
+
+    // Stratégie : Réseau d'abord, puis cache (Network-First) pour les autres requêtes
+    event.respondWith(
+        fetch(event.request)
+            .then(response => {
+                // Si la requête réussit, on met à jour le cache dynamique
+                const clonedResponse = response.clone();
+                caches.open(DYNAMIC_CACHE_NAME).then(cache => {
+                    if (event.request.method === 'GET' && !event.request.url.startsWith('chrome-extension://')) {
+                        cache.put(event.request.url, clonedResponse);
+                    }
+                });
+                return response;
+            })
+            .catch(() => {
+                // Si le réseau échoue, on cherche dans le cache
+                return caches.match(event.request).then(response => {
+                    if (response) {
+                        return response;
+                    }
+                    // Optionnel: retourner une page d'erreur hors ligne si rien n'est trouvé dans le cache
+                });
+            })
+    );
 });
+
+// Ajout d'un écouteur pour les notifications (pour l'avenir)
+// Cela aide à maintenir le Service Worker actif et signale à l'OS
+// que l'application peut avoir des comportements en arrière-plan.
+self.addEventListener('notificationclick', event => {
+  console.log('[Service Worker] Notification cliquée: ', event.notification.tag);
+  event.notification.close();
+
+  // Ouvre l'application si elle n'est pas déjà ouverte
+  event.waitUntil(
+    clients.matchAll({ type: 'window' }).then(windowClients => {
+      for (var i = 0; i < windowClients.length; i++) {
+        var client = windowClients[i];
+        if (client.url === '/' && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow('/');
+      }
+    })
+  );
+});
+
+    
