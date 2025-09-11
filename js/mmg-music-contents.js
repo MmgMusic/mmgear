@@ -578,17 +578,23 @@ document.addEventListener('DOMContentLoaded', () => {
         playerLikeBtn.classList.toggle('far', !isLiked);
     }
     
-    function addToPlaylist(itemId) {
-        if (currentPlaylist.includes(itemId)) {
-            showDialog("Ce titre est déjà dans la playlist.");
-            return;
+    function togglePlaylistItem(itemId) {
+        const itemIndex = currentPlaylist.indexOf(itemId);
+
+        if (itemIndex > -1) {
+            currentPlaylist.splice(itemIndex, 1);
+            showDialog("Titre retiré de la playlist.");
+            playAudio(sounds.back);
+        } else {
+            currentPlaylist.push(itemId);
+            showDialog("Titre ajouté à la playlist !");
+            playAudio(sounds.select);
         }
-        currentPlaylist.push(itemId);
+        
         localStorage.setItem('mmg-playlist', JSON.stringify(currentPlaylist));
-        showDialog("Titre ajouté à la playlist !");
-        playAudio(sounds.select);
         renderPlaylist();
         updateDetailsPlaylistButtonState();
+        updateCardPlaylistButtonState(itemId);
     }
 
     function renderPlaylist() {
@@ -762,10 +768,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 cardImageHtml = `<div class="card__image" style="background-image: url('${imagePath.replace(/'/g, "\\'")}');"></div>`;
                 
                 const isLiked = likedSongs.has(itemId);
+                const isInPlaylist = currentPlaylist.includes(itemId);
                 const actionsHtml = (cardType === 'title' || cardType === 'video' || (cardType === 'search' && !item.type))
                     ? `<div class="card-actions">
                          <i class="like-btn-card ${isLiked ? 'fas' : 'far'} fa-heart ${isLiked ? 'active' : ''}" data-like-id="${itemId}" title="Aimer"></i>
-                         <i class="fas fa-plus add-playlist-btn-card" data-playlist-id="${itemId}" title="Ajouter à la playlist"></i>
+                         <i class="fas ${isInPlaylist ? 'fa-check' : 'fa-plus'} add-playlist-btn-card ${isInPlaylist ? 'added' : ''}" data-playlist-id="${itemId}" title="${isInPlaylist ? 'Retirer de la playlist' : 'Ajouter à la playlist'}"></i>
                        </div>` 
                     : '';
 
@@ -821,6 +828,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    function updateCardPlaylistButtonState(itemId) {
+        const cardPlaylistBtn = document.querySelector(`.card[data-item-id="${itemId}"] .add-playlist-btn-card`);
+        if (!cardPlaylistBtn) return;
+
+        const isInPlaylist = currentPlaylist.includes(itemId);
+        cardPlaylistBtn.classList.toggle('fa-check', isInPlaylist);
+        cardPlaylistBtn.classList.toggle('fa-plus', !isInPlaylist);
+        cardPlaylistBtn.classList.toggle('added', isInPlaylist);
+        cardPlaylistBtn.title = isInPlaylist ? "Retirer de la playlist" : "Ajouter à la playlist";
+    }
+
     function updateDetailsPlaylistButtonState() {
         const detailsSection = document.getElementById('music-title-details-section');
         const btn = document.getElementById('details-add-to-playlist-btn');
@@ -1309,7 +1327,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (playlistBtn) {
                 e.preventDefault();
                 e.stopPropagation();
-                addToPlaylist(playlistBtn.dataset.playlistId);
+                togglePlaylistItem(playlistBtn.dataset.playlistId);
                 return;
             }
             
@@ -1319,7 +1337,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.stopPropagation();
                 const currentItemId = document.getElementById('music-title-details-section').dataset.currentItemId;
                 if(currentItemId) {
-                    addToPlaylist(currentItemId);
+                    togglePlaylistItem(currentItemId);
                 }
                 return;
             }
@@ -2328,4 +2346,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     loadDataAndInitialize();
 });
+
 
