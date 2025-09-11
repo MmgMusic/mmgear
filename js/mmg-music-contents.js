@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- NOUVEAUX ÉTATS ---
     let isBackgroundPlayEnabled = true; // Activé par défaut
-    const keepAliveAudio = document.getElementById('keep-alive-audio');
     
     let listenProgress = 0;
     let previousListenProgress = 0; 
@@ -134,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function onPlayerReady(event) {
         setVolume(currentVolume);
-        setInterval(updateProgressBar, 250);
+        setInterval(updateProgressBar, 1000); // Moins fréquent pour optimiser
     }
 
     function onPlayerStateChange(event) {
@@ -150,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (event.data === YT.PlayerState.ENDED) {
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
-            if (isBackgroundPlayEnabled) keepAliveAudio.pause();
             
             const finalProgress = activePlayer.getDuration() > 0 ? activePlayer.getCurrentTime() / activePlayer.getDuration() : 0;
             
@@ -188,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (playPauseBtn) playPauseBtn.className = 'fas fa-pause';
             backgroundMusic.pause();
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "playing";
-            if (isBackgroundPlayEnabled) keepAliveAudio.play();
 
             if (isResumingFromOverlay) {
                 isResumingFromOverlay = false; 
@@ -214,7 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (event.data === YT.PlayerState.PAUSED) {
             if (playPauseBtn) playPauseBtn.className = 'fas fa-play';
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = "paused";
-            if (isBackgroundPlayEnabled) keepAliveAudio.pause();
             updateMediaPositionState();
         }
     }
@@ -1527,9 +1523,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('background-play-switch').addEventListener('change', (e) => {
             isBackgroundPlayEnabled = e.target.checked;
             localStorage.setItem('mmg-backgroundPlayEnabled', JSON.stringify(isBackgroundPlayEnabled));
-            if (!isBackgroundPlayEnabled) {
-                keepAliveAudio.pause();
-            }
+            
         });
 
 
@@ -2334,3 +2328,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
     loadDataAndInitialize();
 });
+
