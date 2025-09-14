@@ -1,4 +1,4 @@
 # MmgMusicBeats
 The official Mmg Music / Mmg Beats website !
 
-https://mmgmusic.github.io/MmgMusicBeats/
+https://mmgmusic.github.io/website/
