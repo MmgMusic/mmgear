@@ -1,0 +1,10 @@
+{
+  "albums": {
+    "album1": { "id": "album1", "title": "The Aventador Files", "image": "assets/Pochette-TheAventadorFiles.jpg" }
+  },
+  "titles": {
+    "beat1": { "id": "beat1", "title": "Aventador 2", "image": "assets/pochettes/Pochette-TheAventadorFiles.jpg", "albumId": "album1", "year": "2024", "description": "Une prod trap puissante dans le style de Zaytoven.", "tags": ["trap", "zaytoven"], "youtube_id": "G-kU42sCmso", "streaming": { "youtube": "G-kU42sCmso", "spotify": "2PmnpswKTBTtngtBvydjVg", "appleMusic": "aventador-2/1715858202", "deezer": "30TyaOKnWtYxGGnTbSHfl", "amazonMusic": "B0CMZFFQVK" } }
+  },
+  "gameplay": {},
+  "makingofs": {}
+}
