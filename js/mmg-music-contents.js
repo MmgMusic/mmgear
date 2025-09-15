@@ -313,8 +313,6 @@
             // Afficher le lecteur pour les contenus vidéo
             document.getElementById('medium-player-iframe').style.display = '';
             showSection('large-player-section');
-        } else {
-            showSection('large-player-section');
         }
     
         if (activePlayer && typeof activePlayer.loadVideoById === 'function') {
