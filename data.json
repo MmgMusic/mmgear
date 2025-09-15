@@ -1,0 +1,19 @@
+{
+  "projectData": {
+    "mmg-music": {
+      "card1": { "title": "Albums", "langKey": "albums", "link": "albums-section", "image": "assets/mmg-titles.png" },
+      "card2": { "title": "Clips Vidéos", "langKey": "videoClips", "link": "gameplay-section", "image": "assets/mmg-videos.png" },
+      "card3": { "title": "Making-Ofs", "langKey": "makingOfs", "link": "makingofs-section", "image": "assets/mmg-makingofs.png" },
+      "card4": { "title": "Titres Likés", "langKey": "likedTitles", "link": "liked-titles-section", "image": "https://placehold.co/240x300/E91E63/FFFFFF?text=♥" },
+      "card5": { "title": "À Propos", "langKey": "about", "link": "about-section", "image": "assets/mmg-music-avatar.jpg" }
+    },
+    "mmg-beats": {
+      "card1": { "title": "Albums Beats", "langKey": "albumsBeats", "link": "albums-section", "image": "https://placehold.co/200x120/FFC107/FFFFFF?text=Beats+Albums" },
+      "card2": { "title": "Vidéos Beats", "langKey": "videosBeats", "link": "gameplay-section", "image": "https://placehold.co/200x120/E91E63/FFFFFF?text=Beats+Videos" },
+      "card3": { "title": "Making-Ofs Beats", "langKey": "makingOfs", "link": "makingofs-section", "image": "https://placehold.co/200x120/673AB7/FFFFFF?text=Beats+Making-Ofs" },
+      "card4": { "title": "Titres Likés", "langKey": "likedTitles", "link": "liked-titles-section", "image": "https://placehold.co/240x300/E91E63/FFFFFF?text=♥" },
+      "card5": { "title": "À Propos", "langKey": "about", "link": "about-section", "image": "assets/mmg-beats-avatar.jpg" }
+    }
+  },
+  "contentData": {}
+}
