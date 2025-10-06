@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMGEAR - Start</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Bienvenue sur la MMGEAR, Portail d'entrée vers l'univers musical de Mmg Music et Mmg Beats.">
+    <meta name="keywords" content="Mmg, Mmg Music, Mmg Beats, musique, producteur, beatmaker, musique de jeu vidéo, hip-hop, beats website, website, frutiger aero">
+    <meta name="author" content="Mmg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mmg-music.github.io/MMGEAR/">
+    <meta property="og:title" content="MMGEAR - L'univers musical de Mmg">
+    <meta property="og:description" content="Explorez les albums, clips et making-ofs de Mmg Music et Mmg Beats dans une interface interactive.">
+    <meta property="og:image" content="https://mmg-music.github.io/MMGEAR/assets/og-image.png">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1f2937"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MMGEAR">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@700&display=swap" media="print" onload="this.media='all'">
+    
+    <!-- OPTIMISATION: Préchauffage des ressources de la page suivante -->
+    <link rel="prefetch" href="mmg-music-contents.html" as="document">
+    <link rel="prefetch" href="js/welcome.js" as="script">
+    <link rel="prefetch" href="js/mmg-music-contents.js" as="script">
+    <link rel="prefetch" href="data.json" as="fetch">
+
+    <style>
+        /* Styles généraux pour la page d'accueil */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #f0f2f5;
+            color: #000;
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            font-weight: 700;
+            cursor: url('assets/cursors/pointer.cur') 16 16, auto;
+        }
+
+        a, button {
+             cursor: url('assets/cursors/link.cur') 16 16, pointer;
+        }
+        
+        input[type="text"], textarea {
+            cursor: url('assets/cursors/text.cur') 16 16, text;
+        }
+
+        /* Conteneur principal pour centrer les éléments */
+        #intro-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Bouton START */
+        #start-btn {
+            padding: 15px 40px;
+            font-size: 2em;
+            font-weight: bold;
+            color: #000;
+            background-color: transparent;
+            border: 4px solid #000;
+            transition: all 0.3s ease;
+            z-index: 10;
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            font-weight: 700;
+        }
+
+        #start-btn:hover {
+            background-color: #000;
+            color: #f0f2f5;
+        }
+
+        /* Styles pour l'animation responsive (conservés de votre index original) */
+        .main-logo {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 95vw; 
+            max-width: 1200px;
+            aspect-ratio: 1200 / 300;
+            height: auto;
+            min-height: auto;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Media query pour mieux gérer la hauteur sur mobile */
+        @media (max-height: 450px) {
+            .main-logo {
+                width: auto;
+                height: 90vh; /* Utilise la hauteur de la fenêtre */
+            }
+        }
+
+        /* Nouveaux styles de l'animation MMGEAR */
+        .logo-animation {
+            pointer-events: none;
+            overflow: visible;
+            display: flex;
+            flex-shrink: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .anime-logo {
+            overflow: visible;
+            position: relative;
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            height: 180px;
+        }
+
+        .anime-logo-signs {
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            width: 100%;
+            height: 512px;
+            margin-top: -352px;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .logo-group-mm {
+            transform: translateX(-100vw);
+        }
+        
+        .logo-group-gear {
+            transform: translateX(100vw);
+        }
+
+        .logo-letter {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            overflow: visible;
+            height: 100%;
+        }
+
+        /* Espacement fixe des lettres */
+        .logo-letter.letter-m1 { margin-right: 10px; }
+        .logo-letter.letter-m2 { margin-right: 7px; }
+        .logo-letter.letter-g { margin-right: -5px; }
+        .logo-letter.letter-e { margin-right: -11px; }
+        .logo-letter.letter-a { margin-right: 2px; }
+        .logo-letter.letter-r { margin-right: 0; }
+
+        .bounced {
+            transform-origin: 50% 100% 0px;
+            transform: translateY(200px) scaleX(.55) scaleY(.8);
+        }
+
+        .logo-animation .logo-letter svg {
+            overflow: visible;
+            fill: none;
+            fill-rule: evenodd;
+            width: 100%; /* Ajusté pour la responsivité */
+            height: auto;
+        }
+
+        .logo-animation .line {
+            fill: currentColor;
+            stroke: none;
+            fill-rule: evenodd;
+            stroke-linecap: square;
+            stroke-width: 4px;
+        }
+        
+        /* Fondu blanc pour la transition */
+        #fade-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 2.5s ease-in; /* MODIFICATION: Transition plus longue */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Conteneur principal -->
+    <div id="intro-container">
+        <!-- Bouton de démarrage -->
+        <button id="start-btn">START</button>
+
+        <!-- Structure de l'animation (initialement cachée) -->
+        <div class="main-logo">
+            <div class="logo-animation">
+                <div class="anime-logo">
+                    <div class="anime-logo-signs">
+                        <div class="logo-group logo-group-mm">
+                            <div class="logo-letter letter-m1">
+                                <svg class="bounced" viewBox="0 0 70.5 55.2" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M 40.3 28.601 L 40.3 55.001 L 30.3 55.001 L 30.3 27.301 Q 30.3 22.501 27.95 18.551 Q 25.6 14.601 21.65 12.251 Q 17.7 9.901 12.8 9.901 L 10 9.901 L 10 55.001 L 0 55.001 L 0 0.001 L 12.8 0.001 Q 19.9 0.001 25.85 3.251 Q 31.8 6.501 35.5 11.901 Q 39.3 6.501 45.05 3.251 Q 50.8 0.001 57.7 0.001 L 70.5 0.001 L 70.5 55.001 L 60.5 55.001 L 60.5 9.901 L 57.7 9.901 Q 52.9 9.901 48.95 12.451 Q 45 15.001 42.65 19.201 Q 40.3 23.401 40.3 28.601 Z"/></svg>
+                            </div>
+                            <div class="logo-letter letter-m2">
+                                <svg class="bounced" viewBox="0 0 70.5 55.2" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M 40.3 28.601 L 40.3 55.001 L 30.3 55.001 L 30.3 27.301 Q 30.3 22.501 27.95 18.551 Q 25.6 14.601 21.65 12.251 Q 17.7 9.901 12.8 9.901 L 10 9.901 L 10 55.001 L 0 55.001 L 0 0.001 L 12.8 0.001 Q 19.9 0.001 25.85 3.251 Q 31.8 6.501 35.5 11.901 Q 39.3 6.501 45.05 3.251 Q 50.8 0.001 57.7 0.001 L 70.5 0.001 L 70.5 55.001 L 60.5 55.001 L 60.5 9.901 L 57.7 9.901 Q 52.9 9.901 48.95 12.451 Q 45 15.001 42.65 19.201 Q 40.3 23.401 40.3 28.601 Z"/></svg>
+                            </div>
+                        </div>
+                        <div class="logo-group logo-group-gear">
+                            <div class="logo-letter letter-g">
+                                <svg class="bounced" viewBox="0 0 70.5 55.2" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M 61.201 22.3 L 61.201 55.2 L 25.701 55.2 Q 18.001 55.2 12.201 51.5 Q 6.401 47.8 3.201 41.5 Q 0.001 35.2 0.001 27.5 Q 0.001 19.8 3.201 13.6 Q 6.401 7.4 12.201 3.7 Q 18.001 0 25.701 0 L 61.201 0 L 61.201 10.1 L 25.701 10.1 Q 20.901 10.1 17.401 12.45 Q 13.901 14.8 12.001 18.7 Q 10.101 22.6 10.101 27.5 Q 10.101 32.4 12.001 36.4 Q 13.901 40.4 17.401 42.75 Q 20.901 45.1 25.701 45.1 L 51.101 45.1 L 51.101 32.4 L 22.401 32.4 L 22.401 22.3 L 61.201 22.3 Z"/></svg>
+                            </div>
+                            <div class="logo-letter letter-e">
+                                <svg class="bounced" viewBox="0 0 70.5 55.2" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M 57.4 45.1 L 57.4 55.2 L 0 55.2 L 0 0 L 57.4 0 L 57.4 10.1 L 10.1 10.1 L 10.1 45.1 L 57.4 45.1 Z M 51 22.3 L 51 32.4 L 14.8 32.4 L 14.8 22.3 L 51 22.3 Z"/></svg>
+                            </div>
+                            <div class="logo-letter letter-a">
+                                <svg class="bounced" viewBox="0 0 70.5 55.2" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M 63.8 0 L 63.8 55.2 L 53.8 55.2 L 53.8 40.1 L 15.3 40.1 L 15.3 29.9 L 53.8 29.9 L 53.8 10.1 L 27.8 10.1 Q 22.9 10.1 18.9 12.5 Q 14.9 14.9 12.5 18.85 Q 10.1 22.8 10.1 27.7 L 10.1 55.2 L 0 55.2 L 0 27.7 Q 0 22 2.15 16.95 Q 4.3 11.9 8.15 8.1 Q 12 4.3 17.05 2.15 Q 22.1 0 27.8 0 L 63.8 0 Z"/></svg>
+                            </div>
+                            <div class="logo-letter letter-r">
+                                <svg class="bounced" viewBox="0 0 70.5 55.2" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M 48.5 39.301 L 64.7 55.001 L 51.1 55.001 L 35.5 40.101 L 15.2 40.101 L 15.2 30.201 L 42.9 30.201 Q 47.1 30.201 50.05 27.151 Q 53 24.101 53 20.001 Q 53 15.801 50.05 12.851 Q 47.1 9.901 42.9 9.901 L 10 9.901 L 10 55.001 L 0 55.001 L 0 0.001 L 42.9 0.001 Q 48.5 0.001 53 2.701 Q 57.5 5.401 60.2 9.951 Q 62.9 14.501 62.9 20.001 Q 62.9 24.501 61.05 28.451 Q 59.2 32.401 55.95 35.251 Q 52.7 38.101 48.5 39.301 Z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Son de l'introduction -->
+    <audio id="intro-sound" src="assets/MMGEARIntroSFX.ogg" preload="none"></audio>
+
+    <!-- Overlay pour la transition -->
+    <div id="fade-overlay"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            // OPTIMISATION: Redirection instantanée si l'intro a déjà été vue
+            if (sessionStorage.getItem('mmg-intro-completed') === 'true') {
+                window.location.replace('mmg-music-contents.html');
+                return; // On arrête l'exécution pour ne pas préparer l'animation
+            }
+
+
+            const startBtn = document.getElementById('start-btn');
+            const introSound = document.getElementById('intro-sound');
+            const mainLogo = document.querySelector('.main-logo');
+            const fadeOverlay = document.getElementById('fade-overlay');
+
+            function fitElementToParent(el, padding, exception) {
+                let timeout = null;
+                function resize() {
+                    if (timeout) clearTimeout(timeout);
+                    anime.set(el, {scale: 1});
+                    if (exception) anime.set(exception, {scale: 1});
+                    const pad = padding || 0;
+                    const parentEl = el.parentNode;
+                    const elOffsetWidth = el.offsetWidth - pad;
+                    const parentOffsetWidth = parentEl.offsetWidth;
+                    const ratio = parentOffsetWidth / elOffsetWidth;
+                    const invertedRatio = elOffsetWidth / parentOffsetWidth;
+                    timeout = setTimeout(() => {
+                        anime.set(el, {scale: ratio});
+                        if (exception) anime.set(exception, {scale: invertedRatio});
+                    }, 10);
+                }
+                resize();
+                window.addEventListener('resize', resize);
+            }
+
+            // NOUVELLE timeline d'animation
+            const logoAnimation = (() => {
+                const logoAnimationEl = document.querySelector('.logo-animation');
+                fitElementToParent(logoAnimationEl, 0);
+                const logoAnimationTL = anime.timeline({
+                    autoplay: false,
+                    easing: 'easeOutSine'
+                });
+
+                logoAnimationTL
+                .add({
+                    targets: '.bounced',
+                    transformOrigin: ['50% 100% 0px', '50% 100% 0px'],
+                    translateY: [
+                        {value: [150, -160], duration: 190, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
+                        {value: 4, duration: 120, easing: 'easeInQuad'},
+                        {value: 0, duration: 120, easing: 'easeOutQuad'}
+                    ],
+                    scaleX: [
+                        {value: [.25, .85], duration: 190, easing: 'easeOutQuad'},
+                        {value: 1.08, duration: 120, delay: 85, easing: 'easeInOutSine'},
+                        {value: 1, duration: 260, delay: 25, easing: 'easeOutQuad'}
+                    ],
+                    scaleY: [
+                        {value: [.3, .8], duration: 120, easing: 'easeOutSine'},
+                        {value: .35, duration: 120, delay: 180, easing: 'easeInOutSine'},
+                        {value: .57, duration: 180, delay: 25, easing: 'easeOutQuad'},
+                        {value: .5, duration: 190, delay: 15, easing: 'easeOutQuad'}
+                    ],
+                    // CORRECTION: Le délai est recalculé pour que l'animation FINISSE au bon moment.
+                    delay: function(el, i) {
+                        const landingTimestamps = [210, 420, 640, 860, 1070, 1280];
+                        const animationDuration = 450; // Durée de l'animation d'apparition
+                        const startTime = landingTimestamps[i] - animationDuration;
+                        return Math.max(0, startTime);
+                    }
+                })
+                .add({ targets: ['.logo-group-mm', '.logo-group-gear'], translateX: 0, easing: 'easeOutElastic(1, .6)', duration: 1000, }, 200)
+                .add({
+                    targets: '.logo-letter',
+                    translateY: [
+                        {value: 40, duration: 150, easing: 'easeOutQuart'},
+                        {value: 0, duration: 800, easing: 'easeOutElastic(1, .5)'}
+                    ],
+                    delay: anime.stagger(60)
+                }, 2400) // Déclenche le rebond final
+                .add({
+                    targets: '.bounced',
+                    scaleY: [
+                        {value: .4, duration: 150, easing: 'easeOutQuart'},
+                        {value: .5, duration: 800, easing: 'easeOutElastic(1, .5)'}
+                    ],
+                    delay: anime.stagger(60)
+                }, '-=950') // Se synchronise avec le rebond des lettres
+                .add({ // Placeholder pour la timeline de coloration
+                    begin: function() {
+                        const shake = () => {
+                            anime({
+                                targets: '#intro-container',
+                                translateX: [ { value: 5, duration: 40 }, { value: -5, duration: 40 }, { value: 0, duration: 40 } ],
+                                translateY: [ { value: 2, duration: 40 }, { value: -2, duration: 40 }, { value: 0, duration: 40 } ],
+                                easing: 'easeInOutSine'
+                            });
+                        };
+
+                        const colorTimeline = anime.timeline({ easing: 'easeOutQuad' });
+
+                        colorTimeline
+                            .add({ targets: '.letter-m1 .line', fill: '#ff0000', duration: 150, begin: shake })
+                            .add({ targets: '.letter-m2 .line', fill: '#ff0000', duration: 150, begin: shake }, '-=90') // Intervalle de 60ms
+                            .add({ targets: '.letter-g .line', fill: '#ff0000', duration: 150, begin: shake }, '-=90'); // Intervalle de 60ms
+                    }
+                }, 2550); // Se déclenche 150ms après le début du rebond final
+
+
+                // Logique de fin d'animation et redirection
+                logoAnimationTL.complete = () => {
+                    setTimeout(() => {
+                        fadeOverlay.style.opacity = '1';
+                        setTimeout(() => {
+                            sessionStorage.setItem('mmg-intro-completed', 'true');
+                            window.location.href = 'mmg-music-contents.html';
+                        }, 2500); // MODIFICATION: Redirection synchronisée avec le fondu
+                    }, 300); // MODIFICATION: Délai réduit avant le fondu
+                };
+
+                return logoAnimationTL;
+            })();
+
+            // Déclencheur au clic sur le bouton START
+            startBtn.addEventListener('click', () => {
+                document.body.style.cursor = 'none';
+                startBtn.style.display = 'none';
+                mainLogo.style.opacity = '1';
+                logoAnimation.play();
+                introSound.play().catch(e => console.error("La lecture audio a été bloquée par le navigateur."));
+            });
+        });
+    </script>
+    <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js') // Use relative path for compatibility
+                    .then(registration => {
+                        console.log('Service Worker registered successfully with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
