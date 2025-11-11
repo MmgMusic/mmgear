@@ -3210,8 +3210,8 @@
             document.body.classList.toggle('dark-theme', e.target.checked);
             playAudio(e.target.checked ? sounds.switchToBlack : sounds.switchToWhite);
             localStorage.setItem('mmg-theme', e.target.checked ? 'dark' : 'light'); // CORRECTION: Utilisation de la clé de stockage correcte.
-            applyTheme(localStorage.getItem('ui-theme') || 'default');
             updateThemeColorMeta(); // NOUVEAU: Met à jour la couleur de thème au changement
+            applyTheme(localStorage.getItem('ui-theme') || 'default');
         });
         
         // NOUVEAU: Logique pour le sélecteur de thème mobile
@@ -5477,3 +5477,4 @@
             `;
         }).join('');
     }
+
