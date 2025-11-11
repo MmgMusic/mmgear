@@ -1384,6 +1384,9 @@
             sounds.connecting.currentTime = 0;
             sounds.connecting.onended = null;
         }
+        if (!overlayToClose.classList.contains('hidden')) {
+            updateThemeColorMeta();
+        }
 
         // CORRECTION: Réinitialiser la variable globale activeOverlay à la fin.
         activeOverlay = null;
@@ -5482,3 +5485,4 @@
             `;
         }).join('');
     }
+
