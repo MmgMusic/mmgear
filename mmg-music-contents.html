@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmg Music</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Explorez les albums, clips et making-ofs de Mmg Music et Mmg Beats dans une interface interactive inspirée des jeux vidéo.">
+    <meta name="keywords"
+        content="Mmg, Mmg Music, Mmg Beats, musique, producteur, beatmaker, musique de jeu vidéo, hip-hop, portfolio musical">
+    <meta name="author" content="Mmg">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mmg-music.github.io/MMGEAR/">
+    <meta property="og:title" content="MMGEAR - L'univers musical de Mmg">
+    <meta property="og:description"
+        content="Explorez les albums, clips et making-ofs de Mmg Music et Mmg Beats dans une interface interactive.">
+    <meta property="og:image" content="https://mmg-music.github.io/MMGEAR/assets/og-image.webp">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1f2937" />
+    <meta name="navigation-bar-color" content="#121212"> <!-- NOUVEAU: Couleur de la barre de navigation Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MMGEAR">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.webp">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style"
+        onload="this.rel='stylesheet'">
+    <!-- Le preload du script principal n'est plus nécessaire ici car il est chargé dynamiquement -->
+    <link rel="preload" href="assets/mmg-music-avatar.webp" as="image">
+    <link rel="preload" href="assets/mmg-beats-avatar.webp" as="image">
+
+    <!-- Structure CSS -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/mobile.css" media="(max-width: 952px)">
+    <link rel="stylesheet" href="css/computer.css" media="(min-width: 953px)">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@700&family=DotGothic16&family=Press+Start+2P&family=VT323&display=swap"
+        media="print" onload="this.media='all'">
+    <!-- NOUVEAU: Ajout de la police Noto Sans pour le thème Android -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap"
+        media="print" onload="this.media='all'">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="css/font-awesome.custom.min.css" media="print" onload="this.media='all'">
+    <!-- NOUVEAU: Lucide Icons pour la nouvelle boutique -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- NOUVEAU: Floating UI pour le positionnement du tutoriel -->
+    <script src="https://cdn.jsdelivr.net/npm/@floating-ui/core@1.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@floating-ui/dom@1.6.3"></script>
+
+    <!-- Anti-Flicker Snippet -->
+    <style>
+        /* Cache le contenu principal (qui "flicke") de manière synchrone pour éviter le FOUC. */
+        /* L'écran d'accueil reste visible. */
+        #main-content-wrapper {
+            opacity: 0;
+        }
+
+        /* CORRECTION: Utilisation de Flexbox pour le centrage afin d'éviter les conflits avec l'animation de tremblement (transform). */
+        #intro-animation-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #intro-animation-overlay .main-logo {
+            /* Le logo prend maintenant la taille de son parent, qui est centré. */
+            max-width: 1900px;
+            aspect-ratio: 1200 / 300;
+            pointer-events: none;
+            /* CORRECTION: La largeur est augmentée à 100% pour agrandir légèrement l'animation. */
+            width: 100vw;
+        }
+
+        /* CORRECTION: Ajout d'un décalage vertical de 10px sur ordinateur pour un meilleur centrage visuel. */
+        @media (min-width: 953px) {
+            #intro-animation-overlay .main-logo {
+                transform: translateY(50px);
+            }
+        }
+
+        /* Media query pour mieux gérer la hauteur sur mobile, reprise de indexBONNEINTRO.html */
+        @media (max-height: 450px) {
+            #intro-animation-overlay .main-logo {
+                width: auto;
+                height: 90vh;
+                /* Utilise la hauteur de la fenêtre */
+            }
+        }
+
+        #intro-animation-overlay .logo-animation {
+            /* CORRECTION: La largeur à 100% est nécessaire pour que l'animation reste dans son conteneur centré. */
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+
+<!-- NOUVEAU: Conteneur pour l'animation d'introduction -->
+<div id="intro-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background-color: #111827; display: none; opacity: 0; transition: opacity 0.5s ease-out; justify-content: center; align-items: center;">
+    <!-- MODIFICATION: Le SVG de l'intro est maintenant directement ici -->
+    <svg class="animated-logo w-full max-w-xs h-auto" viewBox="0 0 420.001 78.502" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 450px; height: auto;">
+        <defs>
+            <linearGradient id="movingGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <animate attributeName="x1" values="-100%; 200%; -100%" keyTimes="0; 0.5; 1" dur="5s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="0%; 300%; 0%" keyTimes="0; 0.5; 1" dur="5s" repeatCount="indefinite" />
+                <stop offset="0%" stop-color="#3b82f6" />
+                <stop offset="50%" stop-color="#ec4899" />
+                <stop offset="100%" stop-color="#8b5cf6" />
+            </linearGradient>
+        </defs>
+        <g fill-rule="evenodd">
+            <path style="fill: url(#movingGradient); stroke: none !important; vector-effect: non-scaling-stroke;" d="M 16.201 59.001 L 0.001 59.001 L 0.001 25.001 Q 0.001 17.601 3.051 12.001 Q 6.101 6.401 11.501 3.201 Q 16.901 0.001 23.901 0.001 Q 30.201 0.001 35.501 2.601 Q 40.801 5.201 44.101 9.801 Q 47.501 5.201 52.751 2.601 Q 58.001 0.001 64.201 0.001 Q 71.201 0.001 76.501 3.201 Q 81.801 6.401 84.801 12.001 Q 87.801 17.601 87.801 25.001 L 87.801 59.001 L 71.501 59.001 L 71.501 25.001 Q 71.501 20.401 68.901 17.501 Q 66.301 14.601 61.901 14.601 Q 57.601 14.601 54.851 17.501 Q 52.101 20.401 52.101 25.001 L 52.101 59.001 L 35.901 59.001 L 35.901 25.001 Q 35.901 20.401 33.151 17.501 Q 30.401 14.601 26.001 14.601 Q 21.701 14.601 18.951 17.501 Q 16.201 20.401 16.201 25.001 L 16.201 59.001 Z M 113.901 59.001 L 97.701 59.001 L 97.701 25.001 Q 97.701 17.601 100.751 12.001 Q 103.801 6.401 109.201 3.201 Q 114.601 0.001 121.601 0.001 Q 127.901 0.001 133.201 2.601 Q 138.501 5.201 141.801 9.801 Q 145.201 5.201 150.451 2.601 Q 155.701 0.001 161.901 0.001 Q 168.901 0.001 174.201 3.201 Q 179.501 6.401 182.501 12.001 Q 185.501 17.601 185.501 25.001 L 185.501 59.001 L 169.201 59.001 L 169.201 25.001 Q 169.201 20.401 166.601 17.501 Q 164.001 14.601 159.601 14.601 Q 155.301 14.601 152.551 17.501 Q 149.801 20.401 149.801 25.001 L 149.801 59.001 L 133.601 59.001 L 133.601 25.001 Q 133.601 20.401 130.851 17.501 Q 128.101 14.601 123.701 14.601 Q 119.401 14.601 116.651 17.501 Q 113.901 20.401 113.901 25.001 L 113.901 59.001 Z M 233.301 8.001 L 234.001 2.001 L 248.301 2.001 L 248.301 53.801 Q 248.301 61.001 244.801 66.601 Q 241.301 72.201 235.051 75.351 Q 228.801 78.501 220.301 78.501 Q 213.801 78.501 208.201 75.901 Q 202.601 73.301 199.151 68.601 Q 195.701 63.901 195.501 57.701 L 209.601 57.701 Q 210.801 61.801 213.401 63.651 Q 216.001 65.501 220.301 65.501 Q 225.601 65.501 228.901 62.451 Q 232.201 59.401 232.201 53.801 L 232.201 46.801 Q 230.001 50.101 226.301 52.201 Q 222.601 54.301 216.901 54.301 Q 210.401 54.301 205.151 51.001 Q 199.901 47.701 196.801 41.651 Q 193.701 35.601 193.701 27.401 Q 193.701 19.401 196.901 13.351 Q 200.101 7.301 205.601 3.901 Q 211.101 0.501 217.901 0.501 Q 222.901 0.501 226.751 2.501 Q 230.601 4.501 233.301 8.001 Z M 312.201 34.401 L 273.001 34.401 Q 273.801 40.801 277.201 44.401 Q 280.601 48.001 286.001 48.001 Q 290.401 48.001 293.201 45.851 Q 296.001 43.701 296.701 40.601 L 311.801 40.601 Q 310.801 46.801 307.151 51.251 Q 303.501 55.701 297.901 58.101 Q 292.301 60.501 285.301 60.501 Q 276.601 60.501 270.201 56.851 Q 263.801 53.201 260.251 46.451 Q 256.701 39.701 256.701 30.501 Q 256.701 21.301 260.201 14.601 Q 263.701 7.901 270.051 4.201 Q 276.401 0.501 285.001 0.501 Q 293.901 0.501 300.151 4.501 Q 306.401 8.501 309.551 16.101 Q 312.701 23.701 312.201 34.401 Z M 360.101 8.601 L 361.001 2.001 L 374.401 2.001 L 374.401 59.001 L 361.001 59.001 L 360.101 51.501 Q 357.501 55.701 353.301 58.101 Q 349.101 60.501 344.101 60.501 Q 336.501 60.501 330.651 56.601 Q 324.801 52.701 321.501 45.801 Q 318.201 38.901 318.201 30.001 Q 318.201 21.301 321.401 14.651 Q 324.601 8.001 330.201 4.251 Q 335.801 0.501 343.101 0.501 Q 348.701 0.501 353.051 2.651 Q 357.401 4.801 360.101 8.601 Z M 400.801 59.001 L 384.601 59.001 L 384.601 26.001 Q 384.601 13.701 391.251 7.101 Q 397.901 0.501 410.301 0.501 Q 411.601 0.501 414.401 0.651 Q 417.201 0.801 420.001 1.401 L 420.001 15.301 Q 418.101 15.001 416.401 14.751 Q 414.701 14.501 412.601 14.501 Q 409.501 14.501 406.801 15.401 Q 404.101 16.301 402.451 18.801 Q 400.801 21.301 400.801 26.101 L 400.801 59.001 Z M 347.001 46.301 Q 352.601 46.301 355.901 41.901 Q 359.201 37.501 359.201 30.001 Q 359.201 22.501 355.901 18.151 Q 352.601 13.801 347.001 13.801 Q 341.301 13.801 338.001 18.151 Q 334.701 22.501 334.701 30.001 Q 334.701 37.501 338.001 41.901 Q 341.301 46.301 347.001 46.301 Z M 220.901 41.601 Q 226.201 41.601 229.201 37.951 Q 232.201 34.301 232.201 28.301 Q 232.201 22.401 229.201 18.401 Q 226.201 14.401 220.901 14.401 Q 215.701 14.401 212.951 18.301 Q 210.201 22.201 210.201 28.301 Q 210.201 34.301 212.901 37.951 Q 215.601 41.601 220.901 41.601 Z M 273.001 24.501 L 296.201 24.501 Q 295.801 18.201 292.501 15.551 Q 289.201 12.901 285.101 12.901 Q 280.201 12.901 277.001 16.051 Q 273.801 19.201 273.001 24.501 Z" />
+        </g>
+    </svg>
+</div>
+
+<body class="light-theme mobile-player-hidden">
+
+    <!-- Audio assets for UI sounds (preload="none" est souvent mieux pour le démarrage) -->
+    <audio id="hover-sound" src="assets/sounds/hover.ogg" preload="none"></audio>
+    <audio id="back-sound" src="assets/sounds/back.ogg"></audio>
+    <audio id="select-sound" src="assets/sounds/select.ogg"></audio>
+    <audio id="switch-to-white-sound" src="assets/sounds/switch_towhite.ogg"></audio>
+    <audio id="switch-to-black-sound" src="assets/sounds/switch_toblack.ogg"></audio>
+    <audio id="scroll-sound" src="assets/sounds/scroll.mp3" preload="auto"></audio>
+    <audio id="shop-sound" src="assets/sounds/shop.ogg" preload="auto"></audio>
+    <audio id="connecting-sound" src="assets/sounds/connecting.ogg" preload="auto"></audio>
+    <audio id="achievement-unlocked-sound" src="assets/sounds/achievement.ogg" preload="auto"></audio>
+    <audio id="coin-sound" src="assets/sounds/coin.ogg" preload="auto"></audio>
+    <audio id="minimize-sound" src="assets/sounds/minimize_008.ogg" preload="auto"></audio>
+    <audio id="blocked-sound" src="assets/sounds/blocked.ogg" preload="auto"></audio>
+    <audio id="maximize-sound" src="assets/sounds/maximize_008.ogg" preload="auto"></audio>
+
+    <!-- Silent audio to keep playback alive in background on mobile -->
+    <audio id="keep-alive-sound" src="assets/sounds/silent.ogg" loop preload="auto"></audio>
+
+    <!-- Main application wrapper (caché au début) -->
+    <div id="main-content-wrapper" class="main-grid-layout">
+
+        <!-- Fond animé (maintenant en dehors du main-board pour couvrir tout l'écran) -->
+        <div class="animation-bg-area">
+            <!-- NOUVEAU: Conteneur pour l'animation des cubes PS2 -->
+            <div class="ps2-cubes-container">
+                <div class="ps2-cube"></div>
+                <div class="ps2-cube"></div>
+                <div class="ps2-cube"></div>
+                <div class="ps2-cube"></div>
+                <div class="ps2-cube"></div>
+                <div class="ps2-cube"></div>
+            </div>
+        </div>
+
+        <!-- NOUVELLE BARRE LATERALE -->
+        <aside class="sidebar">
+            <div class="sidebar-top-nav">
+                <div class="sidebar-header-buttons">
+                    <!-- CORRECTION: Le bouton retour est maintenant ici, à côté du bouton Accueil. -->
+                    <a href="#" class="top-bar-btn back-btn clickable-icon" title="Retour" data-lang-title="back"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-arrow-left">
+                            <path d="m12 19-7-7 7-7" />
+                            <path d="M19 12H5" />
+                        </svg></a>
+                    <a href="#" id="home-btn" class="top-bar-btn home-btn clickable-icon" title="Accueil"
+                        data-lang-title="home"><svg xmlns="http://www.w3.org/2000/svg" width="92" height="92"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-house-icon lucide-house">
+                            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                            <path
+                                d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        </svg></a>
+                    <a href="#" id="notifications-btn" class="top-bar-btn clickable-icon" title="Notifications"
+                        data-lang-title="notifications"><svg xmlns="http://www.w3.org/2000/svg" width="92" height="92"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell">
+                            <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                            <path
+                                d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+                        </svg><span class="notification-dot hidden"></span></a>
+                </div>
+                <!-- CORRECTION: Le sélecteur de profil est remis dans la sidebar -->
+                <div class="central-profiles-card">
+                    <div class="profile-tab active clickable-icon" data-project="mmg-music">
+                        <img src="assets/mmg-music-avatar.webp" alt="Mmg Music" loading="lazy" decoding="async">
+                        <span>Mmg Music</span>
+                    </div>
+                    <div class="profile-tab clickable-icon" data-project="mmg-beats">
+                        <img src="assets/mmg-beats-avatar.webp" alt="Mmg Beats" loading="lazy" decoding="async">
+                        <span>Mmg Beats</span>
+                    </div>
+                </div>
+            </div>
+            <nav id="sidebar-main-nav" class="sidebar-main-nav"></nav>
+            <!-- NOUVEAU: Le bloc de version est maintenant un élément séparé -->
+            <div class="sidebar-version-footer">
+                <strong>MMGEAR</strong>
+                <span>version 2.5</span>
+            </div>
+            <div class="sidebar-footer" id="sidebar-footer">
+                <!-- Sélecteur de thème -->
+                <div class="theme-switcher-footer">
+                    <i class="fas fa-moon theme-icon"></i>
+                    <div class="switch-wrapper">
+                        <label class="switch clickable-icon"> <input type="checkbox" id="theme-switch"> <span
+                                class="slider round"></span> </label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Conteneur pour le contenu principal et le lecteur -->
+        <div class="main-area">
+            <!-- NOUVELLE BARRE DU HAUT -->
+            <header class="top-bar">
+                <!-- CORRECTION: Toutes les icônes sont maintenant sur une seule ligne -->
+                <div class="mobile-header-icons">
+                    <a href="#" id="mobile-notifications-btn" class="top-bar-btn clickable-icon"
+                        title="Notifications" data-lang-title="notifications"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell">
+                            <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                            <path
+                                d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+                        </svg><span class="notification-dot hidden"></span></a>
+                    <div id="mobile-header-logo-container" class="show-logo">
+                        <!-- NOUVEAU: Le SVG animé remplace le texte "MMGEAR" -->
+                        <h2 id="mobile-header-title"></h2>
+                        <svg id="mobile-header-svg-logo" class="animated-logo-header" viewBox="0 0 420.001 78.502"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="movingGradientHeader" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <animate attributeName="x1" values="-100%; 200%; -100%" keyTimes="0; 0.5; 1" dur="5s" repeatCount="indefinite" />
+                                    <animate attributeName="x2" values="0%; 300%; 0%" keyTimes="0; 0.5; 1" dur="5s" repeatCount="indefinite" />
+                                    <stop offset="0%" stop-color="#3b82f6" />
+                                    <stop offset="50%" stop-color="#ec4899" />
+                                    <stop offset="100%" stop-color="#8b5cf6" />
+                                </linearGradient>
+                            </defs>
+                            <g fill-rule="evenodd">
+                                <path stroke="none" d="M 16.201 59.001 L 0.001 59.001 L 0.001 25.001 Q 0.001 17.601 3.051 12.001 Q 6.101 6.401 11.501 3.201 Q 16.901 0.001 23.901 0.001 Q 30.201 0.001 35.501 2.601 Q 40.801 5.201 44.101 9.801 Q 47.501 5.201 52.751 2.601 Q 58.001 0.001 64.201 0.001 Q 71.201 0.001 76.501 3.201 Q 81.801 6.401 84.801 12.001 Q 87.801 17.601 87.801 25.001 L 87.801 59.001 L 71.501 59.001 L 71.501 25.001 Q 71.501 20.401 68.901 17.501 Q 66.301 14.601 61.901 14.601 Q 57.601 14.601 54.851 17.501 Q 52.101 20.401 52.101 25.001 L 52.101 59.001 L 35.901 59.001 L 35.901 25.001 Q 35.901 20.401 33.151 17.501 Q 30.401 14.601 26.001 14.601 Q 21.701 14.601 18.951 17.501 Q 16.201 20.401 16.201 25.001 L 16.201 59.001 Z M 113.901 59.001 L 97.701 59.001 L 97.701 25.001 Q 97.701 17.601 100.751 12.001 Q 103.801 6.401 109.201 3.201 Q 114.601 0.001 121.601 0.001 Q 127.901 0.001 133.201 2.601 Q 138.501 5.201 141.801 9.801 Q 145.201 5.201 150.451 2.601 Q 155.701 0.001 161.901 0.001 Q 168.901 0.001 174.201 3.201 Q 179.501 6.401 182.501 12.001 Q 185.501 17.601 185.501 25.001 L 185.501 59.001 L 169.201 59.001 L 169.201 25.001 Q 169.201 20.401 166.601 17.501 Q 164.001 14.601 159.601 14.601 Q 155.301 14.601 152.551 17.501 Q 149.801 20.401 149.801 25.001 L 149.801 59.001 L 133.601 59.001 L 133.601 25.001 Q 133.601 20.401 130.851 17.501 Q 128.101 14.601 123.701 14.601 Q 119.401 14.601 116.651 17.501 Q 113.901 20.401 113.901 25.001 L 113.901 59.001 Z M 233.301 8.001 L 234.001 2.001 L 248.301 2.001 L 248.301 53.801 Q 248.301 61.001 244.801 66.601 Q 241.301 72.201 235.051 75.351 Q 228.801 78.501 220.301 78.501 Q 213.801 78.501 208.201 75.901 Q 202.601 73.301 199.151 68.601 Q 195.701 63.901 195.501 57.701 L 209.601 57.701 Q 210.801 61.801 213.401 63.651 Q 216.001 65.501 220.301 65.501 Q 225.601 65.501 228.901 62.451 Q 232.201 59.401 232.201 53.801 L 232.201 46.801 Q 230.001 50.101 226.301 52.201 Q 222.601 54.301 216.901 54.301 Q 210.401 54.301 205.151 51.001 Q 199.901 47.701 196.801 41.651 Q 193.701 35.601 193.701 27.401 Q 193.701 19.401 196.901 13.351 Q 200.101 7.301 205.601 3.901 Q 211.101 0.501 217.901 0.501 Q 222.901 0.501 226.751 2.501 Q 230.601 4.501 233.301 8.001 Z M 312.201 34.401 L 273.001 34.401 Q 273.801 40.801 277.201 44.401 Q 280.601 48.001 286.001 48.001 Q 290.401 48.001 293.201 45.851 Q 296.001 43.701 296.701 40.601 L 311.801 40.601 Q 310.801 46.801 307.151 51.251 Q 303.501 55.701 297.901 58.101 Q 292.301 60.501 285.301 60.501 Q 276.601 60.501 270.201 56.851 Q 263.801 53.201 260.251 46.451 Q 256.701 39.701 256.701 30.501 Q 256.701 21.301 260.201 14.601 Q 263.701 7.901 270.051 4.201 Q 276.401 0.501 285.001 0.501 Q 293.901 0.501 300.151 4.501 Q 306.401 8.501 309.551 16.101 Q 312.701 23.701 312.201 34.401 Z M 360.101 8.601 L 361.001 2.001 L 374.401 2.001 L 374.401 59.001 L 361.001 59.001 L 360.101 51.501 Q 357.501 55.701 353.301 58.101 Q 349.101 60.501 344.101 60.501 Q 336.501 60.501 330.651 56.601 Q 324.801 52.701 321.501 45.801 Q 318.201 38.901 318.201 30.001 Q 318.201 21.301 321.401 14.651 Q 324.601 8.001 330.201 4.251 Q 335.801 0.501 343.101 0.501 Q 348.701 0.501 353.051 2.651 Q 357.401 4.801 360.101 8.601 Z M 400.801 59.001 L 384.601 59.001 L 384.601 26.001 Q 384.601 13.701 391.251 7.101 Q 397.901 0.501 410.301 0.501 Q 411.601 0.501 414.401 0.651 Q 417.201 0.801 420.001 1.401 L 420.001 15.301 Q 418.101 15.001 416.401 14.751 Q 414.701 14.501 412.601 14.501 Q 409.501 14.501 406.801 15.401 Q 404.101 16.301 402.451 18.801 Q 400.801 21.301 400.801 26.101 L 400.801 59.001 Z M 347.001 46.301 Q 352.601 46.301 355.901 41.901 Q 359.201 37.501 359.201 30.001 Q 359.201 22.501 355.901 18.151 Q 352.601 13.801 347.001 13.801 Q 341.301 13.801 338.001 18.151 Q 334.701 22.501 334.701 30.001 Q 334.701 37.501 338.001 41.901 Q 341.301 46.301 347.001 46.301 Z M 220.901 41.601 Q 226.201 41.601 229.201 37.951 Q 232.201 34.301 232.201 28.301 Q 232.201 22.401 229.201 18.401 Q 226.201 14.401 220.901 14.401 Q 215.701 14.401 212.951 18.301 Q 210.201 22.201 210.201 28.301 Q 210.201 34.301 212.901 37.951 Q 215.601 41.601 220.901 41.601 Z M 273.001 24.501 L 296.201 24.501 Q 295.801 18.201 292.501 15.551 Q 289.201 12.901 285.101 12.901 Q 280.201 12.901 277.001 16.051 Q 273.801 19.201 273.001 24.501 Z" vector-effect="non-scaling-stroke"/>
+                            </g>
+                        </svg>
+                    </div>
+
+
+                    <!-- NOUVEAU: Groupe d'icônes à droite -->
+                    <div class="mobile-header-right-icons">
+                        <!-- NOUVEAU: Bouton de recherche -->
+                        <a href="#" id="mobile-search-btn" class="top-bar-btn clickable-icon" title="Rechercher"
+                            data-lang-title="search"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
+                                <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></a>
+                        <a href="#" id="mobile-settings-btn" class="top-bar-btn clickable-icon" title="Paramètres"
+                            data-lang-title="settings"><svg xmlns="http://www.w3.org/2000/svg" width="92" height="92"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-settings-icon lucide-settings">
+                                <path
+                                    d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg></a>
+                        <a href="#" id="mobile-wifi-btn" class="top-bar-btn clickable-icon" title="WiFi"
+                            data-lang-title="wifi"><svg xmlns="http://www.w3.org/2000/svg" width="92" height="92"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-wifi-icon lucide-wifi">
+                                <path d="M12 20h.01" />
+                                <path d="M2 8.82a15 15 0 0 1 20 0" />
+                                <path d="M5 12.859a10 10 0 0 1 14 0" />
+                                <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+                            </svg></a>
+                    </div>
+                </div>
+                <!-- Barre de recherche (commune) -->
+                <div class="search-bar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-search-icon lucide-search">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Titre, tag, album..."
+                        data-lang-key="searchPlaceholder">
+                    <button id="search-clear-btn" class="search-clear-btn hidden" title="Effacer"><i
+                            class="fas fa-times"></i></button>
+                    <button id="tags-filter-btn" class="top-bar-btn clickable-icon" title="Filtrer par tag"
+                        data-lang-title="filterByTag"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag-icon lucide-tag">
+                            <path
+                                d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
+                            <circle cx="7.5" cy="7.5" r=".5" fill="currentColor" />
+                        </svg><span id="tags-filter-count" class="filter-count-badge hidden"></span></button>
+                </div>
+                <div id="mobile-profile-switch" class="profile-switch">
+                    <button id="switch-music" class="profile-switch-btn active clickable-icon"
+                        data-project="mmg-music"><span>Mmg Music</span></button>
+                    <button id="switch-beats" class="profile-switch-btn clickable-icon"
+                        data-project="mmg-beats"><span>Mmg Beats</span></button>
+                </div>
+                <!-- Icônes pour ordinateur (cachées sur mobile) -->
+                <div class="top-bar-right">
+                    <!-- CORRECTION: Le bouton Boutique est retiré de la barre du haut -->
+                    <a href="#" id="settings-btn" class="top-bar-btn clickable-icon" title="Paramètres"
+                        data-lang-title="settings"><svg xmlns="http://www.w3.org/2000/svg" width="92" height="92"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-settings-icon lucide-settings">
+                            <path
+                                d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg></a>
+                    <a href="#" id="wifi-btn" class="top-bar-btn clickable-icon" title="WiFi"
+                        data-lang-title="wifi"><svg xmlns="http://www.w3.org/2000/svg" width="92" height="92"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi-icon lucide-wifi">
+                            <path d="M12 20h.01" />
+                            <path d="M2 8.82a15 15 0 0 1 20 0" />
+                            <path d="M5 12.859a10 10 0 0 1 14 0" />
+                            <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+                        </svg></a>
+                    <div class="time" id="real-time">09:31</div>
+                </div>
+            </header>
+
+            <!-- Main content area -->
+            <main class="main-content">
+                <div class="content-section-board">
+                    <!-- Large Player for Videos -->
+                    <section id="large-player-section" class="page-section hidden">
+                        <div class="player-container">
+                            <div id="large-player-iframe"></div>
+                            <button id="fullscreen-btn" class="fullscreen-btn" title="Plein écran"
+                                data-lang-title="fullscreen"><i class="fas fa-expand"></i></button>
+                            <button id="exit-fullscreen-btn" class="exit-fullscreen-btn"
+                                title="Quitter le plein écran"><i class="fas fa-compress"></i></button>
+                        </div>
+                    </section>
+
+                    <!-- NOUVEAU: Tableau de bord principal -->
+                    <section id="home-dashboard-section" class="page-section">
+                        <!-- La classe 'hidden' est retirée pour en faire la page par défaut -->
+                        <div class="page-content">
+                            <div class="dashboard-grid">
+                                <!-- NOUVEAU: Ligne du haut avec Carrousel (3/4) et Réseaux (1/4) -->
+                                <div class="dashboard-top-row">
+                                    <!-- Section Carrousel (3/4) -->
+                                    <div class="dashboard-standalone-section">
+                                        <h2 class="section-title" data-lang-key="suggestions">Nouveautés</h2>
+                                        <div class="dashboard-card carousel-card">
+                                            <div id="dashboard-carousel-container" class="carousel-container"></div>
+                                            <div class="carousel-dots" id="dashboard-carousel-dots"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- NOUVEAU: Ligne pour les playlists et la file d'attente -->
+                                <div class="dashboard-row-split">
+                                    <!-- Section Playlists Recommandées (1/3) -->
+                                    <div class="dashboard-standalone-section">
+                                        <h2 class="section-title" data-lang-key="recommendedPlaylists">Playlists
+                                            Recommandées</h2>
+                                        <div id="playlist-reco-list" class="horizontal-scroll-container"></div>
+                                    </div>
+
+                                    <!-- Section File d'attente (2/3) -->
+                                    <div class="dashboard-standalone-section">
+                                        <h2 class="section-title" data-lang-key="queueTitle">En file d'attente</h2>
+                                        <div class="list-view-header hidden" data-header-for="dashboard-queue-list">
+                                        </div>
+                                        <div id="dashboard-queue-list" class="content-sections-card list-view">
+                                        </div>
+                                    </div>
+
+                                    <!-- NOUVEAU: La section Réseaux est remise ici -->
+                                    <div class="dashboard-standalone-section dashboard-socials-section">
+                                        <h2 class="section-title" data-lang-key="socials">Réseaux</h2>
+                                        <div id="socials-list-container" class="socials-list-grid"></div>
+                                    </div>
+
+                                    <!-- NOUVEAU: Section pour les guides, visible uniquement sur mobile -->
+                                    <div class="dashboard-standalone-section dashboard-guide-section">
+                                        <h2 class="section-title" data-lang-key="guide">Guide</h2>
+                                        <!-- Les boutons du guide seront injectés ici -->
+                                        <div id="dashboard-guide-buttons"></div>
+                                    </div>
+
+                                    <!-- NOUVEAU: Section "À propos" avec titre externe sur mobile -->
+                                    <div class="dashboard-standalone-section dashboard-about-section">
+                                        <h2 class="section-title" data-lang-key="about">À propos</h2>
+                                        <!-- La carte elle-même ne contient que l'image de fond -->
+                                        <a href="#" class="dashboard-card dashboard-about-card"
+                                            data-link="about-section"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="music-title-details-section" class="page-section hidden">
+                        <!-- NOUVEAU: Ajout de la classe .page-content pour une mise en page cohérente -->
+                        <div class="page-content">
+                            <div class="music-details-grid">
+                                <div class="music-details-container">
+                                    <div class="music-art-panel">
+                                        <div class="album-art-wrapper">
+                                            <img id="details-album-art" src="" alt="Pochette de l'album">
+                                        </div>
+                                        <button id="temp-play-btn" class="temp-play-btn hidden"
+                                            data-lang-key="launchSong">Lancer la chanson</button>
+                                        <div class="details-actions-container">
+                                            <button id="details-add-to-playlist-btn" class="details-action-btn"><i
+                                                    class="fas fa-plus"></i> <span data-lang-key="addToPlaylist">Ajouter
+                                                    à la playlist</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="music-info-panel">
+                                        <h2 id="details-title"></h2>
+                                        <p><strong data-lang-key="album">Album:</strong> <a href="#"
+                                                id="details-album-link" class="tag-link"><span
+                                                    id="details-album"></span></a></p>
+                                        <p><strong data-lang-key="year">Année:</strong> <a href="#"
+                                                id="details-year-link" class="tag-link"><span
+                                                    id="details-year"></span></a></p>
+                                        <h3 data-lang-key="inspirations">Inspirations</h3>
+                                        <p id="details-description"></p>
+                                        <h3 data-lang-key="tags">Tags</h3>
+                                        <div id="details-tags" class="tags-container"></div>
+                                        <h3 data-lang-key="listenOn">Écouter sur</h3>
+                                        <div id="streaming-links" class="streaming-links-container"></div>
+                                    </div>
+                                </div>
+                                <div class="associated-videos-panel">
+                                    <div id="gameplay-video-container"></div>
+                                    <div id="makingof-video-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div id="medium-player-iframe" class="hidden-player"></div>
+
+                    <!-- Video suggestions section -->
+                    <section id="video-suggestions-section" class="page-section hidden">
+                        <div class="page-content">
+                            <h2 class="section-title" data-lang-key="suggestions">Suggestions</h2>
+                            <div class="content-sections-card" id="suggestions-cards"></div>
+                        </div>
+                    </section>
+
+                    <section id="albums-section" class="page-section hidden">
+                        <div class="page-content">
+                            <h2 class="section-title" data-lang-key="albums">Albums</h2>
+                            <section class="content-sections-card" id="albums-cards"></section>
+                        </div>
+                    </section>
+
+                    <section id="search-results-section" class="page-section hidden">
+                        <div class="page-content">
+                            <h2 id="search-results-title" class="section-title" data-lang-key="searchResults">Résultats
+                                de recherche</h2>
+                            <section class="content-sections-card" id="search-results-cards"></section>
+                        </div>
+                    </section>
+
+                    <section id="titles-section" class="page-section hidden">
+                        <div class="page-content">
+                            <div class="section-header-with-view-switcher">
+                                <h2 id="titles-section-title" class="section-title" data-lang-key="titles">Titres</h2>
+                                <button class="view-toggle-btn" data-target-container="titles-cards"
+                                    title="Changer de vue" data-lang-title="toggleView">
+                                    <svg class="view-toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"></svg>
+                                </button>
+                            </div>
+                            <!-- NOUVEAU: Conteneur pour l'en-tête de la liste -->
+                            <div class="list-view-header hidden" data-header-for="titles-cards"></div>
+                            <section class="content-sections-card titles-grid" id="titles-cards"></section>
+                        </div>
+                    </section>
+
+                    <section id="videos-section" class="page-section hidden">
+                        <div class="page-content">
+                            <!-- NOUVEAU: Onglets pour basculer entre Clips et Making-ofs -->
+                            <div class="playlist-tabs" id="videos-tabs-container">
+                                <!-- Les onglets seront injectés par JS -->
+                            </div>
+                            <div class="section-header-with-view-switcher">
+                                <h2 id="videos-section-title" class="section-title" data-lang-key="videos">Vidéos</h2>
+                                <button class="view-toggle-btn" data-target-container="videos-cards"
+                                    title="Changer de vue" data-lang-title="toggleView">
+                                    <svg class="view-toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"></svg>
+                                </button>
+                            </div>
+                            <!-- NOUVEAU: Conteneur pour l'en-tête de la liste -->
+                            <div class="list-view-header hidden" data-header-for="videos-cards"></div>
+                            <!-- Le contenu (cartes) sera injecté ici -->
+                            <section class="content-sections-card" id="videos-cards"></section>
+                        </div>
+                    </section>
+
+                    <section id="bonus-section" class="page-section hidden">
+                        <div class="page-content">
+                            <div class="section-header-with-view-switcher">
+                                <h2 class="section-title" data-lang-key="bonus">Bonus</h2>
+                                <button class="view-toggle-btn" data-target-container="bonus-cards"
+                                    title="Changer de vue" data-lang-title="toggleView">
+                                    <svg class="view-toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"></svg>
+                                </button>
+                            </div>
+                            <!-- NOUVEAU: Conteneur pour l'en-tête de la liste -->
+                            <div class="list-view-header hidden" data-header-for="bonus-cards"></div>
+                            <section class="content-sections-card" id="bonus-cards"></section>
+                        </div>
+                    </section>
+
+                    <!-- NOUVEAU: Section Bibliothèque (fusion de Playlist et Likes) -->
+                    <section id="library-section" class="page-section hidden">
+                        <div class="page-content">
+                            <div class="playlist-tabs" id="library-tabs-container">
+                                <!-- Les onglets seront injectés par JS -->
+                            </div>
+                            <div class="section-header-with-view-switcher" id="library-header">
+                                <div class="section-title-group">
+                                    <h2 id="library-section-title" class="section-title">Bibliothèque</h2>
+                                    <button id="library-clear-playlist-btn" class="clear-playlist-button"
+                                        title="Vider la playlist" data-lang-title="clearPlaylist"><i
+                                            class="fas fa-trash"></i></button>
+                                </div>
+                                <button class="view-toggle-btn" data-target-container="library-container"
+                                    title="Changer de vue" data-lang-title="toggleView">
+                                    <svg class="view-toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"></svg>
+                                </button>
+                            </div>
+                            <div class="list-view-header hidden" data-header-for="library-container"></div>
+                            <section class="content-sections-card" id="library-container"></section>
+                        </div>
+                    </section>
+
+                    <section id="about-section" class="page-section hidden">
+                        <h2 id="about-title" class="section-title">À propos</h2>
+                        <div id="about-content" class="about-content"></div>
+                    </section>
+
+                    <!-- NOUVEAU: Section pour la boutique -->
+                    <section id="shop-section" class="page-section hidden">
+                        <!-- NOUVEAU: Conteneur de contenu avec la classe page-content pour le défilement et le padding -->
+                        <div class="page-content">
+                            <!-- LIGNE 1 : EN-TÊTE & COMPTEUR DE PIÈCES -->
+                            <header class="shop-header">
+                                <h1 class="shop-title" data-lang-key="shop">Boutique</h1>
+                                <div class="shop-coin-counter">
+                                    <span data-lang-key="myCoins">Mes Pièces</span>
+                                    <p><span id="coin-count">0</span> <i class="fas fa-coins"></i></p>
+                                </div>
+                            </header>
+
+                            <!-- Section pour le code secret -->
+                            <div class="cheat-code-section">
+                                <input type="text" id="cheat-code-input" class="input" placeholder="Code secret..."
+                                    data-lang-key="secretCode">
+                                <button id="cheat-code-btn" title="Activer" data-lang-title="activate"><i
+                                        class="fas fa-arrow-right"></i></button>
+                            </div>
+
+                            <!-- SECTION FUSIONNÉE POUR THÈMES & MISSIONS -->
+                            <section class="shop-section">
+                                <div class="playlist-tabs" id="shop-rewards-tabs">
+                                    <button class="playlist-tab-btn active" data-tab="themes"
+                                        data-lang-key="shopThemes">Thèmes</button>
+                                    <button class="playlist-tab-btn" data-tab="missions"
+                                        data-lang-key="shopMissions">Missions</button>
+                                </div>
+                                <div id="shop-themes-content" class="shop-tab-content">
+                                    <!-- Le contenu des thèmes et fonds d'écran sera injecté ici -->
+                                    <div id="themes-container" class="shop-list-grid"></div>
+                                </div>
+                                <div id="shop-missions-content" class="shop-tab-content hidden">
+                                    <!-- Le contenu des missions sera injecté ici -->
+                                    <div id="missions-container" class="shop-list-grid"></div>
+                                </div>
+                            </section>
+
+                            <!-- SECTION Fonds d'Écran (maintenant intégrée dans l'onglet thèmes, mais le conteneur est séparé pour la logique JS) -->
+                            <section class="shop-section">
+                                <h2 class="shop-section-title" data-lang-key="shopBackgrounds">Fonds d'Écran</h2>
+                                <div id="backgrounds-container" class="content-sections-card titles-grid"></div>
+                            </section>
+                        </div>
+                    </section>
+                </div>
+            </main>
+
+            <!-- Bottom UI container for player and footer -->
+            <footer class="bottom-ui-container">
+                <section id="mp3-player-container" class="">
+                    <div class="player-controls-wrapper">
+                        <div class="player-left-controls">
+                            <div class="player-cover">
+                                <img id="player-album-cover" src="" alt="Pochette d'album">
+                            </div>
+                            <div id="autoplay-toggle" class="autoplay-btn active" title="Autoplay activé"
+                                data-lang-title="autoplay">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <p id="desktop-player-context" class="desktop-player-context-text"></p>
+                        </div>
+                        <div class="player-center-controls">
+                            <div class="song-info">
+                                <h4 id="song-title"></h4>
+                            </div>
+                            <div class="player-buttons">
+                                <i class="fas fa-random small-btn clickable-icon" id="shuffle-btn"
+                                    title="Lecture aléatoire" data-lang-title="randomPlayback"></i>
+                                <i class="fas fa-step-backward clickable-icon" id="prev-video-btn" title="Précédent"
+                                    data-lang-title="previous"></i>
+                                <div class="controls-box clickable-icon" id="play-pause-box">
+                                    <i class="fas fa-play" id="play-pause-btn"></i>
+                                    <div class="loader"></div>
+                                </div>
+                                <i class="fas fa-step-forward clickable-icon" id="next-video-btn" title="Suivant"
+                                    data-lang-title="next"></i>
+                                <i class="fas fa-sync-alt small-btn clickable-icon" id="loop-btn"
+                                    title="Répéter la chanson" data-lang-title="repeatSong"></i>
+                            </div>
+                        </div>
+                        <div class="player-right-controls">
+                            <div class="volume-control-new">
+                                <button id="volume-down-btn" class="volume-adjust-btn">-</button>
+                                <span id="volume-level-display" title="Volume" data-lang-title="volume">100</span>
+                                <button id="volume-up-btn" class="volume-adjust-btn">+</button>
+                            </div>
+                            <i class="far fa-heart like-btn clickable-icon" id="player-like-btn"
+                                title="Aimer la chanson" data-lang-title="likeSong"></i>
+                            <i class="fas fa-plus clickable-icon" id="player-add-to-playlist-btn"
+                                title="Ajouter à la playlist" data-lang-title="addPlaylist"></i>
+                            <i class="fas fa-share-alt clickable-icon" id="share-btn" title="Partager la chanson"
+                                data-lang-title="shareSong"></i>
+                            <i class="fas fa-bars clickable-icon" id="queue-btn" title="File d'attente"
+                                data-lang-title="addToQueue"></i>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <span id="current-time-display" class="time-display">0:00</span>
+                        <div class="progress-bar" id="progress-bar" title="Avancer/Reculer dans le morceau"
+                            data-lang-title="advanceRewind">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span id="duration-display" class="time-display">0:00</span>
+                    </div>
+                </section>
+            </footer>
+
+        </div>
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="assets/sounds/mmg-beats-mmg-music.ogg" type="audio/ogg">
+        Votre navigateur ne supporte pas la lecture audio.
+    </audio>
+
+    <!-- NOUVEAU: Barre de navigation pour mobile (REMISE ICI) -->
+    <nav id="mobile-bottom-nav" class="mobile-bottom-nav">
+        <!-- CORRECTION: La barre de navigation mobile est mise à jour avec les nouvelles sections. -->
+        <a href="#" class="mobile-nav-link clickable-icon active" data-link="home-dashboard-section"><svg
+                xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-house-icon lucide-house">
+                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                <path
+                    d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            </svg><span data-lang-key="home">Accueil</span></a>
+        <a href="#" class="mobile-nav-link clickable-icon" data-link="albums-section"><svg
+                xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-disc-album">
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 12h.01" />
+            </svg><span data-lang-key="albums">Albums</span></a>
+        <a href="#" class="mobile-nav-link clickable-icon" data-link="videos-section"><svg
+                xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-tv">
+                <rect width="20" height="15" x="2" y="7" rx="2" />
+                <polyline points="17 2 12 7 7 2" />
+            </svg><span data-lang-key="videos">Vidéos</span></a>
+        <a href="#" class="mobile-nav-link clickable-icon" data-link="shop-section"><svg
+                xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-shopping-bag-icon lucide-shopping-bag">
+                <path d="M16 10a4 4 0 0 1-8 0" />
+                <path d="M3.103 6.034h17.794" />
+                <path
+                    d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" />
+            </svg><span data-lang-key="shop">Boutique</span></a>
+        <a href="#" class="mobile-nav-link clickable-icon" data-link="library-section"><svg
+                xmlns="http://www.w3.org/2000/svg" width="92" height="92" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-library-icon lucide-library">
+                <path d="m16 6 4 14" />
+                <path d="M12 6v14" />
+                <path d="M8 8v12" />
+                <path d="M4 4v16" />
+            </svg><span data-lang-key="library">Bibliothèque</span></a>
+    </nav>
+
+    <!-- Overlays (un seul exemple montré pour la concision) -->
+    <div id="settings-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2 data-lang-key="settings">Paramètres</h2>
+            <div class="setting-item">
+                <!-- CORRECTION: L'icône remplace le texte et le switch est aligné comme les autres -->
+                <span class="setting-label-group"><i class="fas fa-moon"></i> <span
+                        data-lang-key="theme">Thème</span></span>
+                <label class="switch clickable-icon">
+                    <input type="checkbox" id="mobile-theme-switch"> <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span data-lang-key="bgMusic">Musique de fond</span>
+                <label class="switch clickable-icon">
+                    <input type="checkbox" id="settings-bg-music-switch" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span data-lang-key="sfx">Effets sonores (SFX)</span>
+                <label class="switch clickable-icon">
+                    <input type="checkbox" id="sfx-switch" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <!-- NOUVEAU PARAMÈTRE -->
+            <div class="setting-item">
+                <span class="setting-label-group">
+                    <span data-lang-key="bgPlay">Lecture arrière-plan (stable)</span>
+                    <i class="fas fa-info-circle"
+                        title="Active une méthode pour empêcher la musique de se couper lorsque l'application est en arrière-plan sur mobile. Peut consommer un peu plus de batterie."
+                        data-lang-title="bgPlayInfo"></i>
+                </span>
+                <label class="switch clickable-icon">
+                    <input type="checkbox" id="background-play-switch" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span data-lang-key="language">Langue</span>
+                <div class="language-switcher">
+                    <button class="lang-btn clickable-icon" data-lang="fr">FR</button>
+                    <button class="lang-btn clickable-icon" data-lang="en">EN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wifi-overlay" class="hidden">
+        <div class="settings-card">
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <div class="wifi-content-wrapper">
+                <div class="wifi-spinner"></div>
+                <h2 data-lang-key="connecting">Connexion...</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOUVEAU: Overlay fusionné pour les succès et la boutique -->
+    <div id="rewards-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2 data-lang-key="achievements">Succès & Boutique</h2>
+            <div class="coin-counter">
+                <h3 data-lang-key="myCoins">Mes Pièces</h3>
+                <p><span id="coin-count">0</span></p>
+            </div>
+            <div id="achievements-list"></div>
+
+            <!-- Contenu de l'ancienne boutique -->
+            <h3 class="shop-subcategory" data-lang-key="shopThemes">Thèmes d'interface</h3>
+            <div class="shop-item">
+                <span data-lang-key="theme_default">Thème par Défaut</span>
+                <button class="theme-buy-btn" data-theme="default" data-lang-key="select">Sélectionner</button>
+            </div>
+            <div class="shop-item">
+                <span data-lang-key="theme_8bit">Thème 8-bit</span>
+                <button class="theme-buy-btn locked" data-theme="theme-8bit" data-achievement="retroPlayer"
+                    data-lang-key="unlock">
+                    <i class="fas fa-lock"></i> <span>Débloquer</span>
+                </button>
+            </div>
+            <div class="shop-item">
+                <span data-lang-key="theme_16bit">Thème 16-bit</span>
+                <button class="theme-buy-btn locked" data-theme="theme-16bit" data-achievement="loopMaster"
+                    data-lang-key="unlock">
+                    <i class="fas fa-lock"></i> <span>Débloquer</span>
+                </button>
+            </div>
+            <div class="shop-item">
+                <span data-lang-key="theme_ps_style">Thème PS Style</span>
+                <button class="theme-buy-btn locked" data-theme="theme-ps-style" data-achievement="psPlayer"
+                    data-lang-key="unlock">
+                    <i class="fas fa-lock"></i> <span>Débloquer</span>
+                </button>
+            </div>
+            <div class="shop-item">
+                <span data-lang-key="theme_android">Thème Android</span>
+                <button class="theme-buy-btn locked" data-theme="theme-android" data-achievement="patienceIsKey"
+                    data-lang-key="unlock">
+                    <i class="fas fa-lock"></i> <span>Débloquer</span>
+                </button>
+            </div>
+            <h3 class="shop-subcategory" data-lang-key="shopBackgrounds">Arrière-plans</h3>
+            <div class="shop-item">
+                <span data-lang-key="bg_bubbles">Bulles Animées</span>
+                <button class="theme-buy-btn" data-theme="default-bg" data-lang-key="select">Sélectionner</button>
+            </div>
+            <div class="shop-item">
+                <span data-lang-key="bg_waves">Vagues Colorées</span>
+                <button class="theme-buy-btn" data-theme="theme-bg-waves" data-lang-key="select">Sélectionner</button>
+            </div>
+            <div class="shop-item">
+                <span data-lang-key="bg_gray">Gris Simple</span>
+                <button class="theme-buy-btn" data-theme="theme-bg-gray" data-lang-key="select">Sélectionner</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="notifications-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2 data-lang-key="notifications">Notifications</h2>
+            <div id="notifications-content">
+                <div id="unlock-notification-item" class="notification-item hidden">
+                    <div class="notification-icon"><i class="fas fa-unlock-alt"></i></div>
+                    <div class="notification-details">
+                        <h4 data-lang-key="unlockAvailableTitle">Déblocage disponible !</h4>
+                        <p data-lang-key="unlockAvailableDesc">Vous avez assez de pièces pour débloquer un nouveau titre
+                            exclusif.</p>
+                    </div>
+                </div>
+                <div class="update-log">
+                    <h4 data-lang-key="updateLog">Journal des mises à jour</h4>
+                    <div id="update-log-entries"></div>
+                </div>
+            </div>
+            <button id="mark-as-read-btn" class="mark-as-read-button" data-lang-key="markAsRead">Marquer comme
+                lu</button>
+        </div>
+    </div>
+
+    <div id="tags-filter-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2 data-lang-key="filterByTag">Filtrer par Tags</h2>
+            <div id="tags-filter-list" class="tags-list"></div>
+        </div>
+    </div>
+
+    <div id="playlist-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <div class="playlist-tabs" id="playlist-tabs-container">
+                <!-- Les onglets seront injectés ici -->
+            </div>
+            <div class="playlist-content">
+                <div class="playlist-header">
+                    <h2 id="playlist-overlay-title"></h2>
+                    <!-- NOUVEAU: Conteneur pour les actions de playlist (recommandée, etc.) -->
+                    <div id="playlist-header-actions"></div>
+                    <button id="clear-playlist-btn" class="clear-playlist-button" title="Vider la playlist"
+                        data-lang-title="clearPlaylist"><i class="fas fa-trash"></i></button>
+                </div>
+                <div id="playlist-container">
+                    <p>La playlist est vide. Cliquez sur l'icône '+' sur un titre pour l'ajouter.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="player-options-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2 data-lang-key="moreOptions">Options</h2>
+            <div class="setting-item">
+                <span data-lang-key="volume">Volume</span>
+                <div id="overlay-volume-container"></div>
+            </div>
+            <div class="setting-item">
+                <span data-lang-key="share">Partager</span>
+                <i class="fas fa-share-alt" id="overlay-share-btn" title="Partager la chanson"
+                    data-lang-title="shareSong"></i>
+            </div>
+            <div class="setting-item">
+                <span data-lang-key="autoplay">Autoplay</span>
+                <div id="overlay-autoplay-toggle" class="autoplay-btn active clickable-icon" title="Autoplay activé"
+                    data-lang-title="autoplay">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOUVEAU: Boîte de dialogue plus grande pour les succès -->
+    <div id="big-dialog" class="hidden">
+        <p></p>
+    </div>
+
+    <!-- NOUVEAU: Overlay pour le tutoriel (réintégré) -->
+    <div id="tutorial-overlay" class="hidden">
+        <!-- Boîte du tutoriel (cachée par défaut) -->
+        <div id="tutorial-box" class="hidden">
+            <button id="tutorial-close" class="tutorial-close-btn"><i class="fas fa-times"></i></button>
+            <p id="tutorial-text"></p>
+            <div id="tutorial-nav">
+                <button id="tutorial-prev" title="Précédent"><i class="fas fa-arrow-left"></i></button>
+                <span id="tutorial-step-counter">1 / X</span>
+                <button id="tutorial-next" title="Suivant"><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="artwork-overlay" class="hidden">
+        <img id="artwork-overlay-img" src="" alt="Pochette en grand">
+    </div>
+
+    <!-- NOUVEL OVERLAY POUR L'INSTALLATION PWA -->
+    <div id="pwa-install-overlay" class="hidden">
+        <div class="pwa-install-card">
+            <img src="assets/icons/icon-192.webp" alt="MMGEAR App Icon" class="pwa-icon">
+            <h2 data-lang-key="pwaInstallTitle">Installer l'application MMGEAR</h2>
+            <p data-lang-key="pwaInstallDescription">Pour une expérience optimale, installez l'application sur votre
+                appareil. C'est rapide, léger et ne prend que peu de place.</p>
+            <p><strong data-lang-key="pwaInstallBenefits">Avantages :</strong></p>
+            <ul>
+                <li><i class="fas fa-bolt"></i> <span data-lang-key="pwaBenefit1">Accès rapide et direct depuis votre
+                        écran d'accueil.</span></li>
+                <li><i class="fas fa-bell"></i> <span data-lang-key="pwaBenefit2">Badge de notification sur l'icône pour
+                        les nouveautés.</span></li>
+                <li><i class="fas fa-mobile-alt"></i> <span data-lang-key="pwaBenefit3">Interface optimisée pour une
+                        expérience mobile fluide.</span></li>
+            </ul>
+            <div class="pwa-install-actions">
+                <button id="pwa-install-btn" class="pwa-action-btn install"
+                    data-lang-key="pwaInstall">Installer</button>
+                <button id="pwa-dismiss-btn" class="pwa-action-btn dismiss" data-lang-key="pwaDismiss">Plus
+                    tard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOUVEL OVERLAY : Options de playlist recommandée -->
+    <div id="reco-playlist-options-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2>Playlist</h2>
+            <div class="playlist-options-actions">
+                <button class="playlist-option-btn playlist-action-btn" data-action="play">
+                    <i class="fas fa-play"></i> <span data-lang-key="playPlaylist">Lancer la playlist</span>
+                </button>
+                <button class="playlist-option-btn playlist-action-btn" data-action="save">
+                    <i class="fas fa-save"></i> <span data-lang-key="savePlaylist">Enregistrer la playlist</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOUVEAU: Menu contextuel pour les cartes de titre -->
+    <div id="card-context-menu" class="hidden">
+        <div class="context-menu-content">
+            <button class="context-menu-btn" data-action="play-next">
+                <i class="fas fa-level-up-alt"></i> <span data-lang-key="playNext">Lancer ensuite</span>
+            </button>
+            <button class="context-menu-btn" data-action="add-to-queue">
+                <i class="fas fa-bars"></i> <span data-lang-key="addToQueue">Ajouter à la file d'attente</span>
+            </button>
+            <!-- NOUVEAU: Bouton pour retirer de la file d'attente -->
+            <button class="context-menu-btn hidden" data-action="remove-from-queue">
+                <i class="fas fa-trash-alt"></i> <span data-lang-key="removeFromQueue">Retirer de la file
+                    d'attente</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- NOUVEAU: Overlay pour la file d'attente -->
+    <div id="queue-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <div class="playlist-content" style="max-height: 70vh;">
+                <div class="playlist-header">
+                    <div class="queue-header-info">
+                        <h2 id="queue-overlay-title" data-lang-key="queue">File d'attente</h2>
+                        <p id="queue-context-subtitle"></p>
+                    </div>
+                </div>
+                <div id="queue-container" class="playlist-container">
+                    <!-- Le contenu de la file d'attente sera injecté ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOUVEAU: Overlay de confirmation d'achat -->
+    <div id="purchase-confirm-overlay" class="hidden">
+        <div class="settings-card">
+            <div class="mobile-player-handle"></div> <!-- NOUVEAU: Poignée -->
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h2 data-lang-key="confirmPurchase">Confirmer l'achat</h2>
+            <div id="purchase-details">
+                <!-- Le contenu sera injecté par JS -->
+            </div>
+            <div id="purchase-actions">
+                <button id="confirm-purchase-btn" class="pwa-action-btn install"
+                    data-lang-key="confirm">Confirmer</button>
+                <button id="cancel-purchase-btn" class="pwa-action-btn dismiss" data-lang-key="cancel">Annuler</button>
+            </div>
+            <p id="purchase-error-message" class="hidden"
+                style="color: #e74c3c; text-align: center; margin-top: 15px; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <!-- CORRECTION: La boîte de dialogue standard est déplacée ici pour être au-dessus de tous les overlays -->
+    <div id="custom-dialog" class="hidden">
+        <p id="dialog-message"></p>
+    </div>
+
+    <!-- NOUVEAU: Panneau de la file d'attente mobile (style Spotify) -->
+    <div id="mobile-queue-panel-backdrop" class="mobile-queue-panel-backdrop hidden"></div>
+    <div id="mobile-queue-panel" class="mobile-queue-panel hidden">
+        <div class="mobile-queue-handle-wrapper">
+            <div class="mobile-queue-handle"></div>
+        </div>
+        <div class="mobile-queue-header">
+            <h2 data-lang-key="queue">File d'attente</h2>
+        </div>
+        <div class="mobile-queue-context">
+            <p><span data-lang-key="nowPlayingFrom">Lecture en cours depuis :</span> <strong
+                    id="mobile-queue-context-name"></strong></p>
+        </div>
+        <div id="mobile-queue-list" class="mobile-queue-list">
+            <!-- Les titres de la file d'attente seront injectés ici -->
+        </div>
+    </div>
+
+    <!-- NOUVEAU: Lecteur plein écran pour mobile -->
+    <div id="mobile-full-player" class="mobile-full-player">
+        <div class="mobile-player-handle"></div>
+        <div class="mobile-player-header">
+            <!-- Le bouton autoplay a été déplacé dans les contrôles secondaires -->
+        </div>
+
+        <!-- NOUVEAU: Wrapper pour le contenu du haut (pochette + infos) -->
+        <div class="mobile-player-top-content">
+            <div class="mobile-player-art-wrapper">
+                <img id="mobile-player-album-art" src="https://placehold.co/300x300/1D4ED8/ffffff?text=Now+Playing"
+                    alt="Album Cover" class="mobile-player-art">
+            </div>
+
+            <div class="mobile-player-song-info">
+                <h3 id="mobile-player-title"><span>Titre de la chanson</span></h3>
+                <p id="mobile-player-artist"><span>Artiste</span></p>
+                <!-- RESTAURATION: Les boutons Like et Add sont remis comme avant -->
+                <div class="mobile-player-secondary-controls">
+                    <i class="far fa-heart clickable-icon" id="mobile-player-like-btn"></i>
+                    <div id="mobile-player-autoplay-btn" class="autoplay-btn active clickable-icon"
+                        title="Autoplay activé" data-lang-title="autoplay"><i class="fas fa-play-circle"></i></div>
+                    <i class="fas fa-plus clickable-icon" id="mobile-player-add-to-playlist-btn"
+                        title="Ajouter à la playlist" data-lang-title="addPlaylist"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOUVEAU: Wrapper pour regrouper les contrôles principaux et aérer l'affichage -->
+        <div class="mobile-player-main-controls-wrapper">
+            <div class="mobile-player-progress">
+                <span id="mobile-player-current-time">0:00</span>
+                <div class="progress-bar" id="mobile-player-progress-bar">
+                    <div class="progress-fill" id="mobile-player-progress-fill"></div>
+                </div>
+                <span id="mobile-player-duration">0:00</span>
+            </div>
+
+            <div class="mobile-player-controls">
+                <i class="fas fa-random clickable-icon" id="mobile-player-shuffle-btn"></i>
+                <i class="fas fa-step-backward clickable-icon" id="mobile-player-prev-btn"></i>
+                <div class="mobile-player-play-box clickable-icon" id="mobile-player-play-pause-box">
+                    <i class="fas fa-play" id="mobile-player-play-pause-btn"></i>
+                    <div class="loader"></div>
+                </div>
+                <i class="fas fa-step-forward clickable-icon" id="mobile-player-next-btn"></i>
+                <i class="fas fa-sync-alt clickable-icon" id="mobile-player-loop-btn"></i>
+            </div>
+        </div>
+
+        <!-- MODIFICATION: Le conteneur des actions du bas inclut maintenant le volume -->
+        <div class="mobile-player-bottom-actions">
+            <i class="fas fa-share-alt clickable-icon" id="mobile-player-share-btn" title="Partager la chanson"
+                data-lang-title="shareSong"></i>
+            <div id="mobile-player-volume-control" class="volume-control-new">
+                <button id="mobile-volume-down-btn" class="volume-adjust-btn">-</button>
+                <span id="volume-level-display" title="Volume" data-lang-title="volume">100</span>
+                <button id="mobile-volume-up-btn" class="volume-adjust-btn">+</button>
+            </div>
+            <i class="fas fa-bars clickable-icon" id="mobile-player-queue-btn" title="File d'attente"
+                data-lang-title="addToQueue"></i>
+        </div>
+
+    </div>
+
+    <!-- NOUVEAU: Mini-lecteur pour mobile -->
+    <div id="mobile-mini-player" class="mobile-mini-player hidden">
+        <div class="mini-player-progress">
+            <div id="mini-player-progress-fill" class="mini-player-progress-fill"></div>
+        </div>
+        <div class="mini-player-content">
+            <img id="mini-player-album-art" src="" alt="Pochette">
+            <div class="mini-player-info">
+                <h4 id="mini-player-title"><span></span></h4>
+                <p id="mini-player-context" class="mini-player-context-text"></p>
+            </div>
+            <div id="mini-player-controls" class="mini-player-controls">
+                <i class="far fa-heart clickable-icon" id="mini-player-like-btn"></i>
+                <i class="fas fa-play clickable-icon" id="mini-player-play-pause-btn"></i>
+                <i class="fas fa-times clickable-icon" id="mini-player-close-btn"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOUVEAU: Charger la librairie d'animation AVANT le script qui l'utilise -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="js/languages.js"></script>
+    <script src="js/mmg-music-contents.js" defer></script>
+    <script src="https://www.youtube.com/iframe_api" async defer></script>
+</body>
+
+</html>
