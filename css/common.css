@@ -1,0 +1,4785 @@
+/* css/critical.css */
+
+/* === GENERAL & THEME DE BASE === */
+:root {
+    --bg-color: #f0f2f5;
+    --text-color: #666;
+    --card-bg: rgba(255, 255, 255, 0.4);
+    --card-border: rgba(255, 255, 255, 0.25);
+    --main-board-bg: rgba(255, 255, 255, 0.2);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --icon-color: #666;
+    --icon-hover-bg: rgba(0, 0, 0, 0.05);
+    --active-color: #1d4ed8;
+    --progress-bar-bg: var(--active-color);
+    --slider-bg: #ccc;
+    --slider-checked-bg: #2196F3;
+    --card-style-bg: #ffffff;
+    --card-style-accent: #ff8a65;
+    --card-style-text: #263238;
+    --card-style-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    --search-bar-bg: #f0f2f5;
+    --ui-bar-bg: #ffffff;
+    --ui-bar-border: #e5e7eb;
+}
+
+body,
+html {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* CORRECTION: Le curseur par défaut est défini ici pour s'appliquer partout */
+    cursor: url('../assets/cursors/pointer.cur'), auto;
+}
+
+input[type="text"],
+textarea {
+    cursor: url('../assets/cursors/text.cur'), auto;
+}
+
+/* CORRECTION: Le curseur "doigt" est défini ici pour s'appliquer partout */
+a,
+button,
+.profile-tab,
+.top-bar-btn,
+.start-choice-btn,
+#mp3-player-container i,
+.slider,
+.switch,
+.tag-item,
+.progress-bar-container,
+.volume-control-new,
+.recent-video-item,
+.reco-playlist-card-inner,
+.card-actions i,
+.card-image-container,
+.list-view-image-container {
+    cursor: url('../assets/cursors/link.cur'), pointer;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: 700;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.main-grid-layout>*:not(.animation-bg-area):not(.gentle-waves-container) {
+    position: relative;
+    z-index: 1;
+}
+
+/* === BACKGROUND ANIME === */
+.animation-bg-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+
+.circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    background: linear-gradient(to bottom, rgba(0, 191, 255, 0.7), rgba(50, 205, 50, 0.7));
+    bottom: -150px;
+    animation: animate-bg 25s linear infinite;
+    border-radius: 20%;
+}
+
+/* NOUVEAU: Ajout de la police Pokémon */
+@font-face {
+    font-family: 'PokemonDS';
+    /* CORRECTION: Utilisation du bon format et du bon fichier pour la police */
+    src: url('../assets/fonts/pokemon-ds-font.woff2') format('woff2');
+}
+
+/* NOUVEAU: Ajout de la police Pixel32 pour le thème Spotimon */
+@font-face {
+    font-family: 'Pixel32';
+    src: url("../assets/fonts/Pixel32.v1.9.1.woff2") format('woff2');
+}
+
+
+.circles li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9) {
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+@keyframes animate-bg {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.top-bar {
+    background-color: var(--ui-bar-bg);
+}
+
+.top-bar-btn {
+    text-decoration: none;
+    color: var(--icon-color);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    border: none;
+    background: none;
+}
+
+.top-bar-btn:hover {
+    background-color: var(--icon-hover-bg);
+    transform: scale(1.1);
+}
+
+/* === NOUVEAU: Styles pour la boutique === */
+.shop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.shop-title {
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.shop-coin-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--icon-hover-bg);
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+.shop-coin-counter span {
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.shop-coin-counter p {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.shop-coin-counter .fa-coins {
+    color: #f59e0b;
+}
+
+.shop-product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.shop-product-card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    /* Ajoute un espace entre le titre et le bouton */
+    min-width: 0;
+    /* Empêche le conteneur de déborder à cause du flexbox */
+}
+
+/* NOUVEAU: Style pour le titre du produit dans la boutique */
+.shop-product-title {
+    font-weight: 600;
+    font-size: 0.9em;
+    margin: 0;
+    white-space: nowrap;
+    /* Empêche le retour à la ligne */
+    overflow: hidden;
+    /* Cache le texte qui dépasse */
+    flex-grow: 1;
+    /* Permet au titre de prendre l'espace disponible */
+}
+
+.shop-product-title>span {
+    display: inline-block;
+    /* Nécessaire pour l'animation de défilement */
+}
+
+.shop-buy-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: var(--icon-hover-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-color);
+    font-weight: 700;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+    /* Empêche le bouton de se réduire */
+}
+
+.shop-buy-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.shop-buy-btn .lucide-coins {
+    stroke: #f59e0b;
+}
+
+/* === NOUVEAU: Styles pour la liste des thèmes et missions dans la boutique === */
+.shop-list-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Espace entre chaque élément */
+}
+
+.shop-list-item.card {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    /* Colonnes: Icône, Info, Action */
+    gap: 15px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+/* NOUVEAU: Cursor pointer for clickable shop cards (excluding missions) */
+.shop-product-card:not(.locked),
+.shop-list-item.card:not([data-mission-id]) {
+    cursor: url('../assets/cursors/link.cur'), pointer;
+}
+
+.shop-list-item.card:hover {
+    background-color: var(--icon-hover-bg);
+}
+
+.shop-list-item-icon-container {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: var(--active-color);
+    flex-shrink: 0;
+}
+
+.shop-item-description {
+    font-size: 0.8em;
+    opacity: 0.7;
+    margin-top: 2px;
+    white-space: normal;
+    /* Permet au texte de passer à la ligne */
+    line-height: 1.4;
+    /* Améliore la lisibilité sur plusieurs lignes */
+}
+
+.shop-item-description>span {
+    display: inline-block;
+}
+
+.shop-list-item-action {
+    justify-self: end;
+}
+
+/* Styles pour les missions terminées */
+.shop-list-item.unlocked .shop-list-item-icon-container {
+    /* La couleur de l'icône n'est plus forcée en vert ici */
+    background-color: transparent;
+    /* Le fond n'est plus teinté */
+}
+
+.shop-list-item.unlocked .shop-list-item-action .theme-buy-btn.selected {
+    color: #28a745;
+    /* Le tick reste vert */
+    background-color: transparent;
+    /* Le fond du bouton n'est plus teinté */
+}
+
+.shop-items-flex {
+    display: flex;
+}
+
+/* === NOUVEAU: Styles pour la liste des thèmes dans la boutique === */
+.shop-list-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Espace entre chaque thème */
+}
+
+.shop-list-item.card {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    /* Colonnes: Icône, Info, Action */
+    gap: 15px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+/* NOUVEAU: Conteneur pour l'icône de thème, style similaire aux missions */
+.shop-list-item-icon-container {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: var(--active-color);
+    flex-shrink: 0;
+}
+
+.shop-list-item.card:hover {
+    background-color: var(--icon-hover-bg);
+}
+
+.shop-item-description {
+    font-size: 0.8em;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+.shop-list-item-action {
+    justify-self: end;
+}
+
+.list-view-buy-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+/* === Styles pour les cartes de mission === */
+.shop-missions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.mission-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mission-card.completed {
+    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.mission-card-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mission-card-icon {
+    font-size: 1.5em;
+    color: var(--active-color);
+}
+
+.mission-card-info h3 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.mission-card-info p {
+    margin: 0;
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+.mission-card-status {
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+}
+
+.mission-card-status.completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.mission-card-status.progress {
+    background-color: var(--icon-hover-bg);
+}
+
+/* Espace au-dessus du contenu des onglets */
+.shop-tab-content {
+    margin-top: 15px;
+}
+
+/* Animation de surbrillance pour la mission liée à un thème */
+@keyframes highlight-mission-anim {
+    0% {
+        box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(29, 78, 216, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(29, 78, 216, 0);
+    }
+}
+
+.highlight-mission {
+    animation: highlight-mission-anim 1.5s ease-out;
+    position: relative;
+    z-index: 10;
+}
+
+/* Style pour le texte de pourcentage dans le bouton de mission */
+.mission-progress-text {
+    font-size: 0.8em;
+    font-weight: 700;
+    width: 40px;
+    padding: 0;
+}
+
+/* === AUTRES ÉLÉMENTS & RESPONSIVE === */
+.icon-pop {
+    animation: icon-pop-animation 0.3s ease-out;
+}
+
+@keyframes icon-pop-animation {
+    0% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1.0);
+    }
+}
+
+#notifications-btn {
+    position: relative;
+}
+
+.notification-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 10px;
+    height: 10px;
+    background-color: #e74c3c;
+    border-radius: 50%;
+    border: 2px solid var(--ui-bar-bg);
+    z-index: 101;
+    /* CORRECTION: z-index très élevé pour passer au-dessus de la top-bar (z-index: 100) */
+}
+
+/* NOUVEAU: Styles pour les icônes SVG */
+.top-bar-btn svg,
+.search-bar svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.5;
+    color: var(--icon-color);
+}
+
+.search-bar {
+    /* NOUVEAU: Style de base pour la barre de recherche */
+    border: none;
+    /* CORRECTION: Plus de bordure par défaut */
+    outline: 1px solid transparent;
+    /* On utilise outline pour la transition sans affecter le layout */
+    transition: outline-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.search-bar:focus-within {
+    /* NOUVEAU: Style au focus pour un retour visuel moderne */
+    outline: 1px solid var(--text-color);
+    /* CORRECTION: La couleur du contour est maintenant grise */
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    /* CORRECTION: L'ombre est maintenant grise et plus subtile */
+}
+
+body.dark-theme .search-bar:focus-within {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    /* CORRECTION: Ombre blanche transparente pour le thème sombre */
+}
+
+/* NOUVEAU: Style pour le bouton d'effacement de la recherche */
+.search-clear-btn {
+    background-color: var(--icon-hover-bg);
+    border: none;
+    color: var(--icon-color);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    flex-shrink: 0;
+    /* Empêche le bouton de se réduire */
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.search-clear-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+
+.search-bar svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* NOUVEAU: Styles pour le compteur de filtre et le bouton de suppression */
+#tags-filter-btn {
+    position: relative;
+    /* Nécessaire pour positionner le badge */
+}
+
+.filter-count-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--active-color);
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--ui-bar-bg);
+}
+
+/* NOUVEAU: Règle utilitaire pour masquer des éléments */
+.hidden {
+    display: none !important;
+}
+
+/* === CONTENU PRINCIPAL === */
+.main-content {
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-section-board {
+    /* MODIFICATION: Padding latéral réduit pour plus d'espace horizontal */
+    padding: 1px 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* === PROFILES & GRILLE DE CARTES === */
+.central-profiles-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-tab {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 12px;
+    background-color: var(--search-bar-bg);
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    gap: 15px;
+}
+
+.profile-tab:hover {
+    transform: scale(1.03);
+}
+
+.profile-tab img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-tab.active {
+    background-color: var(--active-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+body.dark-theme .profile-tab.active {
+    color: #121212;
+}
+
+body.dark-theme .profile-tab {
+    background-color: #374151;
+}
+
+.player-controls-wrapper,
+.time-display {
+    color: var(--text-color);
+}
+
+.section-title {
+    /* MODIFICATION: Taille de police réduite pour un style plus épuré */
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 8px;
+    /* CORRECTION: Retire la marge du haut par défaut du h2 */
+    margin-bottom: 6px;
+    /* Rétablit un petit espace sous le titre pour le séparer de son contenu */
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Styles pour la carte en cours de lecture */
+
+/* CORRECTION: Le fond bleu est retiré. Le titre reste coloré pour une bonne visibilité. */
+.list-view .card.now-playing-card {
+    background-color: transparent;
+    /* Plus de fond coloré */
+}
+
+/* NOUVEAU: Animation pour l'icône d'égaliseur */
+@keyframes play-animation {
+
+    0%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(0.4);
+    }
+}
+
+/* NOUVEAU: Conteneur pour l'icône d'égaliseur */
+.list-view-equalizer {
+    display: none;
+    /* Caché par défaut */
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.list-view-equalizer .bar {
+    width: 3px;
+    height: 12px;
+    background-color: var(--active-color);
+    animation: play-animation 1.2s ease-in-out infinite;
+}
+
+.list-view-equalizer .bar:nth-child(2) {
+    animation-delay: -0.2s;
+}
+
+.list-view-equalizer .bar:nth-child(3) {
+    animation-delay: -0.4s;
+}
+
+/* NOUVEAU: Quand une carte est en lecture, on affiche l'égaliseur et on cache le numéro */
+.list-view .card.now-playing-card .list-view-equalizer {
+    display: flex;
+}
+
+.list-view .card.now-playing-card .list-view-index {
+    display: none;
+}
+
+
+/* CORRECTION: Le titre de la carte en cours de lecture est en bleu. */
+.card.now-playing-card .card__title span {
+    color: var(--active-color) !important;
+}
+
+/* CORRECTION: En mode liste, le titre de la carte en cours de lecture reste de la couleur normale pour un meilleur contraste. */
+.list-view .card.now-playing-card .list-view-title span span {
+    color: var(--active-color) !important;
+    font-weight: 700;
+    /* On le met juste en gras pour le distinguer */
+}
+
+/* Pour la vue en grille, on ajoute un contour bleu avec un espacement */
+/* NOUVEAU: Animation de pulsation pour la pochette du titre en cours de lecture */
+@keyframes pulse-playing-art {
+
+    0%,
+    100% {
+        transform: scale(1) translateY(-4px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    50% {
+        transform: scale(1.04) translateY(-6px);
+        box-shadow: 0 15px 30px var(--active-color-shadow);
+    }
+
+}
+
+/* CORRECTION: L'ancien contour bleu est remplacé par l'animation de pulsation sur la pochette. */
+.titles-grid .card.now-playing-card .card-image-container {
+    animation: pulse-playing-art 2s infinite ease-in-out;
+}
+
+/* === THEME SOMBRE === */
+body.dark-theme {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    /* CORRECTION: Texte principal en blanc pur */
+    --text-color-light: rgba(255, 255, 255, 0.7);
+    /* CORRECTION: Texte secondaire en blanc semi-transparent */
+    --card-bg: #1f2937;
+    --card-border: rgba(55, 65, 81, 0.7);
+    /* Bordure de carte plus visible */
+    --main-board-bg: transparent;
+    /* Le fond principal est déjà sombre */
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --active-color-shadow: rgba(129, 140, 248, 0.4);
+    /* NOUVEAU: Ombre pour l'animation en thème sombre */
+    --icon-color: #e5e7eb;
+    /* CORRECTION: Icônes beaucoup plus claires, presque blanches */
+    --icon-hover-bg: rgba(255, 255, 255, 0.08);
+    --active-color: #818cf8;
+    /* Bleu lavande pour l'accentuation */
+    --progress-bar-bg: var(--active-color);
+    --slider-bg: #4b5563;
+    --slider-checked-bg: var(--active-color);
+    --card-style-bg: #1f2937;
+    --card-style-text: #f9fafb;
+    /* CORRECTION: Texte des modales/cartes en blanc quasi pur */
+    --card-style-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    --ui-bar-bg: #1f2937;
+    /* Fond des barres UI (sidebar, player) */
+    --ui-bar-border: #374151;
+    /* Bordure des barres UI */
+    --search-bar-bg: #374151;
+    /* Fond de la barre de recherche */
+}
+
+body.dark-theme .search-bar input::placeholder {
+    color: #777;
+}
+
+/* CORRECTION: Les panneaux mobiles utilisent maintenant la couleur de fond opaque des cartes en thème sombre. */
+body.dark-theme .settings-card {
+    background-color: var(--card-style-bg);
+    /* --card-style-bg est #1f2937 en thème sombre */
+}
+
+body.dark-theme .close-btn {
+    color: #ddd;
+}
+
+body.dark-theme #player-like-btn.active {
+    color: #e91e63;
+}
+
+body.dark-theme .welcome-box {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #ddd;
+}
+
+/* CORRECTION: Fond semi-transparent pour la top-bar en thème sombre */
+body.dark-theme .top-bar {
+    background-color: rgba(31, 41, 55, 0.85);
+    /* --ui-bar-bg en RGBA, légèrement plus opaque */
+}
+
+body.dark-theme #start-music-btn {
+    background-color: #ddd;
+    color: #2a2a2a;
+    border-color: #ddd;
+}
+
+/* CORRECTION: Empêche le défilement de la page entière pendant le tutoriel */
+body.tutorial-active-body {
+    overflow: hidden;
+}
+
+/* === GENERAL & THEME DE BASE === */
+/* CORRECTION: Applique le curseur "bloqué" à toute la carte, en mode grille ou liste */
+.card.locked {
+    cursor: url('../assets/cursors/unavailable.cur'), not-allowed;
+}
+
+/* CORRECTION MAJEURE: Le conteneur de base n'est plus une grille. */
+.content-sections-card {
+    display: block;
+    /* Par défaut, c'est un simple conteneur. */
+}
+
+/* La grille n'est appliquée QUE si la classe .titles-grid est présente. */
+.content-sections-card.titles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    /* CORRECTION: Taille harmonisée avec les autres grilles */
+    gap: 25px;
+}
+
+/* CORRECTION: Ajoute un espace au-dessus de la liste, SAUF pour la file d'attente du tableau de bord */
+.content-sections-card.list-view:not(#dashboard-queue-list) {
+    padding-top: 8px;
+    /* Ajoute juste un peu d'espace au-dessus de la liste */
+}
+
+@keyframes card-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* === NOUVEAU STYLE DE CARTE MODERNE === */
+.card {
+    animation: card-fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-link-wrapper {
+    display: block;
+}
+
+.card a,
+.card a:hover {
+    text-decoration: none;
+}
+
+.card-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    /* Crée un conteneur carré */
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: var(--icon-hover-bg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:not(.locked):hover .card-image-container {
+    /* CORRECTION: Remplacement de la translation verticale par un léger zoom pour éviter le dépassement. */
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* NOUVEAU: Animation de déblocage pour les cartes */
+@keyframes card-unlocked-animation {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+
+    20% {
+        transform: scale(1.05) rotate(-1deg);
+    }
+
+    40% {
+        transform: scale(0.98) rotate(1deg);
+    }
+
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 15px rgba(255, 215, 0, 0.5), 0 0 30px 30px rgba(255, 255, 255, 0.5);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+.card-unlocked-anim {
+    animation: card-unlocked-animation 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* CORRECTION: Règle générique pour que TOUTES les images de carte se comportent de la même manière */
+.card-image-container .card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    /* CORRECTION: Assure que l'image se comporte comme un bloc */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card__badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    color: white;
+    padding: 0.3em 0.6em;
+    border-radius: 999px;
+    font-size: 0.8em;
+    font-weight: 600;
+    z-index: 3;
+}
+
+.card-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-grow: 1;
+    min-width: 0;
+    /* Empêche le texte de déborder */
+}
+
+#content-cards .card__image.card-icon-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: none !important;
+}
+
+#content-cards .card__image.card-icon-bg i {
+    font-size: 4em;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+#content-cards .card:hover .card__image.card-icon-bg i {
+    transform: scale(1.1);
+}
+
+#content-cards .card__description,
+#content-cards .card__title {
+    font-weight: bold;
+    font-size: 1.1em;
+    opacity: 1;
+}
+
+/* NOUVEAU: Styles pour les cartes type Spotify */
+.card.spotify-style {
+    perspective: none;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 15px;
+    transition: background-color 0.3s ease;
+}
+
+/* CORRECTION: Appliquer le survol uniquement en mode grille pour éviter les conflits avec la liste */
+.titles-grid .card.spotify-style:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme .card.spotify-style:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card.spotify-style .card-inner {
+    /* CORRECTION: Cacher l'ancienne structure uniquement en mode grille */
+    display: none;
+}
+
+.card.spotify-style .card-link-wrapper {
+    display: block;
+    /* Le lien ne contient que l'image */
+}
+
+.spotify-card-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    /* Crée un conteneur carré */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    margin-bottom: 15px;
+    /* Espace entre l'image et le texte */
+}
+
+.spotify-card-image-container .card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    /* L'image elle-même n'a pas besoin de radius */
+    box-shadow: none;
+    transition: transform 0.3s ease;
+}
+
+.card.spotify-style:hover .spotify-card-image-container .card__image {
+    transform: scale(1.05);
+}
+
+.card.spotify-style .card__text {
+    padding: 0;
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 4px;
+}
+
+.card.spotify-style .card__title {
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.card.spotify-style .card__description {
+    font-size: 0.85em;
+    color: var(--text-color);
+    opacity: 0.8;
+    /* Limite le texte à 2 lignes */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card__title {
+    color: var(--text-color);
+    font-size: 1.1em;
+    margin: 0;
+    font-weight: 700;
+    transition: color 0.4s ease-in-out;
+}
+
+.card:hover .card__title {
+    color: var(--card-style-accent);
+}
+
+.card__description {
+    color: var(--text-color);
+    font-size: 0.8em;
+    margin: 4px 0 0 0;
+    /* MODIFICATION: Marge réduite pour rapprocher artiste et tags */
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card:not(.locked):hover .card__description {
+    opacity: 1;
+}
+
+#titles-cards .card__title,
+#gameplay-cards .card__title,
+#makingofs-cards .card__title,
+#search-results-cards .card__title,
+#videos-cards .card__title,
+#bonus-cards .card__title,
+#liked-titles-cards .card__title,
+#suggestions-cards .card__title,
+/* CORRECTION: Ajout de la bibliothèque, du titre et des colonnes de la vue liste pour que les textes longs puissent défiler. */
+#albums-cards .card__title,
+#library-container .card__title,
+.list-view-title,
+.list-view-artist-col,
+.list-view-tags-col {
+    font-size: 0.88em;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+#titles-cards .card__title>span,
+#gameplay-cards .card__title>span,
+#makingofs-cards .card__title>span,
+#search-results-cards .card__title>span,
+#videos-cards .card__title>span,
+#bonus-cards .card__title>span,
+#liked-titles-cards .card__title>span,
+#suggestions-cards .card__title>span,
+/* CORRECTION: Ajout de la bibliothèque, du titre et des colonnes de la vue liste pour que les textes longs puissent défiler. */
+#albums-cards .card__title>span,
+#library-container .card__title>span,
+.list-view-title>span,
+.list-view-artist-col>span,
+.list-view-tags-col>span {
+    display: inline-block;
+    transform: translateX(0);
+    transition: transform 0.2s ease;
+}
+
+/* MODIFICATION: Le défilement est actif par défaut */
+.scrolling>span {
+    animation: scroll-title var(--scroll-duration, 5s) linear infinite;
+}
+
+/* CORRECTION: Le défilement se met en pause au survol/toucher sur n'importe quel élément de la liste ou de la grille. */
+.card:hover .scrolling>span,
+.card:active .scrolling>span {
+    animation-play-state: paused;
+}
+
+/* === STYLES SPÉCIFIQUES POUR LES CARTES DU MENU PRINCIPAL === */
+
+/* Rendre le texte blanc pour toutes les cartes de menu */
+#content-cards .card-menu .card__title {
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+#content-cards .card-menu .card__image.card-icon-bg {
+    background-color: transparent !important;
+}
+
+#content-cards .card-menu .card__image.card-icon-bg i {
+    color: #fff;
+    font-size: 5em;
+    /* Plus grand */
+    opacity: 0.8;
+}
+
+#content-cards .card.card-menu-albums .card-inner,
+#content-cards .card.card-menu-albumsBeats .card-inner {
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+    /* Rouge */
+}
+
+#content-cards .card.card-menu-videoClips .card-inner,
+#content-cards .card.card-menu-videosBeats .card-inner {
+    background: linear-gradient(45deg, #2980b9, #3498db);
+    /* Bleu */
+}
+
+#content-cards .card.card-menu-makingOfs .card-inner {
+    background: linear-gradient(45deg, #f39c12, #f1c40f);
+    /* Jaune/Orange */
+}
+
+#content-cards .card.card-menu-likedTitles .card-inner {
+    background: linear-gradient(45deg, #8e44ad, #9b59b6);
+    /* Violet */
+}
+
+#content-cards .card.card-menu-about .card-inner {
+    background: #1a1a1a;
+    /* Fond noir */
+}
+
+#content-cards .card-menu-about .card__image {
+    object-fit: cover;
+    /* Assure que l'image remplit bien son espace */
+}
+
+/* NOUVEAU: Styles pour les cartes de playlists recommandées sur l'accueil */
+.card-reco-playlist .card-info-container {
+    /* MODIFICATION: Positionne le titre par-dessus l'image */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    background: transparent;
+    /* NOUVEAU: Ajoute un arrondi en bas pour correspondre à la carte. */
+    border-radius: 0 0 12px 12px;
+    z-index: 2;
+}
+
+.card-reco-playlist .card__title {
+    /* MODIFICATION: Le titre est blanc et a une ombre pour la lisibilité */
+    color: #fff;
+}
+
+.card-reco-playlist:hover .card__title {
+    /* MODIFICATION: Le titre reste blanc au survol */
+    color: #fff;
+}
+
+.card-reco-playlist .card-icon-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* CORRECTION: Assure que le fond coloré remplit tout l'espace disponible. */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.card-reco-playlist .card-icon-bg i {
+    font-size: 5em;
+    color: #fff;
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+}
+
+.card-reco-playlist:hover .card-icon-bg i {
+    transform: scale(1.1);
+}
+
+/* NOUVEAU: Styles pour les icônes SVG dans les playlists recommandées */
+.card-reco-playlist .card-icon-bg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 5em;
+    /* Taille similaire à l'ancienne icône */
+}
+
+.reco-playlist-chill {
+    background: linear-gradient(45deg, #FFD700, #FFEA00);
+    /* SVG pour "Chill Vibes" */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M22 17a10 10 0 0 0-20 0'/%3e%3cpath d='M6 17a6 6 0 0 1 12 0'/%3e%3cpath d='M10 17a2 2 0 0 1 4 0'/%3e%3c/svg%3e");
+}
+
+.reco-playlist-frutiger {
+    background: linear-gradient(45deg, #87CEEB, #ADD8E6);
+    /* SVG pour "Frutiger Aero" */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='14' y='14' width='4' height='6' rx='2'/%3e%3crect x='6' y='4' width='4' height='6' rx='2'/%3e%3cpath d='M6 20h4'/%3e%3cpath d='M14 10h4'/%3e%3cpath d='M6 14h2v6'/%3e%3cpath d='M14 4h2v6'/%3e%3c/svg%3e");
+}
+
+/* Bleu */
+
+@keyframes scroll-title {
+    0% {
+        transform: translateX(0);
+    }
+
+    80% {
+        transform: translateX(var(--overflow-width, -50px));
+    }
+
+    100% {
+        transform: translateX(var(--overflow-width, -50px));
+    }
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+    /* MODIFICATION: Espacement réduit entre le coeur et le + */
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.like-btn-card,
+.add-playlist-btn-card {
+    font-size: 1.2em;
+    transition: color 0.2s ease, transform 0.2s ease;
+    color: var(--icon-color);
+    opacity: 0.7;
+    text-shadow: none;
+    z-index: 5;
+}
+
+.like-btn-card.active {
+    color: #e91e63;
+    font-weight: 900;
+    transform: scale(1.1);
+}
+
+.card-actions-overlay {
+    position: absolute;
+    bottom: 15px;
+    /* Ajustement pour un meilleur placement */
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    opacity: 1;
+    /* Toujours visible */
+    z-index: 5;
+}
+
+.card-actions-overlay .play-btn-overlay {
+    font-size: 2.5rem;
+    color: white;
+    background-color: var(--active-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+    order: 1;
+    /* Met le bouton play au milieu */
+}
+
+.card-actions-overlay .play-btn-overlay:hover {
+    transform: scale(1.1);
+}
+
+.card-actions-overlay .like-btn-card {
+    order: 0;
+}
+
+.card-actions-overlay .add-playlist-btn-card {
+    order: 1;
+}
+
+/* Ajustement de l'ordre */
+
+
+.like-btn-card:hover,
+.add-playlist-btn-card:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.add-playlist-btn-card.added {
+    color: var(--active-color);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.card.locked .card-image-container {
+    filter: grayscale(80%);
+}
+
+.card .lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    text-align: center;
+    padding: 10px;
+}
+
+.lock-overlay .fa-lock {
+    font-size: 3em;
+}
+
+.lock-overlay .unlock-cost {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+/* === LECTEUR MP3 & FOOTER === */
+.sidebar-main-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+    flex-grow: 1;
+    /* Fait en sorte que la navigation prenne l'espace disponible */
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    /* Pousse tout le bloc vers le bas */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.sidebar-version-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.8em;
+    color: #aaa;
+    position: relative;
+    /* AJOUT: Permet le positionnement */
+    bottom: 13px;
+    /* AJOUT: Remonte le bloc de 10px */
+}
+
+.sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+    gap: 15px;
+    /* MODIFICATION: Assure un espacement cohérent pour le guide */
+}
+
+.sidebar-nav-link:hover {
+    background-color: var(--icon-hover-bg);
+}
+
+.sidebar-nav-link.active {
+    background-color: var(--icon-hover-bg);
+    color: var(--active-color);
+}
+
+.sidebar-nav-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.autoplay-btn {
+    font-size: 1.8rem;
+    color: #aaa;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.autoplay-btn.active {
+    color: var(--active-color);
+}
+
+.autoplay-btn:not(.active) .fa-play-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 2px;
+    background-color: #aaa;
+    transform: translate(-50%, -50%) rotate(45deg);
+    transform-origin: center;
+}
+
+.autoplay-btn .fa-play-circle {
+    position: relative;
+    display: block;
+}
+
+.volume-control-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.volume-adjust-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--icon-color);
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.volume-adjust-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#volume-level-display {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    min-width: 25px;
+    text-align: center;
+}
+
+.theme-switcher-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-switcher-footer .theme-icon {
+    font-size: 1.2em;
+    color: #888;
+}
+
+/* === FILTRE PAR TAGS === */
+#tags-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#tags-filter-list .tag-filter-item {
+    display: block;
+}
+
+#tags-filter-list input[type="checkbox"] {
+    display: none;
+}
+
+#tags-filter-list label {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 1em;
+    transition: background-color 0.2s, color 0.2s;
+    cursor: url('../assets/cursors/link.cur'), pointer;
+}
+
+#tags-filter-list input[type="checkbox"]:checked+label {
+    background: var(--active-color);
+    color: white;
+}
+
+
+/* === SECTIONS DE PAGE & GRANDS LECTEURS === */
+.page-section:not(.hidden) {
+    animation: page-fade-in 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    /* CORRECTION: Animation d'entrée accélérée */
+}
+
+.page-section.hidden {
+    display: none !important;
+}
+
+.page-section.is-hiding {
+    animation: page-fade-out 0.15s ease-out forwards;
+    /* CORRECTION: Animation de sortie accélérée */
+    pointer-events: none;
+}
+
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes page-fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+/* NOUVELLES ANIMATIONS POUR LE ZOOM/FONDU */
+@keyframes scale-out-fade {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.03);
+    }
+}
+
+@keyframes scale-in-fade {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.page-section.is-scaling-out {
+    animation: scale-out-fade 0.4s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Fin des nouvelles animations */
+
+.hidden-player {
+    display: none;
+}
+
+#large-player-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.player-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+#large-player-iframe {
+    width: 105%;
+    height: 105%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.fullscreen-btn {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2147483647;
+}
+
+.player-container:hover .fullscreen-btn {
+    opacity: 1;
+}
+
+/* AJOUT: Assure que la section de détails prend toute la hauteur disponible */
+#music-title-details-section {
+    display: flex;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#music-title-details-section .music-details-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    /* CORRECTION: Empêche le débordement */
+    gap: 40px;
+    height: 100%;
+    align-items: center;
+    /* MODIFICATION: Centre verticalement tout le contenu */
+    justify-content: center;
+    /* MODIFICATION: Centre horizontalement */
+}
+
+#music-title-details-section .music-details-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.music-art-panel {
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.album-art-wrapper {
+    position: relative;
+    overflow: hidden;
+    /* CORRECTION: Déplacé ici pour ne couper que l'image et son effet */
+    border-radius: 20px;
+    /* Empêche un espace blanc sous l'image */
+    line-height: 0;
+    /* Assure que le wrapper prend la taille de l'image */
+    display: inline-block;
+}
+
+#details-album-art {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+}
+
+/* MODIFICATION: Style modernisé pour le bouton d'options sur la page de détails */
+.details-options-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    background-color: transparent;
+    color: var(--icon-color);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s, color 0.2s;
+    opacity: 0.7;
+}
+
+.details-options-btn:hover {
+    background-color: var(--icon-hover-bg);
+    transform: scale(1.1);
+    opacity: 1;
+    color: var(--active-color);
+}
+
+.music-info-panel {
+    flex-grow: 1;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tag-item,
+.tag-link span {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.tag-item:hover,
+.tag-link:hover span {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.tag-link {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.temp-play-btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    background-color: var(--active-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.temp-play-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.temp-play-btn.hidden {
+    display: none;
+}
+
+
+#details-description {
+    text-align: justify;
+}
+
+.associated-videos-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-self: end;
+    width: 100%;
+    max-width: 250px;
+}
+
+.associated-videos-panel h4 {
+    margin: 0 0 10px 0;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 5px;
+}
+
+.associated-video-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    padding: 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.associated-video-card img {
+    width: 100px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.associated-video-card p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* CORRECTION: L'effet shine ne s'applique qu'à la pochette */
+.album-art-wrapper:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+#artwork-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+}
+
+#artwork-overlay.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+#artwork-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 15px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+
+.streaming-links-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.streaming-links-container a {
+    color: var(--icon-color);
+    font-size: 2.5rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.streaming-links-container a:hover {
+    transform: scale(1.1);
+    color: var(--active-color);
+}
+
+.streaming-links-container .add-link-btn {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.details-actions-container {
+    margin-top: 15px;
+}
+
+.details-action-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    background-color: var(--icon-hover-bg);
+    color: var(--text-color);
+    border: 1px solid var(--card-border);
+    border-radius: 25px;
+    transition: background-color 0.2s, transform 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.details-action-btn:hover {
+    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.details-action-btn.added {
+    background-color: var(--active-color);
+    color: var(--bg-color);
+    border-color: var(--active-color);
+}
+
+body.dark-theme .details-action-btn.added {
+    color: #121212;
+}
+
+/* === SECTION "À PROPOS" === */
+/* RESTAURATION: Retour aux styles d'origine */
+#about-section {
+    padding: 20px;
+    text-align: left;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    /* MODIFICATION: Aligne les éléments verticalement */
+    align-items: center;
+    /* MODIFICATION: Centre l'avatar et le texte horizontalement */
+    gap: 30px;
+    padding: 20px;
+    line-height: 1.7;
+    font-size: 1.1em;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-content img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid var(--card-border);
+    flex-shrink: 0;
+}
+
+.about-content p {
+    margin: 0;
+    text-align: justify;
+}
+
+/* === OVERLAYS === */
+/* CORRECTION: Le style des overlays est modernisé pour un look plus épuré. */
+#settings-overlay,
+#shop-overlay,
+#wifi-overlay,
+#achievements-overlay,
+#tags-filter-overlay,
+#playlist-overlay,
+#player-options-overlay,
+#tutorial-overlay,
+#notifications-overlay,
+#reco-playlist-options-overlay,
+#queue-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* MODIFICATION: Fond plus subtil */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* NOUVEAU: Fond sombre semi-transparent, plus moderne */
+    backdrop-filter: none;
+    /* NOUVEAU: On retire le flou, plus performant */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+    /* MODIFICATION: Transition plus rapide et ciblée */
+    transition: opacity 0.3s ease;
+    padding: 20px;
+    /* Ajoute un espace de sécurité sur les petits écrans */
+    box-sizing: border-box;
+}
+
+/* AJOUT: Restauration du style de fond pour l'overlay du tutoriel */
+body.tutorial-active-body #tutorial-overlay {
+    background-color: transparent;
+    /* CORRECTION: Fond transparent pour bloquer les clics sans obscurcir */
+    backdrop-filter: none;
+}
+
+body.tutorial-active-body #tutorial-overlay.transparent-bg {
+    background-color: transparent;
+    backdrop-filter: none;
+}
+
+/* CORRECTION: La classe .hidden est suffisante, pas besoin de répéter tous les IDs. */
+.overlay.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+.settings-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    text-align: left;
+}
+
+/* CORRECTION: Style de la carte de dialogue modernisé (opaque, ombre portée) */
+.settings-card {
+    background-color: var(--card-style-bg);
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    text-align: left;
+    box-shadow: var(--card-style-shadow);
+    border: none;
+    /* Suppression de la bordure */
+}
+
+.settings-card {
+    display: flex;
+    /* Make it a flex container */
+    flex-direction: column;
+    /* Stack children vertically */
+    max-height: 90vh;
+    /* Limit overall height of the card */
+}
+
+/* CORRECTION: Style du bouton de fermeture amélioré */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--icon-hover-bg);
+    border: none;
+    font-size: 1.2em;
+    color: var(--icon-color);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+/* NOUVEAU: Positionne le bouton de fermeture dans le menu contextuel mobile */
+.mobile-card-menu-header .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: none;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+}
+
+/* CORRECTION: Style de l'en-tête de la carte de dialogue amélioré */
+.settings-card h2 {
+    margin: 0 0 15px 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--ui-bar-border);
+    text-align: center;
+    font-size: 1.5em;
+}
+
+/* NOUVEAU: Correction pour l'overlay de connexion */
+#wifi-overlay .settings-card h2 {
+    border-bottom: none;
+    /* Supprime le soulignement gris */
+    margin-bottom: 20px;
+    /* Supprime l'espace sous le titre (qui est vide) */
+}
+
+.setting-item,
+.shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* CORRECTION: Style unifié pour les boutons d'action de la boutique (sélectionner, sélectionné, verrouillé) */
+.theme-buy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    /* CORRECTION: Taille réduite */
+    height: 24px;
+    /* CORRECTION: Taille réduite */
+    border-radius: 8px;
+    /* Bords arrondis */
+    border: 1px solid var(--card-border);
+    background-color: var(--icon-hover-bg);
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+
+.theme-buy-btn:not(:disabled):hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-buy-btn.locked {
+    background-color: var(--icon-hover-bg);
+    opacity: 0.5;
+}
+
+.theme-buy-btn.selected {
+    background-color: var(--active-color);
+    color: white;
+    border-color: var(--active-color);
+}
+
+body.dark-theme .theme-buy-btn.selected {
+    color: #121212;
+}
+
+.language-switcher {
+    display: flex;
+    gap: 5px;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 3px;
+    background-color: var(--icon-hover-bg);
+}
+
+.lang-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 5px 15px;
+    border-radius: 17px;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.lang-btn.active {
+    background-color: var(--bg-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.view-switcher-settings {
+    display: flex;
+    gap: 5px;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 3px;
+    background-color: var(--icon-hover-bg);
+}
+
+.view-switch-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 5px 15px;
+    border-radius: 17px;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+.view-switch-btn.active {
+    background-color: var(--bg-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#wifi-overlay .settings-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.wifi-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    /* Ajout pour le décalage */
+    top: 20px;
+    /* Décalage vertical de 20px vers le bas */
+}
+
+.wifi-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--card-border);
+    border-top-color: var(--icon-color);
+    border-radius: 50%;
+    animation: spin-wifi 1s linear infinite;
+}
+
+/* MODIFICATION: Correction de l'animation du loader */
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes spin-wifi {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Styles pour l'overlay de notifications */
+#notifications-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.notification-item.hidden {
+    display: none;
+}
+
+.notification-icon {
+    font-size: 1.8em;
+    color: var(--active-color);
+}
+
+.notification-details h4 {
+    margin: 0 0 5px 0;
+}
+
+.notification-details p {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.update-log h4 {
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.update-log-entry h5 {
+    margin: 0 0 5px 0;
+}
+
+.update-log-entry p {
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 0 0 15px 0;
+}
+
+.update-log-entry.unread h5::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #e74c3c;
+    border-radius: 50%;
+    margin-left: 10px;
+    vertical-align: middle;
+    animation: pulse-unread 2s infinite;
+}
+
+@keyframes pulse-unread {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+
+.mark-as-read-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    background-color: var(--icon-hover-bg);
+    color: var(--text-color);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.mark-as-read-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.mark-as-read-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: transparent;
+}
+
+/* NOUVEAU: Style pour les notifications de déblocage */
+.notification-item.unlock-prompt {
+    cursor: url('../assets/cursors/link.cur'), pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item.unlock-prompt:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* === SECTION SUCCÈS & CHEAT CODE === */
+.coin-counter {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.coin-counter h3 {
+    margin: 0;
+    font-size: 1.1em;
+    color: var(--text-color);
+    text-align: left;
+}
+
+.coin-counter p {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.coin-counter .coin-icon {
+    color: var(--icon-color);
+    font-size: 1.6em;
+}
+
+#achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    opacity: 0.5;
+    transition: opacity 0.3s, background 0.3s;
+}
+
+.achievement-item.unlocked {
+    opacity: 1;
+    background: rgba(76, 175, 80, 0.2);
+}
+
+.achievement-icon {
+    font-size: 2em;
+    width: 40px;
+    text-align: center;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.achievement-icon .fas,
+.achievement-icon .fab {
+    transition: color 0.3s, transform 0.3s;
+}
+
+.achievement-item.unlocked .achievement-icon {
+    color: var(--active-color);
+}
+
+.achievement-item.unlocked:hover .achievement-icon .fas,
+.achievement-item.unlocked:hover .achievement-icon .fab {
+    transform: scale(1.2) rotate(-10deg);
+}
+
+/* NOUVEAU: Style moderne pour la section du code secret */
+.cheat-code-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background-color: var(--search-bar-bg);
+    padding: 8px 12px;
+    border-radius: 9999px;
+    /* Forme de pilule */
+    margin: 0 auto 25px;
+    /* Centré et espacé */
+    max-width: 400px;
+    border: 1px solid var(--card-border);
+    transition: box-shadow 0.2s;
+}
+
+.cheat-code-section:focus-within {
+    box-shadow: 0 0 0 3px var(--active-color-shadow);
+    border-color: var(--active-color);
+}
+
+#cheat-code-input {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    outline: none;
+    color: var(--text-color);
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+#cheat-code-btn {
+    padding: 6px 15px;
+    /* Padding ajusté */
+    border: none;
+    background-color: var(--active-color);
+    color: white;
+    border-radius: 20px;
+    /* Bords arrondis */
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+#cheat-code-btn:hover {
+    opacity: 0.9;
+}
+
+
+/* === AUTRES ÉLÉMENTS & RESPONSIVE === */
+#welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.5s ease-out;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.welcome-box {
+    background-color: #fff;
+    color: #333;
+    border: 2px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    padding: clamp(20px, 5vw, 40px);
+    border-radius: 20px;
+    text-align: center;
+    max-width: 600px;
+    animation: fadeInWelcome 1s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInWelcome {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-box p {
+    text-align: justify;
+}
+
+.welcome-box h1 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-top: 0;
+}
+
+#start-music-btn {
+    background-color: #333;
+    color: #fff;
+    border: 2px solid #333;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    padding: 12px 30px;
+    border-radius: 25px;
+    transition: all 0.2s ease;
+    margin-top: 20px;
+    font-weight: 700;
+}
+
+#start-music-btn:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+
+#main-content-wrapper.hidden {
+    display: none;
+    opacity: 0;
+    /* Assure qu'il est bien caché au départ */
+}
+
+#welcome-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--slider-bg);
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--slider-checked-bg);
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+/* MODIFICATION: Augmentation du z-index pour passer au-dessus du lecteur mobile */
+#custom-dialog {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    background-color: rgba(30, 30, 30, 0.9);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 15px;
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+    z-index: 1200;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+#custom-dialog.hidden {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+    pointer-events: none;
+    display: none;
+}
+
+/* === GUIDE === */
+@keyframes tutorial-pulse {
+    0% {
+        box-shadow: 0 0 0 0px rgba(29, 78, 216, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 0 0 15px rgba(29, 78, 216, 0);
+    }
+}
+
+body.tutorial-active-body #main-content-wrapper {
+    pointer-events: none;
+}
+
+#tutorial-overlay>* {
+    pointer-events: all;
+}
+
+.tutorial-highlight {
+    position: relative;
+    z-index: 1001;
+    border-radius: 10px;
+    animation: tutorial-pulse 1.5s infinite;
+    pointer-events: none;
+}
+
+#guide-selection-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.guide-choice-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.guide-choice-btn:hover {
+    background-color: var(--icon-hover-bg);
+    transform: translateY(-2px);
+}
+
+.tutorial-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tutorial-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* AJOUT: Style de base pour la boîte du tutoriel */
+.tutorial-box {
+    position: absolute;
+    background-color: rgba(30, 30, 30, 0.9);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 350px;
+    text-align: center;
+    z-index: 1002;
+    /* Au-dessus de l'élément surligné */
+}
+
+.tutorial-box.hidden {
+    display: none;
+}
+
+.tutorial-box.pos-top {
+    bottom: 100%;
+    /* Se positionne au-dessus de l'élément cible */
+    margin-bottom: 10px;
+}
+
+.tutorial-box.pos-bottom {
+    top: 100%;
+    /* Se positionne en dessous de l'élément cible */
+    margin-top: 10px;
+}
+
+.tutorial-box.pos-left {
+    right: 100%;
+    margin-right: 10px;
+}
+
+.tutorial-box.pos-right {
+    left: 100%;
+    margin-left: 10px;
+}
+
+.tutorial-box p {
+    margin: 0 0 15px 0;
+    line-height: 1.5;
+}
+
+#tutorial-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#tutorial-nav button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* === PLAYLIST === */
+.playlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.playlist-header h2 {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.playlist-header .close-btn {
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.clear-playlist-button {
+    background: none;
+    border: 1px solid var(--card-border);
+    color: var(--icon-color);
+    font-size: 1rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.clear-playlist-button:hover {
+    background-color: var(--icon-hover-bg);
+    color: #e91e63;
+    transform: scale(1.1);
+}
+
+/* NOUVEAU: Styles pour les actions de l'en-tête de la playlist */
+#playlist-header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.playlist-action-btn {
+    background: none;
+    border: 1px solid var(--card-border);
+    color: var(--icon-color);
+    font-size: 1rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.playlist-action-btn:hover {
+    background-color: var(--icon-hover-bg);
+    transform: scale(1.1);
+}
+
+.playlist-action-btn .fa-plus {
+    color: var(--active-color);
+}
+
+
+
+#playlist-container {
+    max-height: 40vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.playlist-item.dragging {
+    opacity: 0.5;
+}
+
+.queue-item.dragging {
+    opacity: 0.5;
+}
+
+.playlist-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.playlist-item-info {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.playlist-item-info p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.playlist-item-info .playlist-item-title {
+    font-weight: bold;
+}
+
+.playlist-item-info .playlist-item-subtitle {
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+.playlist-item.queue-item .playlist-drag-handle {
+    cursor: grab;
+}
+
+.playlist-drag-handle {
+    color: #aaa;
+    cursor: grab;
+}
+
+.playlist-item.currently-playing {
+    background-color: var(--active-color);
+    color: white;
+}
+
+.playlist-item.queue-item.dragging {
+    opacity: 0.5;
+    background-color: var(--icon-hover-bg);
+}
+
+.playlist-item.currently-playing .playlist-drag-handle,
+.playlist-item.currently-playing .playlist-item-delete {
+    color: white;
+}
+
+.playlist-item .currently-playing-indicator {
+    font-size: 0.8em;
+    font-style: italic;
+    margin-left: auto;
+    opacity: 0.8;
+}
+
+.playlist-item-delete {
+    background: none;
+    border: none;
+    color: var(--icon-color);
+    font-size: 1.1rem;
+    padding: 5px;
+    border-radius: 50%;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.playlist-item-delete:hover {
+    color: #e91e63;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* === PWA INSTALL PROMPT === */
+#pwa-install-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+#pwa-install-overlay.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+.pwa-install-card {
+    background-color: var(--card-style-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--card-style-shadow);
+    color: var(--card-style-text);
+}
+
+.pwa-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pwa-install-card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.pwa-install-card p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.pwa-install-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 20px 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9em;
+}
+
+.pwa-install-card ul li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pwa-install-card ul li i {
+    color: var(--active-color);
+    width: 20px;
+    text-align: center;
+}
+
+.pwa-install-actions {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.pwa-action-btn {
+    flex-grow: 1;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.pwa-action-btn.install {
+    background-color: var(--active-color);
+    color: white;
+}
+
+.pwa-action-btn.install:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+}
+
+.pwa-action-btn.dismiss {
+    background-color: var(--icon-hover-bg);
+    color: var(--text-color);
+}
+
+.pwa-action-btn.dismiss:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.playlist-options-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.playlist-option-btn {
+    padding: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.playlist-option-btn:hover {
+    background-color: var(--icon-hover-bg);
+    transform: translateY(-2px);
+}
+
+/* NOUVEAU: Styles pour la prévisualisation des fonds d'écran dans la boutique */
+.bg-preview-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: var(--bg-color);
+    /* Fond par défaut */
+}
+
+.bg-preview-sidebar {
+    width: 25%;
+    height: 100%;
+    background-color: var(--ui-bar-bg);
+    border-right: 1px solid var(--ui-bar-border);
+}
+
+.bg-preview-content {
+    width: 75%;
+    height: 100%;
+    position: relative;
+}
+
+/* Applique les thèmes spécifiques à la prévisualisation */
+.bg-preview-container.default-bg {
+    background-image: radial-gradient(circle, rgba(0, 191, 255, 0.1) 1px, transparent 1px);
+    background-size: 15px 15px;
+}
+
+.bg-preview-container.theme-bg-waves .bg-preview-content::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(#fd004c, #fe9000, #fff020, #3edf4b, #3363ff, #b102b7, #fd004c);
+    animation: background-waves-anim 4s linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+.bg-preview-container.theme-bg-gray {
+    background-color: #e5e7eb;
+}
+
+/* NOUVEAU: Applique la même grille que pour les titres aux fonds d'écran de la boutique */
+.shop-backgrounds-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+/* NOUVEAU: Styles pour la page Bibliothèque */
+.playlist-content-full-page {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    /* CORRECTION: Assure que le conteneur s'étend pour remplir l'espace vertical de la section. */
+    height: 100%;
+    /* Prend toute la hauteur de la section */
+    gap: 15px;
+}
+
+.playlist-tabs,
+.shop-tabs {
+    /* NOUVEAU: Utilise le même style que le profile-switch */
+    display: flex;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--ui-bar-border);
+    gap: 10px;
+}
+
+.playlist-tab-btn {
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    color: var(--text-color);
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.playlist-tab-btn.active {
+    color: var(--active-color);
+    border-bottom-color: var(--active-color);
+}
+
+/* NOUVEAU: Assure que le conteneur de la bibliothèque peut défiler et grandir */
+#library-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-bottom: 15px;
+    /* Espace en bas pour le défilement */
+    padding-top: 10px;
+    /* NOUVEAU: Ajoute de l'espace en haut pour que l'animation ne soit pas coupée */
+}
+
+/* RESTAURATION: Retour à la grille spécifique pour la bibliothèque */
+#library-container.titles-grid {
+    display: grid;
+    /* Cette grille est maintenant gérée par les classes .content-sections-card et .titles-grid */
+    /* On peut ajouter des styles spécifiques ici si besoin */
+}
+
+/* NOUVEAU: Groupe pour le titre et le bouton poubelle dans la bibliothèque */
+.section-title-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Espace entre le titre et le bouton */
+    min-width: 0;
+    /* Permet au groupe de se réduire si nécessaire */
+    flex-shrink: 1;
+    /* Autorise le groupe à se compresser */
+}
+
+/* CORRECTION: Annule la marge du titre lorsqu'il est groupé avec un bouton */
+.section-title-group .section-title {
+    margin-bottom: 0;
+}
+
+/* CORRECTION: Aligne la poubelle en bas de son conteneur dans l'en-tête de la bibliothèque */
+#library-header .clear-playlist-button {
+    align-self: flex-end;
+    transform: translateY(3.5px);
+    /* NOUVEAU: Décale le bouton de 10px vers le bas */
+}
+
+body.dark-theme .like-btn-card:hover,
+body.dark-theme .add-playlist-btn-card:hover {
+    color: #aaa;
+}
+
+body.dark-theme .playlist-item.currently-playing {
+    color: #121212;
+}
+
+body.dark-theme .playlist-item.currently-playing .playlist-drag-handle,
+body.dark-theme .playlist-item.currently-playing .playlist-item-delete {
+    color: #121212;
+}
+
+body.dark-theme .temp-play-btn {
+    color: #121212;
+}
+
+body.dark-theme .pwa-action-btn.install {
+    color: #121212;
+}
+
+/* === NOUVEAUX FONDS D'ÉCRAN === */
+/* NOUVEAU: Le fond par défaut est maintenant blanc. */
+.animation-bg-area {
+    background-color: #ffffff;
+}
+
+/* CORRECTION: Assure que le fond de l'animation passe en noir avec le thème sombre */
+body.dark-theme .animation-bg-area {
+    background-color: var(--bg-color);
+}
+
+/* NOUVEAU: Fond "Digital" */
+body.theme-bg-digital .animation-bg-area {
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'%3E%3Cdefs%3E%3Crect stroke='%23ffffff' stroke-width='.5' width='1' height='1' id='s'/%3E%3Cpattern id='a' width='3' height='3' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cuse fill='%23fcfcfc' href='%23s' y='2'/%3E%3Cuse fill='%23fcfcfc' href='%23s' x='1' y='2'/%3E%3Cuse fill='%23fafafa' href='%23s' x='2' y='2'/%3E%3Cuse fill='%23fafafa' href='%23s'/%3E%3Cuse fill='%23f7f7f7' href='%23s' x='2'/%3E%3Cuse fill='%23f7f7f7' href='%23s' x='1' y='1'/%3E%3C/pattern%3E%3Cpattern id='b' width='7' height='11' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23f5f5f5'%3E%3Cuse href='%23s'/%3E%3Cuse href='%23s' y='5' /%3E%3Cuse href='%23s' x='1' y='10'/%3E%3Cuse href='%23s' x='2' y='1'/%3E%3Cuse href='%23s' x='2' y='4'/%3E%3Cuse href='%23s' x='3' y='8'/%3E%3Cuse href='%23s' x='4' y='3'/%3E%3Cuse href='%23s' x='4' y='7'/%3E%3Cuse href='%23s' x='5' y='2'/%3E%3Cuse href='%23s' x='5' y='6'/%3E%3Cuse href='%23s' x='6' y='9'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='h' width='5' height='13' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23f5f5f5'%3E%3Cuse href='%23s' y='5'/%3E%3Cuse href='%23s' y='8'/%3E%3Cuse href='%23s' x='1' y='1'/%3E%3Cuse href='%23s' x='1' y='9'/%3E%3Cuse href='%23s' x='1' y='12'/%3E%3Cuse href='%23s' x='2'/%3E%3Cuse href='%23s' x='2' y='4'/%3E%3Cuse href='%23s' x='3' y='2'/%3E%3Cuse href='%23s' x='3' y='6'/%3E%3Cuse href='%23s' x='3' y='11'/%3E%3Cuse href='%23s' x='4' y='3'/%3E%3Cuse href='%23s' x='4' y='7'/%3E%3Cuse href='%23s' x='4' y='10'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='c' width='17' height='13' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23f2f2f2'%3E%3Cuse href='%23s' y='11'/%3E%3Cuse href='%23s' x='2' y='9'/%3E%3Cuse href='%23s' x='5' y='12'/%3E%3Cuse href='%23s' x='9' y='4'/%3E%3Cuse href='%23s' x='12' y='1'/%3E%3Cuse href='%23s' x='16' y='6'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='d' width='19' height='17' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23ffffff'%3E%3Cuse href='%23s' y='9'/%3E%3Cuse href='%23s' x='16' y='5'/%3E%3Cuse href='%23s' x='14' y='2'/%3E%3Cuse href='%23s' x='11' y='11'/%3E%3Cuse href='%23s' x='6' y='14'/%3E%3C/g%3E%3Cg fill='%23efefef'%3E%3Cuse href='%23s' x='3' y='13'/%3E%3Cuse href='%23s' x='9' y='7'/%3E%3Cuse href='%23s' x='13' y='10'/%3E%3Cuse href='%23s' x='15' y='4'/%3E%3Cuse href='%23s' x='18' y='1'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='e' width='47' height='53' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23F60'%3E%3Cuse href='%23s' x='2' y='5'/%3E%3Cuse href='%23s' x='16' y='38'/%3E%3Cuse href='%23s' x='46' y='42'/%3E%3Cuse href='%23s' x='29' y='20'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='f' width='59' height='71' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23F60'%3E%3Cuse href='%23s' x='33' y='13'/%3E%3Cuse href='%23s' x='27' y='54'/%3E%3Cuse href='%23s' x='55' y='55'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='g' width='139' height='97' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23F60'%3E%3Cuse href='%23s' x='11' y='8'/%3E%3Cuse href='%23s' x='51' y='13'/%3E%3Cuse href='%23s' x='17' y='73'/%3E%3Cuse href='%23s' x='99' y='57'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect fill='url(%23a)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23b)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23h)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23c)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23d)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23e)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23f)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23g)' width='100%25' height='100%25'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* NOUVEAU: Fond Letters (anciennement Stripes) */
+body.bg-letters .animation-bg-area {
+    background-image: url('../assets/backgrounds/letters.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* NOUVEAU: Fond Blob */
+body.bg-blob .animation-bg-area {
+    background-image: url('../assets/backgrounds/blob.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* NOUVEAU: Fond Icons */
+body.bg-icons .animation-bg-area {
+    background-image: url('../assets/backgrounds/icons.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body.theme-ps-style .animation-bg-area .circles {
+    display: none;
+}
+
+
+/* === STYLES DES THÈMES SPÉCIFIQUES === */
+body.theme-8bit {
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+    --active-color: #ff8a65;
+}
+
+body.theme-8bit .main-area,
+body.theme-8bit .sidebar,
+body.theme-8bit .card .card-inner,
+body.theme-8bit .settings-card,
+body.theme-8bit .search-bar,
+body.theme-8bit .profile-tab,
+body.theme-8bit .bottom-ui-container,
+body.theme-8bit #tags-filter-overlay .settings-card {
+    border-radius: 0;
+    border: 4px solid #222;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+body.theme-ps-style .animation-bg-area .circles {
+    display: block;
+}
+
+body.theme-16bit {
+    font-family: 'DotGothic16', sans-serif;
+    --active-color: #9b59b6;
+}
+
+body.theme-16bit .main-area,
+body.theme-16bit .sidebar,
+body.theme-16bit .card .card-inner,
+body.theme-16bit .settings-card,
+body.theme-16bit .search-bar,
+body.theme-16bit .profile-tab,
+body.theme-16bit #tags-filter-overlay .settings-card {
+    border-radius: 4px;
+    box-shadow: 4px 4px 0px #555;
+    border: 2px solid #222;
+    backdrop-filter: none;
+}
+
+body.theme-16bit .bottom-ui-container {
+    border-top: 2px solid #222;
+    box-shadow: 0 -4px 0px #555;
+    border-radius: 0;
+    backdrop-filter: none;
+}
+
+/* === NOUVEAU: THÈME ANDROID MINIMALISTE === */
+body.theme-android {
+    --bg-color: #ffffff;
+    /* Fond blanc pur */
+    --card-bg: transparent;
+    /* Cartes sans fond */
+    --card-border: transparent;
+    /* CORRECTION: Bordures transparentes pour un look plus épuré */
+    --main-board-bg: transparent;
+    --card-style-shadow: none;
+    /* Suppression de l'ombre des modales */
+    font-family: 'Noto Sans', sans-serif;
+    /* NOUVEAU: Application de la police Noto Sans */
+    font-size: 0.95rem;
+    /* NOUVEAU: Réduit légèrement la taille de la police pour ce thème */
+    --ui-bar-bg: #ffffff;
+    /* Barres UI blanches */
+    --ui-bar-border: #e5e7eb;
+    /* Bordure grise très claire */
+    --search-bar-bg: #f3f4f6;
+    /* Fond de recherche légèrement gris */
+}
+
+/* Suppression des ombres sur les cartes */
+body.theme-android .card,
+body.theme-android .dashboard-card {
+    box-shadow: none;
+    border: 1px solid var(--card-border);
+}
+
+/* Suppression de l'effet de survol qui ajoute une ombre */
+body.theme-android .card:not(.locked):hover .card-image-container,
+body.theme-android .dashboard-card:hover {
+    box-shadow: none;
+    transform: translateY(0);
+    /* Annule le léger déplacement vers le haut */
+}
+
+/* Ajustement de la barre de recherche */
+body.theme-android .search-bar {
+    border: 1px solid transparent;
+}
+
+body.theme-android .search-bar:focus-within {
+    box-shadow: none;
+    /* Suppression de l'ombre au focus */
+    border-color: var(--active-color);
+}
+
+/* === NOUVEAU: STYLES POUR LE VIEW SWITCHER ET LE MODE LISTE === */
+.section-header-with-view-switcher {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    /* CORRECTION: Devient le conteneur de référence pour le positionnement absolu */
+}
+
+.section-header-with-view-switcher .section-title {
+    margin-bottom: 0;
+}
+
+.view-toggle-btn {
+    position: absolute;
+    /* CORRECTION: Sort le bouton du flux pour un positionnement précis */
+    top: 50%;
+    /* CORRECTION: Aligne le haut du bouton avec le milieu du conteneur */
+    right: 0;
+    /* CORRECTION: Le place tout à droite */
+    transform: translateY(calc(-50% + 4px));
+    /* CORRECTION: Centre et décale de 10px vers le bas */
+    background-color: transparent;
+    border: none;
+    color: var(--icon-color);
+    padding: 5px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+    opacity: 0.7;
+}
+
+.view-toggle-icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+}
+
+.view-toggle-btn:hover {
+    opacity: 1;
+    background-color: var(--icon-hover-bg);
+}
+
+/* === NOUVEAU: MENU CONTEXTUEL === */
+#card-context-menu {
+    position: fixed;
+    z-index: 1600;
+    background-color: var(--card-style-bg);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+    padding: 8px;
+    min-width: 200px;
+    animation: context-menu-fade-in 0.15s ease-out;
+}
+
+@keyframes context-menu-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.context-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-weight: 600;
+    text-align: left;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.context-menu-btn:hover {
+    background-color: var(--icon-hover-bg);
+    color: var(--active-color);
+}
+
+/* === NOUVEAU MODE LISTE (FLAT UI) === */
+.list-view-header {
+    display: grid;
+    padding: 0 1rem;
+    /* 16px */
+    /* La largeur et le gap sont définis dans les fichiers spécifiques */
+    font-size: 0.8rem;
+    /* 12px */
+    color: var(--text-color);
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border-bottom: 1px solid var(--ui-bar-border);
+    margin-bottom: 8px;
+}
+
+.content-sections-card.list-view .card {
+    animation: none;
+    display: grid;
+    align-items: center;
+    padding: 0.75rem 0;
+    /* CORRECTION: Padding latéral retiré */
+    margin-bottom: 4px;
+    /* Ajoute un petit espace sous chaque ligne */
+    border-radius: 10px;
+    transition: background-color 0.2s;
+    opacity: 1;
+    /* CORRECTION: Rend les cartes visibles en mode liste */
+}
+
+/* NOUVEAU: Conteneur pour l'image en mode liste pour positionner le cadenas */
+.list-view-image-container {
+    position: relative;
+    display: flex;
+    /* Pour centrer l'image si elle est plus petite */
+    align-items: center;
+    justify-content: center;
+}
+
+/* NOUVEAU: Style pour l'image de la pochette en mode liste */
+.list-view-item-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.content-sections-card.list-view .card:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+body.dark-theme .content-sections-card.list-view .card:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* NOUVEAU: Grise la pochette en mode liste si le titre est bloqué */
+.content-sections-card.list-view .card.locked .list-view-item-image {
+    filter: grayscale(80%);
+}
+
+/* NOUVEAU: Style pour l'icône de cadenas en mode liste */
+.list-view-lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    /* Doit correspondre au radius de l'image */
+    font-size: 1.2em;
+}
+
+/* NOUVEAU: Style pour le texte de déblocage en mode liste */
+.list-view-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-view-unlock-text {
+    font-size: 0.75em;
+    opacity: 0.7;
+}
+
+/* Styles pour les icônes d'action dans la liste */
+.action-icon {
+    color: var(--icon-color);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: color 0.15s ease, transform 0.1s ease;
+    stroke-width: 2;
+}
+
+.action-icon:hover {
+    color: var(--text-color);
+}
+
+.action-icon.liked {
+    color: #e91e63;
+    /* Rouge pour le like */
+    fill: #e91e63;
+    stroke: #e91e63;
+}
+
+.action-btn-add:hover .action-icon {
+    color: var(--active-color);
+}
+
+/* === NOUVEAU TABLEAU DE BORD === */
+.dashboard-grid {
+    /* MODIFICATION: Grille plus flexible pour s'adapter au contenu */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    /* MODIFICATION: Espace vertical entre les lignes augmenté */
+}
+
+/* MODIFICATION: Seul le carrousel prend toute la largeur dans la grille */
+.carousel-card {
+    grid-column: 1 / -1;
+}
+
+/* NOUVEAU: Style pour les sections autonomes (sans carte de fond) */
+.dashboard-standalone-section {
+    /* Cette classe permet de grouper un titre et son contenu */
+    grid-column: 1 / -1;
+    padding: 0;
+    /* CORRECTION: Annule tout padding par défaut pour harmoniser les espacements. */
+}
+
+
+.dashboard-card {
+    background-color: var(--card-style-bg);
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: var(--card-style-shadow);
+    border: 1px solid var(--card-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-theme .dashboard-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-card-button {
+    width: 100%;
+    margin-top: auto;
+    /* Pousse le bouton en bas */
+    padding: 10px 15px;
+    background-color: var(--icon-hover-bg);
+    color: var(--text-color);
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.dashboard-card-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Style spécifique pour le bouton des titres likés */
+.liked-preview-card .dashboard-card-button {
+    background-color: var(--active-color);
+    color: white;
+}
+
+body.dark-theme .liked-preview-card .dashboard-card-button {}
+
+/* Carrousel */
+.carousel-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-item {
+    scroll-snap-align: center;
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 10px;
+}
+
+.carousel-item img {
+    width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-item-info {
+    text-align: left;
+}
+
+/* NOUVEAU: Styles pour permettre le défilement du titre du carrousel */
+.carousel-item-info h3.card__title {
+    /* CORRECTION: Le conteneur h3 cache le débordement */
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-item-info h3.card__title>span {
+    /* CORRECTION: Le span à l'intérieur ne doit pas revenir à la ligne pour pouvoir défiler */
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.carousel-item-info h3 {
+    font-size: 1.2em;
+    margin: 0 0 5px 0;
+}
+
+.carousel-item-info p {
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin: 0 0 15px 0;
+    /* MODIFICATION: Limiter le texte à 2 lignes */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.carousel-item-info .dashboard-card-button {
+    width: auto;
+    padding: 10px 25px;
+    background-color: var(--active-color);
+    color: white;
+}
+
+body.dark-theme .carousel-item-info .dashboard-card-button {
+    color: #121212;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.carousel-dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--slider-bg);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.carousel-dots button.active {
+    background-color: var(--active-color);
+    transform: scale(1.2);
+}
+
+/* NOUVEAU: Conteneur pour le défilement horizontal des cartes */
+.horizontal-scroll-container {
+    display: flex;
+    gap: 25px;
+    /* Espace entre les cartes */
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* CORRECTION: Empêche la barre de défilement verticale d'apparaître */
+    padding: 0;
+    /* MODIFICATION: Padding vertical retiré */
+    /* Cacher la barre de défilement */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* NOUVEAU: Style pour les cartes dans le conteneur de défilement */
+.horizontal-scroll-container .card {
+    flex: 0 0 240px;
+    /* Largeur fixe pour les cartes */
+    width: 240px;
+}
+
+/* NOUVEAU: Correction pour les cartes de fonds d'écran dans la boutique */
+.shop-backgrounds-grid .shop-product-card.card {
+    flex-basis: auto;
+    /* Permet à la carte de s'adapter à la grille */
+    width: auto;
+    /* Annule la largeur fixe héritée */
+}
+
+/* NOUVEAU: Styles pour l'overlay de confirmation d'achat */
+#purchase-details {
+    text-align: center;
+    line-height: 1.6;
+    margin: 20px 0;
+    font-size: 1.1em;
+}
+
+#purchase-details strong {
+    color: var(--active-color);
+}
+
+#purchase-details .fa-coins {
+    color: #f59e0b;
+    margin-left: 2px;
+}
+
+#purchase-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* NOUVEAU: Style pour les cartes d'arrière-plan dans le scroll horizontal */
+.horizontal-scroll-container .shop-product-card {
+    flex: 0 0 180px;
+    /* Largeur fixe pour les cartes d'arrière-plan */
+}
+
+/* NOUVEAU: Styles pour la grande boîte de dialogue centrale */
+#big-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(30, 30, 30, 0.95);
+    color: white;
+    padding: 25px 40px;
+    border-radius: 20px;
+    z-index: 9999;
+    /* Au-dessus de tout */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 700;
+    opacity: 1;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+#big-dialog.hidden {
+    display: none;
+}
+
+#big-dialog.fade-out {
+    opacity: 0;
+}
+
+/* NOUVEAU: Styles pour la liste de la file d'attente sur le tableau de bord */
+.dashboard-queue-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    max-height: 250px;
+    /* Limite la hauteur pour éviter que la carte ne devienne trop grande */
+}
+
+.dashboard-queue-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.dashboard-queue-item:hover {
+    background-color: var(--icon-hover-bg);
+}
+
+.dashboard-queue-index {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--icon-color);
+    width: 20px;
+    text-align: center;
+}
+
+.dashboard-queue-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.dashboard-queue-info {
+    overflow: hidden;
+}
+
+.dashboard-queue-title {
+    font-weight: 600;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.dashboard-queue-artist {
+    font-size: 0.8em;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.dashboard-queue-empty {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.6;
+}
+
+/* NOUVEAU: Style pour le bouton "Voir plus" du tableau de bord */
+.dashboard-see-more-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: var(--icon-hover-bg);
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.dashboard-see-more-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+
+/* NOUVEAU: Carte Clips Récents */
+.recent-videos-card {
+    background-color: #e0f7fa;
+    /* Cyan très pâle */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+}
+
+.recent-videos-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.recent-videos-default-icon {
+    font-size: 5em;
+    color: #a7d8de;
+    /* Cyan clair */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+}
+
+.recent-videos-card:hover .recent-videos-default-icon {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.recent-videos-card:hover .recent-videos-hover-content {
+    opacity: 1;
+}
+
+/* Carte Activité */
+.activity-card {
+    background-color: #f0f7ff;
+    /* Bleu très pâle */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+}
+
+.activity-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity-default-icon {
+    font-size: 5em;
+    color: #a0c4ff;
+    /* Bleu clair */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+}
+
+.activity-card:hover .activity-default-icon {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.activity-card:hover .activity-hover-content {
+    opacity: 1;
+}
+
+.activity-hover-content {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    /* CORRECTION: align-items: center a été retiré pour permettre au contenu de prendre toute la largeur */
+}
+
+/* Carte Réseaux */
+.socials-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.05);
+}
+
+.social-link i {
+    font-size: 1.5em;
+}
+
+.social-link.instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+}
+
+.socials-card {
+    background-color: #e0f2fe;
+    /* Bleu pâle */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+}
+
+.socials-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.socials-at-symbol {
+    font-size: 5em;
+    color: #93c5fd;
+    /* Bleu plus soutenu */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+}
+
+.socials-hover-content {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.socials-card:hover .socials-at-symbol {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.socials-card:hover .socials-hover-content {
+    opacity: 1;
+}
+
+.socials-hover-content .social-link {
+    width: 100%;
+    max-width: 200px;
+    /* Limite la largeur pour ne pas déborder */
+}
+
+.fa-at:before {
+    content: "\40";
+}
+
+/* NOUVEAU: Styles pour les boutons de réseaux sociaux animés */
+#socials-list-container {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    /* Aligne les boutons au début */
+    overflow-x: auto;
+    /* Permet le défilement horizontal si nécessaire */
+    padding-bottom: 5px;
+    /* Ajoute un léger espace en bas pour l'ombre des boutons */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+#socials-list-container::-webkit-scrollbar {
+    display: none;
+    /* Cache la barre de défilement sur Webkit */
+}
+
+.Btn {
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    /* Assure que les liens n'ont pas de soulignement */
+}
+
+.Btn.instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.Btn.spotify {
+    background-color: #1DB954;
+}
+
+.Btn.appleMusic {
+    background-color: #ff2d55;
+    /* CORRECTION: Couleur changée pour du rouge vif */
+}
+
+.Btn.deezer {
+    background-color: #A239F3;
+}
+
+.Btn:hover {
+    width: 120px;
+    border-radius: 30px;
+}
+
+.Btn:hover .text {
+    opacity: 1;
+}
+
+.Btn:hover .svgIcon {
+    opacity: 0;
+}
+
+.text {
+    position: absolute;
+    color: white;
+    font-weight: 600;
+    opacity: 0;
+    transition-duration: 0.4s;
+}
+
+.svgIcon {
+    transition-duration: 0.3s;
+}
+
+.svgIcon path {
+    fill: white;
+}
+
+/* NOUVEAU: Styles pour les icônes Font Awesome dans les boutons */
+.Btn i {
+    font-size: 1.4em;
+    /* MODIFICATION: Icônes plus grandes */
+    color: white;
+    transition-duration: 0.3s;
+}
+
+.Btn:hover i {
+    opacity: 0;
+}
+
+body.theme-ps-style {
+    --bg-color: #95C4DE;
+    --text-color: #333;
+    --ui-bar-border: #b8d3e0;
+    --search-bar-bg: #e1eef6;
+}
+
+/* --- THÈME SPOTIMON --- */
+body.theme-spotimon {
+    /* Police et couleur de fond générales */
+    font-family: 'Pixel32', sans-serif;
+    /* NOUVEAU: Utilisation de la police Pixel32 */
+    font-size: 1.3em;
+    /* NOUVEAU: Augmente la taille de la police pour une meilleure lisibilité */
+    --bg-color: #e8ebff;
+
+    /* Couleur de la barre du haut et de la sidebar */
+    --ui-bar-bg: #f00000;
+
+    /* Couleur du texte général et des icônes (par défaut) */
+    --text-color: #222224;
+    --icon-color: #FFFFFF;
+    /* Blanc pour les icônes du lecteur */
+    --active-color: #FFFFFF;
+    /* Blanc pour les éléments actifs du lecteur */
+
+    /* Ajustements pour la lisibilité */
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --main-board-bg: rgba(255, 255, 255, 0.4);
+    --search-bar-bg: #fff;
+    --ui-bar-border: #d00000;
+    /* Bordure légèrement plus foncée pour les barres */
+
+    /* NOUVEAU: Arrière-plan quadrillé style DS */
+    --grid-line-color: #d9dbe9;
+    /* Couleur des lignes, légèrement plus foncée que le fond */
+    --grid-size: 20px;
+    --grid-line-thickness: 1px;
+
+    background-image:
+        repeating-linear-gradient(to bottom,
+            var(--grid-line-color),
+            var(--grid-line-color) var(--grid-line-thickness),
+            transparent var(--grid-line-thickness),
+            transparent var(--grid-size)),
+        repeating-linear-gradient(to right,
+            var(--grid-line-color),
+            var(--grid-line-color) var(--grid-line-thickness),
+            transparent var(--grid-line-thickness),
+            transparent var(--grid-size));
+    background-size: var(--grid-size) var(--grid-size);
+}
+
+/* Spécificités du thème Spotimon */
+
+/* Barre du haut : Icônes noires */
+body.theme-spotimon .top-bar {
+    --icon-color: #222224;
+}
+
+/* Barre du bas (Lecteur Desktop) : Fond noir, texte/icônes blancs */
+body.theme-spotimon .bottom-ui-container {
+    background-color: #000000;
+    border-top-color: #333333;
+    --text-color: #FFFFFF;
+    --icon-color: #FFFFFF;
+}
+
+/* Barre du bas (Navigation & Mini-lecteur Mobile) : Fond noir, texte/icônes blancs */
+body.theme-spotimon .mobile-bottom-nav,
+body.theme-spotimon .mobile-mini-player {
+    background-color: #000000;
+    border-top-color: #333333;
+    --text-color: #FFFFFF;
+    --icon-color: #FFFFFF;
+}
+
+/* NOUVEAU: Cache l'animation de bulles pour le thème Spotimon */
+body.theme-spotimon .animation-bg-area {
+    display: none;
+}
+
+/* NOUVEAU: Assure que les icônes dans la boutique restent noires avec le thème Spotimon */
+body.theme-spotimon .shop-list-item-icon-container {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Restaure le style par défaut des lecteurs mobiles pour le thème Spotimon */
+body.theme-spotimon .mobile-mini-player {
+    background-color: #f9fafb;
+    /* Fond gris clair par défaut */
+    border-top-color: #e5e7eb;
+    /* Bordure par défaut */
+    --text-color: #666;
+    /* Texte par défaut */
+    --icon-color: #666;
+    /* Icônes par défaut */
+}
+
+/* CORRECTION: La barre de progression du mini-lecteur doit rester bleue */
+body.theme-spotimon .mini-player-progress-fill {
+    background-color: #1d4ed8;
+    /* Couleur bleue par défaut de --active-color */
+}
+
+body.theme-spotimon .mobile-full-player {
+    background-color: #ffffff;
+    /* Fond blanc par défaut */
+}
+
+/* NOUVEAU: Ajustements de couleur pour les boutons spécifiques au thème Spotimon */
+
+/* Bouton "Lancer" du carrousel et "Lancer la chanson" de la page de détails */
+body.theme-spotimon .carousel-item-info .dashboard-card-button,
+body.theme-spotimon .temp-play-btn {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Bouton "Ajouté à la playlist" sur la page de détails */
+body.theme-spotimon .details-action-btn.added {
+    background-color: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
+}
+
+/* Bouton Autoplay actif sur le grand lecteur mobile */
+body.theme-spotimon .mobile-player-header .autoplay-btn.active {
+    color: #000000;
+}
+
+/* NOUVEAU: Ajustements pour le lecteur plein écran et les icônes de vue */
+
+/* Barre de progression du grand lecteur : la passe en rouge pour être visible */
+body.theme-spotimon .mobile-player-progress .progress-fill {
+    background-color: #f00000;
+}
+
+/* Bouton Play/Pause du grand lecteur : fond noir, icône blanche */
+body.theme-spotimon .mobile-player-play-box {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Icône de changement de vue (grille/liste) : passe en noir */
+body.theme-spotimon .view-toggle-btn {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Icônes des cartes (like, add) en noir */
+body.theme-spotimon .like-btn-card,
+body.theme-spotimon .add-playlist-btn-card {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Icônes des missions en noir */
+body.theme-spotimon .mission-card-icon {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Bouton du cheat code en noir */
+}
+
+.Btn:hover .svgIcon {
+    opacity: 0;
+}
+
+.text {
+    position: absolute;
+    color: white;
+    font-weight: 600;
+    opacity: 0;
+    transition-duration: 0.4s;
+}
+
+.svgIcon {
+    transition-duration: 0.3s;
+}
+
+.svgIcon path {
+    fill: white;
+}
+
+/* NOUVEAU: Styles pour les icônes Font Awesome dans les boutons */
+.Btn i {
+    font-size: 1.4em;
+    /* MODIFICATION: Icônes plus grandes */
+    color: white;
+    transition-duration: 0.3s;
+}
+
+.Btn:hover i {
+    opacity: 0;
+}
+
+body.theme-ps-style {
+    --bg-color: #95C4DE;
+    --text-color: #333;
+    --ui-bar-border: #b8d3e0;
+    --search-bar-bg: #e1eef6;
+}
+
+/* --- THÈME SPOTIMON --- */
+body.theme-spotimon {
+    /* Police et couleur de fond générales */
+    font-family: 'Pixel32', sans-serif;
+    /* NOUVEAU: Utilisation de la police Pixel32 */
+    font-size: 1.3em;
+    /* NOUVEAU: Augmente la taille de la police pour une meilleure lisibilité */
+    --bg-color: #e8ebff;
+
+    /* Couleur de la barre du haut et de la sidebar */
+    --ui-bar-bg: #f00000;
+
+    /* Couleur du texte général et des icônes (par défaut) */
+    --text-color: #222224;
+    --icon-color: #FFFFFF;
+    /* Blanc pour les icônes du lecteur */
+    --active-color: #FFFFFF;
+    /* Blanc pour les éléments actifs du lecteur */
+
+    /* Ajustements pour la lisibilité */
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --main-board-bg: rgba(255, 255, 255, 0.4);
+    --search-bar-bg: #fff;
+    --ui-bar-border: #d00000;
+    /* Bordure légèrement plus foncée pour les barres */
+
+    /* NOUVEAU: Arrière-plan quadrillé style DS */
+    --grid-line-color: #d9dbe9;
+    /* Couleur des lignes, légèrement plus foncée que le fond */
+    --grid-size: 20px;
+    --grid-line-thickness: 1px;
+
+    background-image:
+        repeating-linear-gradient(to bottom,
+            var(--grid-line-color),
+            var(--grid-line-color) var(--grid-line-thickness),
+            transparent var(--grid-line-thickness),
+            transparent var(--grid-size)),
+        repeating-linear-gradient(to right,
+            var(--grid-line-color),
+            var(--grid-line-color) var(--grid-line-thickness),
+            transparent var(--grid-line-thickness),
+            transparent var(--grid-size));
+    background-size: var(--grid-size) var(--grid-size);
+}
+
+/* Spécificités du thème Spotimon */
+
+/* Barre du haut : Icônes noires */
+body.theme-spotimon .top-bar {
+    --icon-color: #222224;
+}
+
+/* Barre du bas (Lecteur Desktop) : Fond noir, texte/icônes blancs */
+body.theme-spotimon .bottom-ui-container {
+    background-color: #000000;
+    border-top-color: #333333;
+    --text-color: #FFFFFF;
+    --icon-color: #FFFFFF;
+}
+
+/* Barre du bas (Navigation & Mini-lecteur Mobile) : Fond noir, texte/icônes blancs */
+body.theme-spotimon .mobile-bottom-nav,
+body.theme-spotimon .mobile-mini-player {
+    background-color: #000000;
+    border-top-color: #333333;
+    --text-color: #FFFFFF;
+    --icon-color: #FFFFFF;
+}
+
+/* NOUVEAU: Cache l'animation de bulles pour le thème Spotimon */
+body.theme-spotimon .animation-bg-area {
+    display: none;
+}
+
+/* NOUVEAU: Assure que les icônes dans la boutique restent noires avec le thème Spotimon */
+body.theme-spotimon .shop-list-item-icon-container {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Restaure le style par défaut des lecteurs mobiles pour le thème Spotimon */
+body.theme-spotimon .mobile-mini-player {
+    background-color: #f9fafb;
+    /* Fond gris clair par défaut */
+    border-top-color: #e5e7eb;
+    /* Bordure par défaut */
+    --text-color: #666;
+    /* Texte par défaut */
+    --icon-color: #666;
+    /* Icônes par défaut */
+}
+
+/* CORRECTION: La barre de progression du mini-lecteur doit rester bleue */
+body.theme-spotimon .mini-player-progress-fill {
+    background-color: #1d4ed8;
+    /* Couleur bleue par défaut de --active-color */
+}
+
+body.theme-spotimon .mobile-full-player {
+    background-color: #ffffff;
+    /* Fond blanc par défaut */
+}
+
+/* NOUVEAU: Ajustements de couleur pour les boutons spécifiques au thème Spotimon */
+
+/* Bouton "Lancer" du carrousel et "Lancer la chanson" de la page de détails */
+body.theme-spotimon .carousel-item-info .dashboard-card-button,
+body.theme-spotimon .temp-play-btn {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Bouton "Ajouté à la playlist" sur la page de détails */
+body.theme-spotimon .details-action-btn.added {
+    background-color: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
+}
+
+/* Bouton Autoplay actif sur le grand lecteur mobile */
+body.theme-spotimon .mobile-player-header .autoplay-btn.active {
+    color: #000000;
+}
+
+/* NOUVEAU: Ajustements pour le lecteur plein écran et les icônes de vue */
+
+/* Barre de progression du grand lecteur : la passe en rouge pour être visible */
+body.theme-spotimon .mobile-player-progress .progress-fill {
+    background-color: #f00000;
+}
+
+/* Bouton Play/Pause du grand lecteur : fond noir, icône blanche */
+body.theme-spotimon .mobile-player-play-box {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Icône de changement de vue (grille/liste) : passe en noir */
+body.theme-spotimon .view-toggle-btn {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Icônes des cartes (like, add) en noir */
+body.theme-spotimon .like-btn-card,
+body.theme-spotimon .add-playlist-btn-card {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Icônes des missions en noir */
+body.theme-spotimon .mission-card-icon {
+    color: var(--text-color);
+}
+
+/* NOUVEAU: Bouton du cheat code en noir */
+body.theme-spotimon #cheat-code-btn {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* NOUVEAU: Bouton d'installation PWA en noir */
+body.theme-spotimon .pwa-action-btn.install {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* --- Card Menu (Three Dots) --- */
+.card-menu-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2em;
+    padding: 8px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.card-menu-btn:hover {}
+
+.card-menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    text-align: left;
+    font-size: 0.95em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.card-menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-menu-item i {
+    width: 24px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.card-menu-item i.active {
+    color: #ef4444;
+    /* Rouge pour le coeur actif */
+}
+
+.card-menu-item i.added {
+    color: #10b981;
+    /* Vert pour ajouté à la playlist */
+}
+
+/* Ajustement pour la vue liste */
+.list-view .actions-col {
+    min-width: 40px;
+}
