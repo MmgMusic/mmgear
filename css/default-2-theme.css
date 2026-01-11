@@ -1,0 +1,44 @@
+/* css/default-2-theme.css */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+/* --- THÈME DEFAULT 2 (Style Template) --- */
+body.theme-default-2 {
+    --bg-color: #ffffff;
+    --text-color: #111827;
+    --text-muted: #6b7280;
+    --card-bg: #f8f9fa;
+    --card-border: #f1f3f5;
+    --ui-bar-bg: #f8f9fa;
+    --ui-bar-border: #f1f3f5;
+    --active-color: #6366f1; /* Indigo */
+    --icon-color: #6b7280;
+    --icon-hover-bg: #ffffff;
+    --search-bar-bg: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --card-style-bg: #ffffff;
+    --card-style-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body.theme-default-2 .sidebar,
+body.theme-default-2 .bottom-ui-container,
+body.theme-default-2 .mobile-bottom-nav {
+    background-color: var(--ui-bar-bg);
+    border-color: var(--ui-bar-border);
+}
+
+body.theme-default-2 .card,
+body.theme-default-2 .dashboard-card {
+    border-radius: 20px;
+    box-shadow: none;
+    border: 1px solid var(--card-border);
+    transition: all 0.3s ease;
+}
+
+body.theme-default-2 .card:hover,
+body.theme-default-2 .dashboard-card:hover {
+    background-color: #ffffff;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    transform: translateY(-4px);
+}
