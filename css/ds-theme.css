@@ -1,0 +1,530 @@
+/* css/ds-theme.css */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&family=Orbitron:wght@700&display=swap');
+
+body.theme-ds {
+    --ds-shell: #e2e8f0;
+    --ds-border: #cbd5e1;
+    --ds-bg: #0f172a;
+    --ds-screen-bg: #f1f5f9;
+    --active-color: #3b82f6;
+    --text-color: #334155;
+    --icon-color: #94a3b8;
+    
+    background-color: var(--ds-bg) !important;
+    background-image: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent body scroll, handle inside screens */
+}
+
+/* Hide elements that shouldn't be visible in DS mode */
+body.theme-ds .animation-bg-area,
+body.theme-ds #player-toggle-handle,
+body.theme-ds .mobile-player-handle {
+    display: none !important;
+}
+
+
+/* --- DS CONSOLE CHASSIS --- */
+body.theme-ds #ds-console-wrapper {
+    width: 100%;
+    max-width: 400px;
+    background: var(--ds-shell);
+    padding: 4px; /* Garde une bordure interne pour le look du châssis */
+    border-radius: 0;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 2px 8px rgba(255,255,255,1);
+    border: 2px solid var(--ds-border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 100vh; /* Prend toute la hauteur */
+    max-height: none;
+    position: relative;
+    z-index: 100;
+}
+
+body.theme-ds .ds-hinge {
+    height: 24px;
+    min-height: 24px;
+    background: linear-gradient(to bottom, #cbd5e1, #94a3b8, #cbd5e1);
+    margin: 0 -4px;
+    border-top: 1px solid #94a3b8;
+    border-bottom: 1px solid #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+body.theme-ds .ds-hinge::after {
+    content: none;
+}
+
+body.theme-ds .ds-hinge-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+}
+
+body.theme-ds .ds-hinge-indicators {
+    display: flex;
+    gap: 6px;
+}
+
+body.theme-ds .indicator-line {
+    width: 4px;
+    height: 12px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* Indicateur de droite (Batterie) - Vert clair */
+body.theme-ds .indicator-line:last-child {
+    background: #86efac;
+    box-shadow: 0 0 5px #86efac;
+    border-color: #4ade80;
+}
+
+/* --- SCREENS --- */
+body.theme-ds .ds-screen {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: none;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+    position: relative;
+    width: 100%;
+}
+
+/* TOP SCREEN (PLAYER) */
+body.theme-ds #ds-top-screen {
+    flex: 0 0 38%;
+    background: #111;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    color: white;
+}
+
+body.theme-ds #ds-top-screen .glass-shine {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    opacity: 0.5;
+}
+
+/* Hide Mini Player in DS Mode */
+body.theme-ds #mobile-mini-player {
+    display: none !important;
+}
+
+/* Customize Full Player for Top Screen */
+body.theme-ds #mobile-full-player {
+    display: flex !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    padding: 10px 20px !important;
+    justify-content: space-evenly !important;
+    z-index: 1 !important;
+    flex-direction: column !important; /* Force la disposition verticale sur PC */
+}
+
+/* Hide unnecessary elements of full player */
+body.theme-ds .mobile-player-handle,
+body.theme-ds .mobile-player-header {
+    display: none !important;
+}
+
+/* Compact Top Content (Art + Info) */
+body.theme-ds .mobile-player-top-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-grow: 0 !important;
+}
+
+body.theme-ds .mobile-player-art-wrapper {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+body.theme-ds .mobile-player-art {
+    width: 80px !important;
+    height: 80px !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    border-radius: 8px;
+}
+
+body.theme-ds .mobile-player-song-info {
+    margin-top: 0 !important;
+    text-align: center !important;
+}
+
+body.theme-ds .mobile-player-song-info h3 {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 1em !important;
+    margin-bottom: 2px !important;
+    letter-spacing: 1px;
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+body.theme-ds .mobile-player-song-info p {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 0.8em !important;
+}
+
+/* Compact Controls */
+body.theme-ds .mobile-player-main-controls-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+}
+
+body.theme-ds .mobile-player-progress {
+    margin-bottom: 5px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+body.theme-ds .mobile-player-progress .progress-bar {
+    background: rgba(255,255,255,0.2) !important;
+    height: 4px !important;
+}
+
+body.theme-ds .mobile-player-progress .progress-fill {
+    background: #3b82f6 !important;
+    box-shadow: 0 0 8px #3b82f6;
+}
+
+body.theme-ds #mobile-player-current-time,
+body.theme-ds #mobile-player-duration {
+    font-size: 0.7em !important;
+    color: rgba(255,255,255,0.7) !important;
+    width: 30px !important;
+}
+
+body.theme-ds .mobile-player-controls {
+    gap: 20px !important;
+    font-size: 1.2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+body.theme-ds .mobile-player-controls i {
+    color: white !important;
+}
+
+/* NOUVEAU: Style pour les boutons loop/shuffle actifs */
+body.theme-ds .mobile-player-controls i.active {
+    color: var(--active-color) !important;
+    text-shadow: 0 0 8px var(--active-color);
+}
+
+body.theme-ds .mobile-player-play-box {
+    width: 45px !important;
+    height: 45px !important;
+    background: rgba(255,255,255,0.15) !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+}
+
+body.theme-ds .mobile-player-play-box i {
+    font-size: 1.2rem !important;
+    color: white !important;
+}
+
+/* Correction centrage visuel Play/Pause */
+body.theme-ds .mobile-player-play-box .fa-play {
+    margin-left: 3px !important;
+}
+
+body.theme-ds .mobile-player-play-box .fa-pause {
+    margin-left: 0 !important;
+}
+
+/* Bottom Actions (Volume, Share, Queue) */
+body.theme-ds .mobile-player-bottom-actions {
+    width: 100% !important;
+    padding: 0 10px !important;
+    margin-top: 5px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+body.theme-ds .mobile-player-bottom-actions i {
+    font-size: 1rem !important;
+    color: rgba(255,255,255,0.7) !important;
+}
+
+body.theme-ds .mobile-player-bottom-actions i:hover {
+    color: white !important;
+}
+
+body.theme-ds .volume-control-new {
+    background: rgba(0,0,0,0.2) !important;
+    padding: 2px 8px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+body.theme-ds .volume-adjust-btn {
+    color: white !important;
+    font-size: 1rem !important;
+}
+
+body.theme-ds #volume-level-display {
+    color: white !important;
+    font-size: 0.8rem !important;
+}
+
+/* Hide secondary controls in top content (like/add are redundant or too cluttered) */
+body.theme-ds .mobile-player-secondary-controls {
+    display: none !important;
+}
+
+/* Placeholder when no music */
+body.theme-ds #mobile-full-player.no-track-playing > * {
+    display: none !important;
+}
+
+body.theme-ds #mobile-full-player.no-track-playing {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+body.theme-ds #mobile-full-player.no-track-playing::before {
+    display: none !important;
+}
+
+body.theme-ds #mobile-full-player.no-track-playing::after {
+    display: none !important;
+}
+
+/* BOTTOM SCREEN (CONTENT) */
+body.theme-ds #ds-bottom-screen {
+    flex: 1;
+    background: var(--ds-screen-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Fix layout for bottom screen children */
+body.theme-ds #ds-content-container {
+    flex: 1;
+    min-height: 0; /* Crucial for nested flex scrolling */
+    display: flex;
+    flex-direction: column;
+}
+
+body.theme-ds #ds-nav-container {
+    flex-shrink: 0;
+}
+
+/* Top Bar inside Bottom Screen */
+body.theme-ds .top-bar {
+    position: relative !important;
+    background: white !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    padding: 8px 10px !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+body.theme-ds .mobile-header-icons {
+    width: 100%;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 !important;
+    height: auto !important;
+}
+
+body.theme-ds #mobile-header-logo-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+body.theme-ds #mobile-header-title {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 12px !important;
+    letter-spacing: 2px;
+    color: #3b82f6 !important;
+    font-weight: 900 !important;
+}
+
+body.theme-ds .top-bar-btn {
+    width: 32px !important;
+    height: 32px !important;
+    background: white !important;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 0 #cbd5e1 !important;
+    color: #64748b !important;
+    margin: 0 !important;
+}
+
+body.theme-ds .top-bar-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+body.theme-ds .top-bar-btn:active {
+    transform: translateY(2px) !important;
+    box-shadow: none !important;
+}
+
+/* Hide desktop elements in DS mode */
+body.theme-ds .top-bar-right {
+    display: none !important;
+}
+
+/* Profile Switcher inside Top Bar */
+body.theme-ds .profile-switch {
+    background: #f1f5f9 !important;
+    padding: 2px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+}
+
+body.theme-ds .profile-switch::after {
+    display: none !important; /* Hide default slider */
+}
+
+body.theme-ds .profile-switch-btn {
+    font-size: 9px !important;
+    padding: 4px !important;
+    border-radius: 6px !important;
+    text-transform: none !important;
+    color: #94a3b8 !important;
+}
+
+body.theme-ds .profile-switch-btn.active {
+    background: white !important;
+    color: #3b82f6 !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+
+/* Main Content Area */
+body.theme-ds .main-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: #f1f5f9;
+    padding: 0 !important;
+}
+
+/* Remove extra bottom padding from mobile view */
+body.theme-ds .page-content {
+    padding-bottom: 20px !important; /* Ajusté pour le scale */
+}
+
+body.theme-ds .content-section-board {
+    padding: 10px !important;
+}
+
+/* Cards Styling for DS */
+body.theme-ds .card {
+    background: white !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255,255,255,0.8) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.04), inset 0 2px 4px rgba(255,255,255,1) !important;
+}
+
+body.theme-ds .card__title {
+    color: #475569 !important;
+    font-size: 0.85em !important;
+}
+
+/* Restore Hero Title style for DS theme */
+body.theme-ds .hero-title {
+    color: white !important;
+    font-size: 2.1rem !important;
+    text-transform: uppercase !important;
+}
+
+/* Bottom Navigation */
+body.theme-ds #mobile-bottom-nav {
+    position: relative !important;
+    display: flex !important;
+    background: white !important;
+    border-top: 1px solid #e2e8f0 !important;
+    padding: 8px 10px 12px !important;
+    box-shadow: none !important;
+}
+
+body.theme-ds .mobile-nav-link {
+    color: #94a3b8 !important;
+}
+
+body.theme-ds .mobile-nav-link.active {
+    color: #3b82f6 !important;
+    background: transparent !important;
+    transform: none !important;
+}
+
+body.theme-ds .mobile-nav-link svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Hide Search Bar initially */
+body.theme-ds .search-bar {
+    display: none; /* Toggled by JS */
+    background: #f1f5f9 !important;
+    margin: 5px 0 !important;
+    border-radius: 8px !important;
+}
+
+body.theme-ds .search-bar.visible {
+    display: flex;
+}
+
+/* Scrollbar hiding */
+body.theme-ds ::-webkit-scrollbar {
+    width: 4px;
+}
+body.theme-ds ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
