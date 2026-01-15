@@ -1,0 +1,1077 @@
+/* css/spotimon-theme.css */
+
+/* --- THÈME SPOTIMON (Style Pokedex) --- */
+body.theme-spotimon {
+    /* 1. PokedexShell - Le châssis principal */
+    /* CORRECTION: Rouge plus vif et fidèle (#DC0A2D est le rouge officiel Pokedex/Nintendo) */
+    --pokedex-red: #DC0A2D;
+    --pokedex-dark-red: #8b0000;
+    --pokedex-screen-bg: #1a1a1a;
+    --pokedex-text-light: #f87171;
+    --pokedex-text-main: #ffffff;
+    --pokedex-accent: #fefce8;
+
+    font-family: 'Inter', sans-serif;
+    /* Le fond de page est géré par le SVG animé maintenant */
+    background-color: #f8fafc !important;
+    color: #111827;
+
+    /* Surcharge des variables globales */
+    --bg-color: #f8fafc;
+    --text-color: #111827;
+    --active-color: #3b82f6;
+    /* Bleu Spotimon */
+    --ui-bar-bg: #222;
+    /* Sombre pour Spotimon (Ajusté depuis common.css) */
+    --ui-bar-border: transparent;
+    --card-bg: var(--pokedex-screen-bg);
+    --card-border: var(--pokedex-dark-red);
+    --main-board-bg: transparent;
+
+    /* Logo Spotimon */
+    --logo-color-1: var(--pokedex-red);
+    --logo-color-2: #ffffff;
+    --logo-color-3: #1a1a1a;
+}
+
+/* --- NOUVEAU FOND ANIMÉ (SVG) --- */
+/* Par défaut caché, affiché uniquement pour ce thème */
+.spotimon-bg-container {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8fafc;
+    /* Couleur de fond du SVG */
+}
+
+body.theme-spotimon .spotimon-bg-container {
+    display: flex;
+}
+
+/* Animation du fond */
+@keyframes rotate-bg {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#spotimon-main-art {
+    transform-origin: center;
+    /* CORRECTION: Centre l'animation de rotation correctement sur tous les écrans */
+    will-change: transform;
+}
+
+body.theme-spotimon #spotimon-main-art {
+    animation: rotate-bg 140s linear infinite;
+}
+
+.spotimon-svg {
+    width: 90vmin;
+    height: 90vmin;
+    shape-rendering: geometricPrecision;
+    opacity: 0.6;
+    /* Légère transparence pour ne pas gêner la lecture */
+}
+
+.stroke-l {
+    stroke: #e2e8f0;
+}
+
+.stroke-m {
+    stroke: #cbd5e1;
+}
+
+.stroke-s {
+    stroke: #94a3b8;
+}
+
+.fill-white {
+    fill: #ffffff;
+}
+
+
+/* --- UI & LAYOUT --- */
+
+/* Sidebar (Châssis Rouge) */
+body.theme-spotimon .sidebar {
+    background-color: #D31027 !important;
+    background-image: linear-gradient(to bottom, #D31027, #910A19) !important;
+    /* Rouge Profond Dégradé */
+    border-right: none !important;
+    padding-right: 0 !important;
+    color: white !important;
+    --text-color: white;
+    --icon-color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 4px 0 40px rgba(0, 0, 0, 0.3) !important;
+    /* Ombre portée externe */
+}
+
+/* Motif Carbone plus discret */
+body.theme-spotimon .sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    opacity: 0.1;
+    /* Texture technique */
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Assure que le contenu passe au-dessus du motif */
+body.theme-spotimon .sidebar>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ajustement du padding interne pour correspondre au design aéré */
+body.theme-spotimon .sidebar-content-wrapper {
+    padding: 32px 24px !important;
+}
+
+/* --- SWITCHER DE PROFIL (MMG Control Core) --- */
+
+/* Cache les autres switchers pour ce thème */
+body.theme-spotimon .mode-switcher,
+body.theme-spotimon #mmg-branding {
+    display: none !important;
+}
+
+/* Affiche le switcher Spotimon */
+body.theme-spotimon #spotimon-profile-switch {
+    display: flex !important;
+}
+
+/* Conteneur Principal */
+.spotimon-control-core {
+    display: none;
+    /* Caché par défaut */
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* Centré pour un meilleur équilibre */
+    gap: 1.25rem;
+    padding: 1.5rem 1rem;
+    background: transparent;
+    /* Fond transparent pour s'intégrer au dégradé */
+    border-radius: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Wrapper pour la lentille et la diode */
+.spotimon-lens-wrapper {
+    position: relative;
+}
+
+/* La Lentille (Bulle) */
+.spotimon-lens {
+    position: relative;
+    width: 4rem;
+    /* Taille réduite */
+    height: 4rem;
+    border-radius: 50%;
+    /* NOUVEAU: Look "Bille de verre" lumineuse */
+    border: 4px solid #ffffff;
+    background: linear-gradient(135deg, #38bdf8 0%, #2563eb 50%, #1e40af 100%);
+    box-shadow:
+        0 10px 25px -5px rgba(37, 99, 235, 0.6),
+        /* Lueur bleue externe */
+        inset 0 0 20px rgba(255, 255, 255, 0.4);
+    /* Lumière interne */
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+}
+
+.spotimon-lens:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 15px 35px -5px rgba(37, 99, 235, 0.7),
+        inset 0 0 25px rgba(255, 255, 255, 0.5);
+}
+
+.spotimon-lens:active {
+    transform: scale(0.92);
+}
+
+/* Effets de verre */
+.lens-reflection {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 30%;
+    height: 20%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border-radius: 9999px;
+    filter: blur(2px);
+    transform: rotate(-25deg);
+    z-index: 20;
+}
+
+.lens-gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+}
+
+/* Diode de notification */
+.spotimon-diode {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 1.2rem;
+    /* Taille réduite */
+    height: 1.2rem;
+    background-color: #dc2626;
+    /* Rouge foncé */
+    border-radius: 50%;
+    border: 4px solid #D31027;
+    /* Couleur du fond pour simuler la découpe */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.diode-light {
+    width: 0.3rem;
+    height: 0.3rem;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 0 4px white;
+}
+
+/* NOUVEAU: Bloc de texte empilé */
+.spotimon-stacked-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Aligne à gauche */
+    position: relative;
+    /* NOUVEAU: Pour positionner le hint en absolu */
+}
+
+.stacked-title-static {
+    font-size: 1.4rem;
+    /* Agrandissement */
+    font-weight: 900;
+    font-style: italic;
+    color: white;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.stacked-title-mask {
+    height: 1.3em;
+    /* CORRECTION: Ajusté à 1.3em */
+    padding-right: 0.2em;
+    /* Marge pour l'italique qui dépasse */
+    margin-right: -0.2em;
+    /* Compensation de la marge */
+    overflow: hidden;
+}
+
+.stacked-title-track {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.spotimon-control-core.is-beats .stacked-title-track {
+    transform: translateY(-1.3em);
+    /* CORRECTION: Ajusté à la nouvelle hauteur */
+}
+
+.stacked-title-dynamic {
+    height: 1em;
+    /* CORRECTION: Hauteur relative à la police (1.3em * 1 = 1.3em effectif) */
+    display: flex;
+    align-items: center;
+    font-size: 1.3em;
+    /* CORRECTION: Taille demandée */
+    font-weight: 900;
+    font-style: italic;
+    color: #fecaca;
+    /* Rouge pâle */
+    line-height: 1;
+    letter-spacing: -0.05em;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+/* NOUVEAU: Styles pour le texte d'indication (Switch to...) */
+.spotimon-hint-mask {
+    position: absolute;
+    /* CORRECTION: Sort du flux pour ne pas décaler le titre */
+    top: 100%;
+    /* Se place juste en dessous */
+    left: 0;
+    height: 12px;
+    overflow: hidden;
+    margin-top: 2px;
+}
+
+.spotimon-hint-track {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.spotimon-control-core.is-beats .spotimon-hint-track {
+    transform: translateY(-12px);
+}
+
+.spotimon-hint {
+    height: 12px;
+    display: flex;
+    align-items: center;
+    font-size: 8px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+}
+
+/* Cercles de Scan Animés */
+.lens-scan-1 {
+    position: absolute;
+    inset: 0;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    animation: spin 10s linear infinite;
+}
+
+.lens-scan-2 {
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    /* Radar effect plus brillant */
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .5;
+    }
+}
+
+/* Contenu Principal */
+body.theme-spotimon .main-area {
+    background-color: transparent !important;
+    /* Laisse voir le fond SVG */
+}
+
+/* CORRECTION: On affiche le conteneur principal d'animation (car le fond Spotimon est dedans) */
+body.theme-spotimon .animation-bg-area {
+    display: block !important;
+    background: transparent !important;
+}
+
+/* On cache les autres éléments à l'intérieur (bulles, cubes PS2, etc.) sauf le fond Spotimon */
+body.theme-spotimon .animation-bg-area>*:not(.spotimon-bg-container),
+body.theme-spotimon .ps3-waves-engine {
+    display: none !important;
+}
+
+/* Reflet haut de page */
+body.theme-spotimon::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* --- ÉCRANS (CARTES) --- */
+/* Cartes de contenu (Transparentes comme le thème par défaut) */
+body.theme-spotimon .card {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #111827;
+    --text-color: #111827;
+}
+
+/* Dashboard Cards (Restent avec fond) */
+body.theme-spotimon .dashboard-card {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    color: #111827;
+    --text-color: #111827;
+}
+
+/* Panneaux et Overlays (Blanc Opaque comme le thème par défaut) */
+body.theme-spotimon .settings-card,
+body.theme-spotimon .about-card-template,
+body.theme-spotimon .news-card-container,
+body.theme-spotimon .reco-card,
+body.theme-spotimon .mobile-queue-panel .settings-card,
+body.theme-spotimon .mobile-card-menu-panel {
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+    color: #111827 !important;
+    --text-color: #111827 !important;
+}
+
+/* Scanline sur les écrans */
+body.theme-spotimon .dashboard-card::after,
+body.theme-spotimon .settings-card::after {
+    display: none !important;
+}
+
+/* Décoration "Tech Corner" supprimée pour les cartes */
+body.theme-spotimon .card .card-image-container::after {
+    display: none;
+}
+
+/* Typographie */
+body.theme-spotimon h1,
+body.theme-spotimon h2,
+body.theme-spotimon h3,
+body.theme-spotimon .section-title,
+body.theme-spotimon .card__title,
+body.theme-spotimon .shop-product-title,
+body.theme-spotimon .daily-bonus-title,
+body.theme-spotimon .hero-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900 !important;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    color: inherit !important;
+    text-shadow: none !important;
+}
+
+body.theme-spotimon .sidebar-section-title {
+    font-size: 9px !important;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.6) !important;
+    /* Blanc transparent pour les sous-titres */
+    text-transform: uppercase;
+    letter-spacing: 0.2em !important;
+    margin-top: 24px !important;
+    margin-bottom: 12px !important;
+    padding-left: 8px !important;
+}
+
+/* Description des cartes en sombre */
+body.theme-spotimon .card__description,
+body.theme-spotimon .reco-subtitle {
+    font-size: 9px !important;
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.6) !important;
+    /* Gris/Noir pour la lisibilité sur fond blanc */
+    text-transform: uppercase;
+    letter-spacing: 0.1em !important;
+}
+
+/* --- CORRECTIONS COULEURS & STYLES SPÉCIFIQUES --- */
+
+/* Texte Blanc pour Hero, Bonus, Upcoming */
+body.theme-spotimon .hero-title,
+body.theme-spotimon .daily-bonus-title,
+body.theme-spotimon .daily-bonus-subtitle,
+body.theme-spotimon .upcoming-title,
+body.theme-spotimon .upcoming-date,
+body.theme-spotimon .upcoming-label {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* CORRECTION: Sélecteur plus spécifique pour surcharger le style de .dashboard-card. */
+/* Retire le fond/bordure blanc et rétablit la bonne ombre pour le carrousel. */
+body.theme-spotimon .dashboard-card.carousel-card {
+    border: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    /* NOUVEAU: Supprime le padding hérité qui crée le rebord blanc */
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25) !important;
+    border-radius: 40px !important;
+    /* Force l'arrondi du template pour éviter les coins blancs */
+}
+
+/* Supprime l'effet scanline sur le carrousel */
+body.theme-spotimon .dashboard-card.carousel-card::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* NOUVEAU: Badge "Nouveauté" du Hero */
+body.theme-spotimon .hero-badge {
+    background-color: var(--pokedex-red) !important;
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Daily Bonus Card - Style LCD Noir (SANS bordure rouge) */
+body.theme-spotimon #daily-bonus-section.daily-bonus-card {
+    background-color: #1a1a1a !important;
+    border: none !important;
+    /* CORRECTION: Bordure rouge retirée */
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8) !important;
+    color: white !important;
+    position: relative;
+}
+
+/* Upcoming Release Card - Style LCD Noir (SANS bordure rouge) */
+body.theme-spotimon .upcoming-release-card {
+    background-color: #1a1a1a !important;
+    border: none !important;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8) !important;
+    color: white !important;
+}
+
+/* Grille sur le Daily Bonus */
+body.theme-spotimon #daily-bonus-section.daily-bonus-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    pointer-events: none;
+    background-image: url('https://www.transparenttextures.com/patterns/grid-me.png');
+    z-index: 0;
+    display: block !important;
+}
+
+/* NOUVEAU: Style pour l'icône du bonus quotidien */
+body.theme-spotimon .daily-bonus-icon-box {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: var(--pokedex-accent) !important;
+    /* Jaune pâle */
+    font-size: 1.5em;
+    /* Un peu plus grand */
+    text-shadow: 0 0 10px var(--pokedex-accent);
+}
+
+/* NOUVEAU: Style des "pilules" de récompense (LEDs) pour le thème Spotimon */
+body.theme-spotimon .daily-bonus-pills {
+    gap: 4px;
+    /* Espace réduit pour les barres */
+    justify-content: stretch;
+    /* Étirer pour remplir la largeur */
+    margin-bottom: 1.25rem;
+    /* Un peu plus d'espace en bas */
+}
+
+body.theme-spotimon .reward-pill {
+    flex: 1;
+    /* Grandit pour remplir l'espace */
+    width: auto;
+    /* Plus de largeur fixe */
+    height: 8px;
+    /* Hauteur de barre */
+    border-radius: 2px;
+    /* Bords légèrement arrondis */
+    background: #333 !important;
+    /* LED éteinte */
+    border: 1px solid #000;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    opacity: 1 !important;
+    /* Annule l'opacité par défaut */
+}
+
+body.theme-spotimon .reward-pill.completed {
+    background: #8b0000 !important;
+    /* Rouge foncé pour "complété" */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 3px #8b0000;
+}
+
+body.theme-spotimon .reward-pill.active {
+    background: #38bdf8 !important;
+    /* Bleu de la lentille */
+    box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8, inset 0 0 5px white;
+    /* Effet de lueur */
+    border-color: #7dd3fc;
+}
+
+/* Assure que le contenu du Daily Bonus est au-dessus de la grille */
+body.theme-spotimon #daily-bonus-section.daily-bonus-card>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* --- BOUTONS --- */
+body.theme-spotimon .shop-buy-btn,
+body.theme-spotimon .theme-buy-btn,
+body.theme-spotimon #start-music-btn,
+body.theme-spotimon #cheat-code-btn {
+    background-color: var(--pokedex-red) !important;
+    color: white !important;
+    border-radius: 8px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    font-size: 10px !important;
+    letter-spacing: 0.1em;
+    border: none !important;
+    box-shadow: none !important;
+    transition: all 0.075s ease-out !important;
+}
+
+body.theme-spotimon .shop-buy-btn:active,
+body.theme-spotimon .theme-buy-btn:active,
+body.theme-spotimon #start-music-btn:active,
+body.theme-spotimon #cheat-code-btn:active {
+    transform: scale(0.95) !important;
+    box-shadow: none !important;
+}
+
+/* Bouton Switch Profil (À propos) */
+body.theme-spotimon .about-switch-btn {
+    background-color: var(--pokedex-red) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    /* CORRECTION: Ombre retirée */
+    border-radius: 12px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s ease !important;
+    /* CORRECTION: Transition plus simple */
+}
+
+body.theme-spotimon .about-switch-btn:active {
+    transform: none !important;
+    /* CORRECTION: Effet d'enfoncement retiré */
+    background-color: var(--pokedex-dark-red) !important;
+    /* CORRECTION: Assombrit au clic */
+}
+
+/* Boutons D-Pad (Navigation) */
+body.theme-spotimon .mobile-nav-link {
+    background-color: transparent !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* NOUVEAU: Bouton "Vider la playlist" */
+body.theme-spotimon .clear-playlist-button {
+    background-color: rgba(220, 10, 45, 0.1) !important;
+    border: 1px solid rgba(220, 10, 45, 0.3) !important;
+    color: var(--pokedex-red) !important;
+    transition: all 0.2s ease !important;
+}
+
+body.theme-spotimon .clear-playlist-button:hover {
+    background-color: var(--pokedex-red) !important;
+    color: white !important;
+    border-color: var(--pokedex-red) !important;
+}
+
+/* NOUVEAU: Style pour le bouton tag dans la barre de recherche */
+body.theme-spotimon .search-bar .top-bar-btn {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: rgba(0, 0, 0, 0.4) !important;
+}
+
+body.theme-spotimon .search-bar .top-bar-btn:hover {
+    color: #000 !important;
+    background: transparent !important;
+    /* Annule l'effet de survol des autres boutons */
+}
+
+/* CORRECTION: Badge de compteur sur le bouton tag en rouge */
+body.theme-spotimon .filter-count-badge {
+    background-color: var(--pokedex-red) !important;
+    color: white !important;
+    border: 2px solid #fff !important;
+}
+
+/* CORRECTION: Tags (Pills) en gris neutre */
+body.theme-spotimon .tag-item,
+body.theme-spotimon .tag-link span {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    /* Gris très clair */
+    color: #374151 !important;
+    /* Texte gris foncé */
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    /* Bordure subtile */
+}
+
+/* NOUVEAU: Style des onglets (Vidéos, Bibliothèque) dans le contenu principal */
+body.theme-spotimon .main-area .playlist-tabs {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1) !important;
+    gap: 4px !important;
+}
+
+body.theme-spotimon .main-area .playlist-tab-btn {
+    background-color: transparent !important;
+    color: rgba(0, 0, 0, 0.4) !important;
+    border: none !important;
+    border-bottom: 4px solid transparent !important;
+    border-radius: 0 !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    font-size: 11px !important;
+    padding-bottom: 12px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: none !important;
+}
+
+body.theme-spotimon .main-area .playlist-tab-btn.active {
+    color: var(--pokedex-red) !important;
+    border-bottom-color: var(--pokedex-red) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* NOUVEAU: Onglet actif du switcher de profil mobile en rouge */
+body.theme-spotimon .profile-switch-btn.active {
+    color: var(--pokedex-red) !important;
+}
+
+body.theme-spotimon .profile-switch::after {
+    background-color: var(--pokedex-red) !important;
+}
+
+body.theme-spotimon .mobile-nav-link.active {
+    background-color: transparent !important;
+    color: var(--pokedex-red) !important;
+    font-weight: 900;
+}
+
+/* Boutons Navigation Sidebar (Style Hardware Premium) */
+body.theme-spotimon .sidebar-nav-link {
+    background-color: transparent !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border: none !important;
+    border-radius: 20px !important;
+    /* rounded-[1.25rem] */
+    margin-bottom: 6px;
+    padding: 16px 24px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em !important;
+    font-size: 10px !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+    transform: translateY(0);
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    position: relative !important;
+    /* Nécessaire pour le point rouge absolu */
+}
+
+body.theme-spotimon .sidebar-nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+body.theme-spotimon .sidebar-nav-link.active {
+    background-color: white !important;
+    color: #D31027 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    transform: scale(1.02) !important;
+    --icon-color: #D31027;
+}
+
+/* NOUVEAU: Le petit point rouge indicateur sur l'élément actif (La "barre" rouge) */
+body.theme-spotimon .sidebar-nav-link.active::after {
+    content: '';
+    position: absolute;
+    right: 20px;
+    width: 6px;
+    height: 6px;
+    background-color: #D31027;
+    border-radius: 50%;
+}
+
+/* Switches (Rouge) */
+body.theme-spotimon .switch input:checked+.slider {
+    background-color: var(--pokedex-red) !important;
+}
+
+/* Boutons Top Bar (sur fond clair) */
+body.theme-spotimon .top-bar-btn {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: #111827 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+}
+
+/* --- PLAYER --- */
+body.theme-spotimon .bottom-ui-container,
+body.theme-spotimon .mobile-bottom-nav {
+    background: #111 !important;
+    border-top: 4px solid #333 !important;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5) !important;
+    /* CORRECTION: Force le texte et les icônes en blanc sur le lecteur de bureau */
+    color: white !important;
+    --text-color: white !important;
+    --icon-color: white !important;
+}
+
+/* CORRECTION: Mini Player noir opaque (Déplacé ici pour priorité) */
+body.theme-spotimon .mobile-mini-player {
+    background: #1a1a1a !important;
+    backdrop-filter: none !important;
+    border-top: 2px solid #333 !important;
+    color: white !important;
+    --text-color: white !important;
+}
+
+body.theme-spotimon .mobile-mini-player .mini-player-info h4,
+body.theme-spotimon .mobile-mini-player .mini-player-info h4 span,
+body.theme-spotimon .mobile-mini-player .mini-player-context-text {
+    color: white !important;
+    /* Force le blanc sur le titre et le contexte */
+}
+
+body.theme-spotimon .mobile-mini-player .mini-player-controls i {
+    color: white !important;
+}
+
+/* Grand lecteur mobile */
+body.theme-spotimon .mobile-full-player {
+    background-color: #D31027 !important;
+    background-image: linear-gradient(to bottom, #D31027, #910A19) !important;
+    /* Garde le dégradé de base */
+    color: white !important;
+    /* Assure que tout le texte par défaut est blanc */
+    --text-color: white;
+    /* Met à jour la variable pour les enfants */
+    --icon-color: white;
+}
+
+/* Motif Carbone plus discret (comme la sidebar) */
+body.theme-spotimon .mobile-full-player::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* --- NOUVEAU: Contrôles du grand lecteur mobile en blanc --- */
+body.theme-spotimon .mobile-full-player .mobile-player-controls i,
+body.theme-spotimon .mobile-full-player .mobile-player-bottom-actions i,
+body.theme-spotimon .mobile-full-player #mobile-player-current-time,
+body.theme-spotimon .mobile-full-player #mobile-player-duration {
+    color: white !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+body.theme-spotimon .mobile-full-player .mobile-player-play-box {
+    background-color: transparent !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.theme-spotimon .mobile-full-player .mobile-player-play-box:active {
+    transform: scale(0.95) !important;
+    box-shadow: none !important;
+}
+
+body.theme-spotimon .mobile-full-player .progress-bar {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.theme-spotimon .mobile-full-player .progress-fill {
+    background-color: white !important;
+    box-shadow: 0 0 8px white !important;
+}
+
+body.theme-spotimon .mobile-player-art-wrapper {
+    background: rgba(255, 255, 255, 0.15) !important;
+    /* Blanc très transparent pour un reflet subtil */
+    backdrop-filter: blur(20px) !important;
+    /* Flou intense pour un effet "verre" */
+    border-radius: 32px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    /* Bordure blanche très subtile */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    padding: 10px;
+}
+
+body.theme-spotimon .mobile-player-progress .progress-bar {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+body.theme-spotimon .mobile-player-progress .progress-fill {
+    background-color: #3b82f6 !important;
+    /* Bleu écran */
+    box-shadow: 0 0 10px #3b82f6;
+}
+
+body.theme-spotimon .mobile-player-play-box {
+    background-color: #1a1a1a !important;
+    color: white !important;
+    border: 2px solid #333 !important;
+    box-shadow: 0 4px 0 #000 !important;
+}
+
+body.theme-spotimon .mobile-player-play-box:active {
+    transform: translateY(4px) !important;
+    box-shadow: none !important;
+}
+
+/* Reset styles */
+body.theme-spotimon .top-bar {
+    background: transparent !important;
+}
+
+/* --- CORRECTIONS SPÉCIFIQUES ORDINATEUR --- */
+@media (min-width: 953px) {
+
+    /* Centre le fond animé par rapport à la zone de contenu (en décalant de la largeur de la sidebar) */
+    body.theme-spotimon .spotimon-bg-container {
+        left: 240px;
+        /* Largeur de la sidebar */
+        width: calc(100% - 240px);
+        /* Largeur restante pour le contenu principal */
+    }
+}
+
+/* --- CORRECTIONS OVERLAY NOTIFICATIONS --- */
+
+/* Change la couleur de l'icône de notification (ex: cadenas de déblocage) pour être visible sur fond blanc */
+body.theme-spotimon .notification-item .notification-icon {
+    color: var(--pokedex-red) !important;
+}
+
+/* Change la couleur de la ligne de séparation sous le titre "Journal des mises à jour" */
+body.theme-spotimon .update-log h4 {
+    border-bottom-color: rgba(0, 0, 0, 0) !important;
+    /* Ligne grise neutre au lieu de rouge */
+}
+
+/* Change la couleur du point "non lu" pour utiliser le rouge du thème */
+body.theme-spotimon .update-log-entry.unread h5::after {
+    background-color: var(--pokedex-red) !important;
+}
+
+/* --- CORRECTIONS DEMANDÉES (Hero, Guide, Menu, Listen On) --- */
+
+/* 1. Hero Button Hover Red */
+body.theme-spotimon .hero-button:hover {
+    background-color: var(--pokedex-red) !important;
+    color: white !important;
+}
+
+/* 2. Guide Buttons White (Page d'accueil) */
+body.theme-spotimon .guide-choice-btn {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.theme-spotimon .guide-choice-btn:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* 3. Context Menu White (Clic droit / 3 points) */
+body.theme-spotimon .card-menu-dropdown,
+body.theme-spotimon #card-context-menu {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+    color: #111827 !important;
+}
+
+body.theme-spotimon .card-menu-item:hover,
+body.theme-spotimon .context-menu-btn:hover {
+    background-color: rgba(220, 10, 45, 0.1) !important;
+    /* Rouge pâle */
+    color: var(--pokedex-red) !important;
+}
+
+body.theme-spotimon .card-menu-item:hover i,
+body.theme-spotimon .context-menu-btn:hover i {
+    color: var(--pokedex-red) !important;
+}
+
+/* 4. Listen On Icons Hover Red (Page Détail) */
+body.theme-spotimon .streaming-links-container a:hover {
+    color: var(--pokedex-red) !important;
+    transform: scale(1.1);
+}
+
+/* 5. Remove Red Borders from Inputs/Switchers */
+body.theme-spotimon .cheat-code-section,
+body.theme-spotimon .language-switcher,
+body.theme-spotimon .view-switcher-settings,
+body.theme-spotimon .wifi-arrow-btn,
+body.theme-spotimon .mark-as-read-button {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ajustements spécifiques récupérés de common.css */
+body.theme-spotimon #albums-cards .card-info-container {
+    padding-left: 10px;
+}
+
+/* Ajustements mobile récupérés de mobile.css */
+@media (max-width: 952px) {
+    body.theme-spotimon .mobile-header-icons {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+}

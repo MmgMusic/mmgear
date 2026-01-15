@@ -1,0 +1,33 @@
+/* css/backgrounds.css */
+
+/* === BACKGROUND ANIME (Défaut - Bulles) === */
+.animation-bg-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    background-color: #ffffff;
+    /* Fond blanc par défaut */
+}
+
+/* Adaptation thème sombre */
+body.dark-theme .animation-bg-area {
+    background-color: #121212;
+}
+
+
+
+/* === FONDS D'ÉCRAN SPÉCIFIQUES === */
+
+/* Fond Icons */
+body.bg-icons .animation-bg-area {
+    background-image: url('../assets/backgrounds/icons.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Prévisualisation dans la boutique */

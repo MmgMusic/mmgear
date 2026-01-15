@@ -1,0 +1,10 @@
+/* css/super-listener-theme.css */
+/* --- THÈME SUPER LISTENER (Secret / Récompense Ultime) --- */
+body.theme-super-listener {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --active-color: #FFD700; /* Or */
+    --card-bg: #2a2a2a;
+    --ui-bar-bg: #222222;
+    --ui-bar-border: #333;
+}

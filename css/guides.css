@@ -1,0 +1,296 @@
+/* === GUIDE SYSTEM STYLES === */
+/* Import de la police si nécessaire, on suppose qu'elle est déjà là */
+
+/* Overlay général qui assombrit le fond */
+#guide-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    /* Totalement transparent */
+    z-index: 99990;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    pointer-events: auto;
+    /* On garde le trou pour la visibilité de l'élément */
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+#guide-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Classe ajoutée à l'élément mis en valeur pour le faire ressortir */
+/* Marqueur de ciblage HUD indépendant */
+#guide-marker {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99994;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    visibility: hidden;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+#guide-marker.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#guide-marker .corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 3px solid var(--active-color, #3b82f6);
+    animation: markerPulse 1.5s infinite ease-in-out;
+}
+
+.corner-tl {
+    top: -6px;
+    left: -6px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.corner-tr {
+    top: -6px;
+    right: -6px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.corner-bl {
+    bottom: -6px;
+    left: -6px;
+    border-right: none;
+    border-top: none;
+}
+
+.corner-br {
+    bottom: -6px;
+    right: -6px;
+    border-left: none;
+    border-top: none;
+}
+
+@keyframes markerPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* Classe minimaliste pour l'élément ciblé */
+.guide-highlighted {
+    position: relative;
+    z-index: 99995 !important;
+}
+
+/* Sur mobile */
+body.is-mobile .guide-highlighted {
+    z-index: 100000 !important;
+}
+
+/* Tooltip Card - La bulle d'info */
+#guide-tooltip {
+    position: fixed;
+    z-index: 99999;
+    background: #ffffff;
+    /* Fond plein pour la clarté */
+    width: 320px;
+    max-width: 90vw;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        top 0.3s ease,
+        left 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme #guide-tooltip {
+    background: #252525;
+    /* Thème sombre solide */
+    border-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+#guide-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Flèche du tooltip (optionnelle, simplifiée ici) */
+#guide-tooltip::before {
+    content: '';
+    position: absolute;
+    /* La position sera gérée en JS ou on fait sans flèche pour style flottant moderne */
+}
+
+/* Contenu du tooltip */
+.guide-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.guide-header-left {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.guide-badge {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 8px;
+    background: var(--active-color, #3b82f6);
+    color: white;
+    border-radius: 99px;
+}
+
+.guide-close {
+    grid-column: 3;
+    justify-self: end;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color, #666);
+    opacity: 0.5;
+    padding: 4px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+.guide-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    color: var(--text-color, #333);
+    line-height: 1.2;
+}
+
+.guide-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color, #666);
+    margin-bottom: 24px;
+    opacity: 0.9;
+}
+
+body.dark-theme .guide-title {
+    color: white;
+}
+
+body.dark-theme .guide-content {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* On centre les points en haut */
+.guide-progress {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Contrôles du bas */
+.guide-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.guide-progress {
+    display: flex;
+    gap: 4px;
+}
+
+.guide-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-color, #ccc);
+    opacity: 0.3;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.guide-dot.active {
+    opacity: 1;
+    background-color: var(--active-color, #3b82f6);
+    transform: scale(1.2);
+}
+
+.guide-nav-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.guide-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.guide-btn-prev {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-color, #666);
+}
+
+.guide-btn-prev:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme .guide-btn-prev {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.guide-btn-next {
+    background: var(--active-color, #3b82f6);
+    color: white;
+}
+
+.guide-btn-next:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.guide-btn-next.finish-btn {
+    background: #10b981;
+}
